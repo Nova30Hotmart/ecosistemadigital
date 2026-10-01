@@ -1,0 +1,2544 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ecosistema Digital · Comunidades Hotmart</title>
+<meta name="description" content="Herramienta de consultoría para diagnosticar el ecosistema digital de cada emprendedor digital.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ecosistema Digital · Comunidades Hotmart">
+<meta property="og:description" content="Diagnostica la escalera de valor, las herramientas de conversión y el potencial de cada emprendedor digital.">
+<meta property="og:image" content="https://assets.hotmartcomunidades.com/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="https://assets.hotmartcomunidades.com/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="https://assets.hotmartcomunidades.com/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="https://assets.hotmartcomunidades.com/apple-touch-icon.png">
+<link rel="manifest" href="https://assets.hotmartcomunidades.com/site.webmanifest">
+<link rel="stylesheet" href="https://assets.hotmartcomunidades.com/brand.css">
+<link rel="stylesheet" href="https://assets.hotmartcomunidades.com/components.css">
+<style>
+/* ---------- Tokens locales (heredan de brand.css, con respaldo) ---------- */
+:root{
+  --o:var(--hot-orange,#FF4000);
+  --o-deep:var(--lava-deep,#D63400);
+  --bg:var(--ink,#060606);
+  --cr:var(--cream,#EFEAE2);
+  --rg:var(--ring,#C6C6CE);
+  --gold:var(--tier-gold,#E6B450);
+  --fd:var(--font-display,'Hotmart Display'),system-ui,sans-serif;
+  --fb:var(--font-body,'Hotmart Sans'),system-ui,sans-serif;
+  --rs:var(--r-sharp,2px); --rc:var(--r-card,14px); --rl:var(--r-lg,18px);
+  --surf:#100E0D; --surf2:#171412; --line:#2A2420; --muted:#A79C96; --faint:#6F6560;
+  --ok:#3DD68C; --wip:#F5B301; --no:#FF5C5C;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--cr);font-family:var(--fb);-webkit-font-smoothing:antialiased;line-height:1.45;
+  background-image:radial-gradient(90% 60% at 15% -10%,rgba(255,64,0,.16),transparent 60%),radial-gradient(60% 50% at 100% 0%,rgba(198,198,206,.06),transparent 60%);
+  background-attachment:fixed;min-height:100vh}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--o);outline-offset:3px}
+.wrap{max-width:1380px;margin:0 auto;padding:0 clamp(16px,3vw,40px)}
+
+/* ---------- Botones (marca: naranja, esquina recta) ---------- */
+.bt{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:var(--rs);background:var(--o);color:#fff;
+  padding:10px 16px;font-weight:700;font-size:13.5px;cursor:pointer;transition:box-shadow .15s,transform .15s;white-space:nowrap}
+.bt:hover{box-shadow:0 0 0 1px rgba(255,64,0,.6),0 8px 24px -6px rgba(255,64,0,.6)}
+.bt.ghost{background:transparent;box-shadow:inset 0 0 0 1px rgba(239,234,226,.35)}
+.bt.ghost:hover{box-shadow:inset 0 0 0 1px rgba(239,234,226,.8)}
+.bt.sm{padding:7px 12px;font-size:12.5px}
+.bt svg{width:16px;height:16px}
+
+/* ---------- Barra superior ---------- */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:rgba(6,6,6,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:14px;min-height:62px;flex-wrap:wrap;padding-top:8px;padding-bottom:8px}
+.logo{height:24px;display:block}
+.logo-txt{font-family:var(--fd);font-size:18px;display:none}
+.sep{width:1px;height:24px;background:var(--line)}
+.client-sel{display:flex;align-items:center;gap:8px}
+.client-sel select{background:var(--surf2);border:1px solid var(--line);border-radius:var(--rs);padding:8px 10px;min-width:190px;max-width:240px}
+.modes{display:flex;background:var(--surf2);border:1px solid var(--line);border-radius:var(--rs);padding:3px;margin-left:auto}
+.modes button{border:0;background:transparent;padding:7px 14px;border-radius:var(--rs);font-size:13px;font-weight:700;color:var(--muted);cursor:pointer}
+.modes button[aria-pressed="true"]{background:var(--o);color:#fff}
+.top-actions{display:flex;gap:8px;align-items:center}
+.menu{position:relative}
+.menu-list{position:absolute;right:0;top:calc(100% + 6px);background:var(--surf2);border:1px solid var(--line);border-radius:var(--rc);padding:6px;min-width:230px;box-shadow:0 20px 40px -12px #000;display:none}
+.menu-list.open{display:block}
+.menu-list button{display:block;width:100%;text-align:left;background:none;border:0;padding:9px 11px;border-radius:8px;font-size:13px;cursor:pointer}
+.menu-list button:hover{background:#221d1a}
+.menu-list .danger{color:#FF8A80}
+
+/* ---------- Hero ---------- */
+.hero{padding:34px 0 18px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:end}
+.eyb{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--o);font-weight:700;margin:0 0 10px}
+h1.ttl{font-family:var(--fd);font-weight:400;font-size:clamp(2.2rem,4.6vw,3.8rem);line-height:1.08;letter-spacing:-.02em;margin:0}
+h1.ttl em{font-style:normal;color:var(--o)}
+.lead{color:var(--muted);max-width:640px;margin:12px 0 0;font-size:15px}
+.hero-meta{display:flex;flex-direction:column;align-items:flex-end;gap:8px;font-size:12.5px;color:var(--muted)}
+.mode-note{color:var(--cr)}
+.mode-note b{color:var(--o)}
+
+/* ---------- Ficha del cliente ---------- */
+.client-card{display:none;background:var(--surf);border:1px solid var(--line);border-radius:var(--rl);padding:16px 18px;margin-bottom:18px;
+  grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+body[data-mode="diagnose"] .client-card{display:grid}
+.fld{display:flex;flex-direction:column;gap:5px;min-width:0}
+.fld label{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:700}
+.fld input,.fld select,.fld textarea{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13.5px;width:100%;min-width:0}
+.fld textarea{resize:vertical;min-height:70px}
+.fld input:focus,.fld select:focus,.fld textarea:focus{border-color:var(--o);outline:none}
+.empty-client{display:none;background:var(--surf);border:1px dashed #3a312b;border-radius:var(--rl);padding:22px;margin-bottom:18px;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.empty-client p{margin:0;color:var(--muted)}
+
+/* ---------- Layout principal ---------- */
+.main{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:22px;align-items:start}
+.panel{background:var(--surf);border:1px solid var(--line);border-radius:var(--rl);position:relative}
+.stage{padding:22px 22px 20px}
+.stage-head{display:flex;justify-content:space-between;gap:16px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.stage-head h2{font-family:var(--fd);font-weight:400;font-size:22px;margin:0;letter-spacing:-.01em}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:9px;height:9px;border-radius:50%;display:inline-block}
+.legend .leg-diag{display:none}
+body[data-mode="diagnose"] .legend .leg-diag{display:inline-flex}
+
+/* ---------- Escalera ---------- */
+.ladder-wrap{position:relative;padding-right:46px;margin-top:14px}
+.ladder{position:relative;min-height:430px;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:auto 1fr;gap:14px;align-items:end}
+.vehicle{grid-column:1/3;grid-row:1;align-self:start;z-index:3}
+.step{grid-row:2}
+.step[data-step="ht"],.step[data-step="prem"]{grid-row:1/3}
+.step{position:relative;border-radius:16px 16px 6px 6px;color:#fff;cursor:pointer;border:0;text-align:center;padding:14px 10px 12px;
+  display:flex;flex-direction:column;align-items:center;gap:7px;
+  background:linear-gradient(178deg,var(--sc) 0%,var(--sc2) 100%);
+  box-shadow:0 18px 30px -16px var(--sc2),inset 0 1px 0 rgba(255,255,255,.3);transition:transform .15s,box-shadow .15s,opacity .2s}
+.step::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,0) 32%)}
+.step:hover{transform:translateY(-3px)}
+.step>*{position:relative;z-index:1}
+.step.premium{box-shadow:0 18px 30px -16px var(--sc2),inset 0 0 0 1.5px rgba(230,180,80,.75),0 0 28px -8px rgba(230,180,80,.45)}
+.step .num{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.95);color:var(--sc2);font-family:var(--fd);font-size:13px;display:flex;align-items:center;justify-content:center;font-weight:700}
+.step .sic svg{width:22px;height:22px}
+.step .role{font-size:12.5px;font-weight:700;line-height:1.15}
+.step .price{font-family:var(--fd);font-size:20px;line-height:1;letter-spacing:-.01em}
+.step .price small{font-size:12px;opacity:.85}
+.step .pname{font-size:11px;opacity:.9;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:none}
+.step .tools{display:flex;flex-shrink:0;flex-wrap:wrap;justify-content:center;gap:6px;width:100%;margin-top:auto;padding-top:10px;border-top:1px solid rgba(255,255,255,.22)}
+.stat{display:none;position:absolute;top:8px;right:8px;width:10px;height:10px;border-radius:50%;box-shadow:0 0 0 2px rgba(0,0,0,.25)}
+body[data-mode="diagnose"] .stat{display:block}
+body[data-mode="diagnose"] .step .pname{display:block}
+.step.st-no{background:repeating-linear-gradient(135deg,rgba(255,255,255,.035) 0 8px,transparent 8px 16px);border:1.5px dashed rgba(255,255,255,.28);box-shadow:none;color:var(--muted)}
+.step.st-no .num{background:#2a2420;color:var(--muted)}
+.step.st-no::after{display:none}
+.asc{position:absolute;font-size:10.5px;font-weight:700;color:var(--cr);background:#241d19;border:1px solid var(--line);border-radius:999px;padding:2px 7px;transform:translateX(-50%);white-space:nowrap;z-index:2}
+
+/* chip de herramienta */
+.sym{width:30px;height:30px;border-radius:8px;background:#fff;border:0;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;position:relative;
+  box-shadow:0 3px 8px -4px rgba(0,0,0,.5);transition:transform .12s,box-shadow .12s,opacity .12s}
+.sym svg{width:16px;height:16px;display:block}
+.sym:hover{transform:translateY(-2px)}
+.sym.on-sel{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--o)}
+body[data-mode="diagnose"] .sym.off{background:transparent;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.55);opacity:.75}
+body[data-mode="diagnose"] .sym.off svg{stroke:#fff!important}
+body[data-mode="diagnose"] .sym.miss::after{content:"";position:absolute;top:-3px;right:-3px;width:8px;height:8px;border-radius:50%;background:var(--no);box-shadow:0 0 0 2px var(--sc2,#000)}
+
+/* vehículo: evento */
+.evt{width:100%;text-align:left;cursor:pointer;background:linear-gradient(160deg,#1E1511,#140F0D);border:1.5px dashed rgba(255,64,0,.55);border-radius:var(--rc);padding:12px 14px;color:var(--cr);display:grid;grid-template-columns:auto 1fr;gap:4px 12px;align-items:center;transition:border-color .15s}
+.evt:hover{border-color:var(--o)}
+.evt .eic{grid-row:span 2;width:38px;height:38px;border-radius:10px;background:rgba(255,64,0,.14);display:flex;align-items:center;justify-content:center}
+.evt .eic svg{width:20px;height:20px;stroke:var(--o)}
+.evt .et{font-weight:700;font-size:13.5px;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.evt .et span{font-family:var(--fd);font-weight:400;color:var(--o);font-size:15px}
+.evt .ed{font-size:11.5px;color:var(--muted);line-height:1.35}
+.evt .tools{grid-column:1/-1;display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.evt .tag{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--o);font-weight:700}
+.evt.st-no{opacity:.65}
+.evt .stat{top:10px;right:10px}
+
+/* audiencia + canales */
+.audience{margin-top:14px;margin-right:46px;height:54px;border-radius:13px;background:linear-gradient(180deg,#5C1404,#2E0A02);border:1px solid #4a1608;display:flex;align-items:center;justify-content:center;gap:10px;color:#fff}
+.audience svg{width:22px;height:22px;stroke:#FF9166}
+.audience b{font-family:var(--fd);font-weight:400;font-size:20px}
+.audience span{font-size:12.5px;color:#E7C3B6}
+.ch-label{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);font-weight:700;margin:14px 0 8px}
+.channels{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-right:46px}
+.chip-ch{display:flex;align-items:center;gap:10px;background:var(--surf2);border:1px solid var(--line);border-radius:11px;padding:10px 12px;cursor:pointer;text-align:left;transition:border-color .15s,transform .12s;position:relative}
+.chip-ch:hover{transform:translateY(-2px);border-color:#4a3c33}
+.chip-ch.on-sel{border-color:var(--o)}
+.chip-ch svg{width:20px;height:20px;stroke:var(--o);flex-shrink:0}
+.chip-ch .cn{font-size:13px;font-weight:700;line-height:1.1}
+.chip-ch .cd{font-size:11px;color:var(--muted);line-height:1.2;margin-top:2px}
+.chip-ch .share{margin-left:auto;font-family:var(--fd);font-size:16px;color:var(--o);display:none}
+body[data-mode="diagnose"] .chip-ch .share{display:block}
+body[data-mode="diagnose"] .chip-ch.off{opacity:.55;border-style:dashed}
+
+/* reingreso */
+.loop{position:absolute;inset:0;pointer-events:none;overflow:visible;z-index:1}
+
+/* ---------- Lateral ---------- */
+.side{display:flex;flex-direction:column;gap:16px}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:var(--rl);padding:16px 17px}
+.card h3{margin:0 0 12px;font-family:var(--fd);font-weight:400;font-size:18px;letter-spacing:-.01em}
+.card h3 em{font-style:normal;color:var(--o)}
+.kpis{display:none}
+body[data-mode="diagnose"] .kpis{display:block}
+.kgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.kpi{background:var(--surf2);border:1px solid var(--line);border-radius:12px;padding:10px 11px}
+.kpi .kl{font-size:10.5px;color:var(--muted);line-height:1.2}
+.kpi .kv{font-family:var(--fd);font-size:20px;line-height:1.15;margin-top:4px;letter-spacing:-.01em;word-break:break-word}
+.kpi.big{grid-column:1/-1}
+.kpi.big .kv{font-size:28px;color:var(--o)}
+.kpi.pot .kv{color:var(--gold)}
+.knote{font-size:11px;color:var(--faint);margin:10px 0 0;line-height:1.35}
+.mlist{display:flex;flex-direction:column;gap:8px}
+.mrow{display:flex;align-items:center;gap:11px;border:1px solid transparent;border-radius:10px;padding:4px;background:none;text-align:left;width:100%}
+body[data-mode="diagnose"] .mrow{cursor:pointer;border-color:var(--line);padding:6px 8px}
+body[data-mode="diagnose"] .mrow.on{border-color:var(--o);background:rgba(255,64,0,.07)}
+.mrow .mi{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:#1F1916;border:1px solid #33271F}
+.mrow .mi svg{width:18px;height:18px;stroke:#FF7A47}
+.mrow .mt{font-size:13px;font-weight:700;line-height:1.1}
+.mrow .md{font-size:11px;color:var(--muted);line-height:1.2;margin-top:2px}
+.mrow .chk{margin-left:auto;width:18px;height:18px;border-radius:5px;border:1.5px solid #4a3c33;display:none;align-items:center;justify-content:center}
+body[data-mode="diagnose"] .mrow .chk{display:flex}
+.mrow.on .chk{background:var(--o);border-color:var(--o)}
+.mrow .chk svg{width:12px;height:12px;stroke:#fff;display:none}
+.mrow.on .chk svg{display:block}
+.cycle{background:linear-gradient(160deg,#21130E,#140D0B);border-color:#3E2418}
+.cycle p{margin:0;font-size:13px;line-height:1.5;color:#E6C6BA}
+.cycle b{color:#FF7A47}
+
+/* brechas */
+.gaps{display:none}
+body[data-mode="diagnose"] .gaps{display:block}
+.glist{display:flex;flex-direction:column;gap:7px;max-height:340px;overflow:auto;margin-right:-6px;padding-right:6px}
+.gap{display:flex;gap:10px;align-items:flex-start;background:var(--surf2);border:1px solid var(--line);border-radius:10px;padding:9px 10px;cursor:pointer;text-align:left;width:100%}
+.gap.pri{border-color:var(--o);background:rgba(255,64,0,.08)}
+.gap .gsym{width:24px;height:24px;border-radius:6px;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.gap .gsym svg{width:14px;height:14px}
+.gap .gt{font-size:12.5px;font-weight:700;line-height:1.2}
+.gap .gd{font-size:11px;color:var(--muted);margin-top:2px}
+.gap .gv{margin-left:auto;font-family:var(--fd);font-size:13px;color:var(--gold);white-space:nowrap}
+.gap .pin{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--o);font-weight:700;margin-top:3px}
+.gnote{font-size:11px;color:var(--faint);margin:0 0 10px}
+
+/* ---------- Kit ---------- */
+.kit{margin:26px 0 10px;padding:22px}
+.kit-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.kit-head h2{font-family:var(--fd);font-weight:400;font-size:22px;margin:0}
+.kit-head p{margin:0;font-size:13px;color:var(--muted);max-width:640px}
+.count{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--o);font-weight:700}
+.kgrid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.kit-item{display:flex;gap:11px;background:var(--surf2);border:1px solid var(--line);border-radius:13px;padding:13px;cursor:pointer;text-align:left;width:100%;transition:border-color .15s}
+.kit-item:hover{border-color:#4a3c33}
+.kit-item.on-sel{border-color:var(--o)}
+.kit-item .ks{width:34px;height:34px;border-radius:9px;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.kit-item .ks svg{width:19px;height:19px}
+.kit-item h4{margin:0;font-size:13px;font-weight:700;line-height:1.15}
+.kit-item p{margin:4px 0 0;font-size:11.5px;line-height:1.35;color:var(--muted)}
+.kit-item .use{display:none;margin-top:6px;font-size:11px;color:var(--cr)}
+.kit-item .use b{color:var(--o)}
+body[data-mode="diagnose"] .kit-item .use{display:block}
+
+/* ---------- Popover ---------- */
+.pop{position:fixed;z-index:60;width:290px;background:#1E1310;border:1px solid #4a2416;color:var(--cr);border-radius:var(--rc);padding:14px 15px;box-shadow:0 22px 50px -14px #000;font-size:12.5px;line-height:1.45}
+.pop[hidden]{display:none}
+.pop-h{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.pop-h .ps{width:30px;height:30px;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pop-h .ps svg{width:17px;height:17px}
+.pop-h b{font-family:var(--fd);font-weight:400;font-size:17px;line-height:1.1}
+.pop p{margin:0 0 7px;color:#EAD7CE}
+.pop .lab{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--o);font-weight:700;display:block;margin-bottom:2px}
+.pop .x{position:absolute;top:8px;right:8px;background:none;border:0;color:var(--muted);cursor:pointer;font-size:18px;line-height:1;padding:4px}
+
+/* ---------- Drawer ---------- */
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:70;opacity:0;pointer-events:none;transition:opacity .2s}
+.scrim.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(460px,100vw);background:#0E0C0B;border-left:1px solid var(--line);z-index:80;transform:translateX(100%);transition:transform .25s;display:flex;flex-direction:column}
+.drawer.open{transform:none}
+.dr-head{padding:18px 20px 14px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.dr-head h3{margin:4px 0 0;font-family:var(--fd);font-weight:400;font-size:24px;line-height:1.1}
+.dr-body{padding:16px 20px 30px;overflow:auto;flex:1;display:flex;flex-direction:column;gap:16px}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{flex:1;min-width:110px;border:1px solid var(--line);background:var(--surf2);border-radius:var(--rs);padding:8px 10px;font-size:12.5px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:7px;justify-content:center}
+.seg button i{width:9px;height:9px;border-radius:50%}
+.seg button[aria-pressed="true"]{border-color:var(--o);background:rgba(255,64,0,.12)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sub-h{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);font-weight:700;margin:4px 0 -6px}
+.trow{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--surf)}
+.trow.on{border-color:rgba(255,64,0,.6)}
+.trow-h{display:flex;align-items:center;gap:10px}
+.trow-h .ts{width:28px;height:28px;border-radius:7px;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.trow-h .ts svg{width:16px;height:16px}
+.trow-h .tn{font-size:13px;font-weight:700}
+.trow-h .td{font-size:11px;color:var(--muted)}
+.tog{margin-left:auto;position:relative;width:42px;height:24px;border-radius:999px;background:#2a2420;border:0;cursor:pointer;flex-shrink:0;transition:background .15s}
+.tog::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .15s}
+.tog[aria-checked="true"]{background:var(--o)}
+.tog[aria-checked="true"]::after{transform:translateX(18px)}
+.trow .metrics{display:none;margin-top:10px}
+.trow.on .metrics{display:grid}
+.calc{background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;color:var(--muted)}
+.calc b{display:block;font-family:var(--fd);font-weight:400;font-size:19px;color:var(--cr)}
+.calc .full{grid-column:1/-1}
+.calc .full b{color:var(--o)}
+
+/* ---------- Modales ---------- */
+.modal{position:fixed;inset:0;z-index:90;display:none;align-items:flex-start;justify-content:center;padding:40px 16px;overflow:auto;background:rgba(0,0,0,.7)}
+.modal.open{display:flex}
+.mbox{background:#0E0C0B;border:1px solid var(--line);border-radius:var(--rl);width:min(820px,100%);padding:24px;position:relative}
+.mbox.narrow{width:min(480px,100%)}
+.mbox h2{font-family:var(--fd);font-weight:400;font-size:28px;margin:4px 0 4px;line-height:1.1}
+.mbox .x{position:absolute;top:14px;right:14px;background:none;border:0;color:var(--muted);font-size:22px;cursor:pointer;padding:4px}
+.mactions{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.sum-sec{margin-top:18px}
+.sum-sec h4{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--o);margin:0 0 8px}
+.sum-table{width:100%;border-collapse:collapse;font-size:13px}
+.sum-table th,.sum-table td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+.sum-table th{font-size:11px;color:var(--muted);font-weight:700}
+.sum-table td.n{text-align:right;white-space:nowrap}
+.sum-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.prio{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none;counter-reset:p}
+.prio li{counter-increment:p;display:flex;gap:10px;align-items:flex-start;background:var(--surf);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:13px}
+.prio li::before{content:counter(p);width:22px;height:22px;border-radius:50%;background:var(--o);color:#fff;font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.muted{color:var(--muted)}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:#1E1310;border:1px solid #4a2416;color:var(--cr);padding:10px 16px;border-radius:10px;font-size:13px;z-index:100;opacity:0;transition:all .2s;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%)}
+
+/* ---------- Modo presentación ---------- */
+.pres-bar{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:50;width:min(860px,calc(100vw - 32px));background:rgba(14,12,11,.94);backdrop-filter:blur(10px);border:1px solid #4a2416;border-radius:var(--rl);padding:14px 16px;display:none;gap:14px;align-items:center;box-shadow:0 20px 50px -14px #000}
+body[data-mode="present"] .pres-bar{display:flex}
+.pres-bar .pc{flex:1;min-width:0}
+.pres-bar .pk{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--o);font-weight:700}
+.pres-bar .pt{font-family:var(--fd);font-size:20px;line-height:1.15;margin-top:2px}
+.pres-bar .pd{font-size:13px;color:var(--muted);margin-top:3px}
+.pdots{display:flex;gap:5px;margin-top:8px}
+.pdots i{width:18px;height:3px;border-radius:2px;background:#3a312b}
+.pdots i.on{background:var(--o)}
+body[data-mode="present"] [data-pres]{opacity:.12;transition:opacity .35s,filter .35s;filter:saturate(.4)}
+body[data-mode="present"] [data-pres].lit{opacity:1;filter:none}
+body[data-mode="present"] [data-pres].cur{filter:drop-shadow(0 0 18px rgba(255,64,0,.55))}
+body[data-mode="present"] .side .card:not([data-pres]),body[data-mode="present"] .client-card{display:none}
+body[data-mode="present"] main{padding-bottom:150px}
+
+/* ================= v3: vistas Guía / Análisis / Asistente ================= */
+:root{
+  /* hoja del reporte: papel claro dentro del sistema oscuro, como documento entregable */
+  --p-bg:#FFFFFF; --p-ink:#17110E; --p-mut:#6E625B; --p-line:#E9E1D9; --p-soft:#F8F4EF;
+  --p-gold:#A86A0C; --p-ok:#1C8F57; --p-wip:#B87F00; --p-no:#CF3A32;
+}
+.view{display:none}
+body[data-mode="guide"] #guideView{display:block}
+body[data-mode="analysis"] #analysisView{display:block}
+body[data-mode="guide"] #ecoView,body[data-mode="analysis"] #ecoView{display:none}
+.modes{overflow-x:auto;scrollbar-width:none;max-width:100%}
+.modes::-webkit-scrollbar{display:none}
+.modes button{flex-shrink:0}
+.ex-badge{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--gold);border:1px solid rgba(230,180,80,.45);border-radius:999px;padding:3px 9px}
+
+/* ---------- Guía ---------- */
+.g-hero{padding:40px 0 26px;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:32px;align-items:end}
+.g-hero h1{font-family:var(--fd);font-weight:400;font-size:clamp(2.2rem,4.4vw,3.6rem);line-height:1.08;letter-spacing:-.02em;margin:0;text-wrap:balance}
+.g-hero h1 em{font-style:normal;color:var(--o)}
+.g-hero .lead{font-size:16px;max-width:58ch}
+.g-cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.g-prep{background:var(--surf);border:1px solid var(--line);border-radius:var(--rl);padding:18px 20px}
+.g-prep h3{margin:0 0 10px;font-family:var(--fd);font-weight:400;font-size:18px}
+.g-prep ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px}
+.g-prep li{display:flex;gap:10px;font-size:13.5px;line-height:1.4;color:#E4D9D2}
+.g-prep li svg{width:16px;height:16px;flex-shrink:0;margin-top:2px}
+.g-sec{padding:26px 0;border-top:1px solid var(--line)}
+.g-sec>header{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.g-sec h2{font-family:var(--fd);font-weight:400;font-size:clamp(1.5rem,2.4vw,2rem);margin:0;letter-spacing:-.01em;text-wrap:balance}
+.g-sec h2 em{font-style:normal;color:var(--o)}
+.g-sec>header p{margin:0;color:var(--muted);font-size:14px;max-width:60ch}
+.g-four{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.g-piece{background:var(--surf);border:1px solid var(--line);border-radius:var(--rc);padding:16px}
+.g-piece .gi{width:38px;height:38px;border-radius:10px;background:rgba(255,64,0,.12);display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+.g-piece .gi svg{width:20px;height:20px}
+.g-piece h4{margin:0 0 6px;font-size:15px}
+.g-piece p{margin:0;font-size:13px;color:var(--muted);line-height:1.5}
+.g-flow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;counter-reset:fl}
+.g-step{position:relative;background:var(--surf);border:1px solid var(--line);border-radius:var(--rl);padding:18px 18px 16px}
+.g-step .n{font-family:var(--fd);font-size:40px;line-height:1;color:var(--o)}
+.g-step h4{margin:8px 0 2px;font-size:16px}
+.g-step .when{font-size:12px;color:var(--faint);margin:0 0 12px}
+.g-step ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.g-step li{font-size:13px;line-height:1.45;color:#E4D9D2;display:grid;grid-template-columns:auto 1fr;gap:4px 10px;align-items:start}
+.g-step li b{font-weight:700;color:var(--cr)}
+.g-step li .t{font-size:11px;font-weight:700;color:var(--o);white-space:nowrap}
+.g-step li .d{grid-column:1/-1;color:var(--muted);font-size:12.5px}
+.g-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.g-tab{background:var(--surf);border:1px solid var(--line);border-radius:var(--rc);padding:15px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:6px;transition:border-color .15s}
+.g-tab:hover{border-color:var(--o)}
+.g-tab .tn{font-weight:700;font-size:14.5px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.g-tab .tn span{color:var(--o)}
+.g-tab .tw{font-size:11.5px;color:var(--o);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.g-tab p{margin:0;font-size:13px;color:var(--muted);line-height:1.45}
+.g-tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.g-tool{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;background:var(--surf);border:1px solid var(--line);border-radius:var(--rc);padding:14px}
+.g-tool .ks{width:36px;height:36px;border-radius:9px;background:#fff;display:flex;align-items:center;justify-content:center}
+.g-tool .ks svg{width:19px;height:19px}
+.g-tool h4{margin:0;font-size:14.5px}
+.g-tool h4 small{font-weight:400;color:var(--faint);font-size:12px;margin-left:6px}
+.g-tool .q{margin:5px 0 0;font-size:13px;color:var(--cr)}
+.g-tool .e{margin:4px 0 0;font-size:12.5px;color:var(--muted)}
+.g-faq{display:flex;flex-direction:column;gap:8px;max-width:860px}
+.g-faq details{background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:0 16px}
+.g-faq summary{cursor:pointer;padding:14px 0;font-weight:700;font-size:14px;list-style:none;display:flex;justify-content:space-between;gap:12px}
+.g-faq summary::-webkit-details-marker{display:none}
+.g-faq summary::after{content:"+";color:var(--o);font-size:18px;line-height:1}
+.g-faq details[open] summary::after{content:"–"}
+.g-faq details p{margin:0 0 14px;font-size:13.5px;color:var(--muted);line-height:1.55;max-width:70ch}
+
+/* ---------- Banner diagnóstico ---------- */
+.diag-tip{display:none;align-items:center;gap:14px;justify-content:space-between;flex-wrap:wrap;background:linear-gradient(120deg,rgba(255,64,0,.13),rgba(255,64,0,.03));border:1px solid rgba(255,64,0,.35);border-radius:var(--rl);padding:14px 18px;margin-bottom:16px}
+body[data-mode="diagnose"] .diag-tip.show{display:flex}
+.diag-tip p{margin:0;font-size:13.5px;color:var(--cr)}
+.diag-tip p b{color:var(--o)}
+
+/* ---------- Asistente ---------- */
+.wiz{position:fixed;inset:0;z-index:95;background:var(--bg);display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.wiz[hidden]{display:none}
+.wiz-top{border-bottom:1px solid var(--line)}
+.wiz-top .wrap{display:flex;align-items:center;gap:14px;min-height:60px;flex-wrap:wrap}
+.wiz-top .wt{font-family:var(--fd);font-size:17px}
+.wiz-top .wc{font-size:12px;color:var(--muted)}
+.wiz-prog{flex:1;min-width:120px;height:4px;background:#2a2420;border-radius:2px;overflow:hidden}
+.wiz-prog i{display:block;height:100%;background:var(--o);transition:width .25s}
+.wiz-body{flex:1;overflow:auto}
+.wiz-in{max-width:760px;margin:0 auto;padding:34px clamp(16px,3vw,40px) 40px}
+.wiz-in .eyb{margin-bottom:8px}
+.wiz-in h2{font-family:var(--fd);font-weight:400;font-size:clamp(1.7rem,3.4vw,2.5rem);line-height:1.12;letter-spacing:-.01em;margin:0;text-wrap:balance}
+.wiz-in .hint{color:var(--muted);font-size:14.5px;margin:10px 0 0;max-width:60ch}
+.choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:22px}
+.choice{text-align:left;cursor:pointer;background:var(--surf);border:1.5px solid var(--line);border-radius:var(--rc);padding:14px 15px;display:flex;flex-direction:column;gap:4px;transition:border-color .15s,background .15s}
+.choice:hover{border-color:#5a4a40}
+.choice[aria-pressed="true"]{border-color:var(--o);background:rgba(255,64,0,.1)}
+.choice b{font-size:14.5px;display:flex;align-items:center;gap:8px}
+.choice b i{width:10px;height:10px;border-radius:50%}
+.choice span{font-size:12.5px;color:var(--muted)}
+.wiz-fields{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;margin-top:20px}
+.wiz-fields.profile{grid-template-columns:repeat(2,minmax(0,1fr))}
+.wiz-sub{margin:28px 0 4px;font-size:15px;font-weight:700}
+.wiz-subd{margin:0 0 12px;font-size:13px;color:var(--muted)}
+.wq{display:flex;flex-direction:column;gap:8px}
+.wq-row{background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.wq-row.on{border-color:rgba(255,64,0,.55)}
+.wq-h{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center}
+.wq-h .ts{width:30px;height:30px;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center}
+.wq-h .ts svg{width:16px;height:16px}
+.wq-h .qq{font-size:14px;line-height:1.35}
+.wq-h .qn{font-size:11.5px;color:var(--faint);margin-top:2px}
+.yn{display:flex;border:1px solid var(--line);border-radius:var(--rs);overflow:hidden}
+.yn button{border:0;background:transparent;padding:7px 13px;font-size:12.5px;font-weight:700;color:var(--muted);cursor:pointer}
+.yn button[aria-pressed="true"]{background:var(--o);color:#fff}
+.wq-m{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:10px;padding-left:42px}
+.wiz-ch{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:16px}
+.wiz-ch .choice .fld{margin-top:8px}
+.wiz-models{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.pill{border:1px solid var(--line);background:var(--surf);border-radius:999px;padding:8px 14px;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.pill svg{width:15px;height:15px}
+.pill[aria-pressed="true"]{border-color:var(--o);background:rgba(255,64,0,.12)}
+.wiz-done{display:grid;grid-template-columns:auto minmax(0,1fr);gap:22px;align-items:center;margin-top:24px;background:var(--surf);border:1px solid var(--line);border-radius:var(--rl);padding:20px}
+.wiz-done .sc{font-family:var(--fd);font-size:56px;line-height:1;color:var(--o)}
+.wiz-done .sc small{font-size:18px;color:var(--muted)}
+.wiz-done p{margin:4px 0 0;color:var(--muted);font-size:14px}
+.wiz-foot{border-top:1px solid var(--line);background:rgba(6,6,6,.9)}
+.wiz-foot .wrap{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:66px}
+.wiz-dots{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.wiz-dots button{width:9px;height:9px;border-radius:50%;border:0;background:#3a312b;padding:0;cursor:pointer}
+.wiz-dots button.on{background:var(--o)}
+.wiz-dots button.cur{box-shadow:0 0 0 3px rgba(255,64,0,.35)}
+
+/* ---------- Análisis ---------- */
+.an-head{padding:34px 0 18px;display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap}
+.an-head h1{font-family:var(--fd);font-weight:400;font-size:clamp(2rem,4vw,3.2rem);line-height:1.08;letter-spacing:-.02em;margin:0}
+.an-head h1 em{font-style:normal;color:var(--o)}
+.an-grid{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:22px;align-items:start;padding-bottom:40px}
+.an-side{display:flex;flex-direction:column;gap:14px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 76px)}
+.an-side .card{padding:15px 16px}
+.an-side .card h3{font-size:16px;margin-bottom:10px}
+.an-actions{display:flex;flex-direction:column;gap:8px}
+.an-actions .bt{justify-content:center}
+.an-side .glist{max-height:280px}
+.cal-btn{margin-top:12px;width:100%;justify-content:center;text-decoration:none}
+.cal-btn[aria-disabled="true"]{opacity:.45;pointer-events:none}
+.chk{display:flex;align-items:center;gap:9px;font-size:13px;cursor:pointer}
+.chk input{accent-color:var(--o);width:16px;height:16px}
+.an-empty{background:var(--surf);border:1px dashed #3a312b;border-radius:var(--rl);padding:40px 24px;text-align:center;margin-bottom:40px}
+.an-empty h2{font-family:var(--fd);font-weight:400;font-size:26px;margin:0 0 8px}
+.an-empty p{color:var(--muted);margin:0 auto 18px;max-width:52ch}
+.an-empty .g-cta{justify-content:center}
+.paper-wrap{min-width:0}
+.paper{background:var(--p-bg);color:var(--p-ink);border-radius:6px;max-width:794px;margin:0 auto;box-shadow:0 30px 60px -30px #000,0 0 0 1px rgba(255,255,255,.04);overflow:hidden}
+
+/* ---------- Reporte (hoja) ---------- */
+.rp{font-family:var(--fb);color:var(--p-ink);font-size:12.5px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.rp *{box-sizing:border-box}
+.rp-blk{padding:0 44px 20px}
+.rp-band{background:#060606;color:#EFEAE2;padding:20px 44px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.rp-band img{height:20px;display:block}
+.rp-band span{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:#FF7A47;font-weight:700}
+.rp-cover{padding-top:0}
+.rp-title{padding:26px 44px 6px}
+.rp-eyb{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:#FF4000;font-weight:700;margin:0 0 8px}
+.rp-title h2{font-family:var(--fd);font-weight:400;font-size:32px;line-height:1.1;letter-spacing:-.015em;margin:0}
+.rp-meta{margin:8px 0 0;color:var(--p-mut);font-size:12px}
+.rp-h{font-family:var(--fd);font-weight:400;font-size:18px;letter-spacing:-.01em;margin:0 0 10px;padding-top:14px;border-top:1px solid var(--p-line);display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.rp-h small{font-family:var(--fb);font-size:10.5px;color:var(--p-mut);font-weight:400}
+.rp-lead{font-size:14px;line-height:1.6;margin:0;color:var(--p-ink)}
+.rp-lead b{color:#D63400}
+.rp-score{display:grid;grid-template-columns:170px minmax(0,1fr);gap:24px;align-items:center}
+.rp-dial{background:var(--p-soft);border-radius:12px;padding:16px;text-align:center}
+.rp-dial .v{font-family:var(--fd);font-size:54px;line-height:1;color:#FF4000}
+.rp-dial .v small{font-size:16px;color:var(--p-mut)}
+.rp-dial .st{display:inline-block;margin-top:8px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#fff;background:#17110E;border-radius:999px;padding:4px 10px}
+.rp-dial p{margin:8px 0 0;font-size:11px;color:var(--p-mut);line-height:1.4}
+.rp-dims{display:flex;flex-direction:column;gap:10px}
+.rp-dim .l{display:flex;justify-content:space-between;font-size:11.5px;font-weight:700}
+.rp-dim .l span{font-weight:400;color:var(--p-mut);font-variant-numeric:tabular-nums}
+.rp-dim .b{height:7px;background:var(--p-line);border-radius:4px;margin-top:5px;overflow:hidden}
+.rp-dim .b i{display:block;height:100%;background:#FF4000;border-radius:4px}
+.rp-dim .d{font-size:10.5px;color:var(--p-mut);margin-top:3px}
+.rp-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.rp-kpi{border:1px solid var(--p-line);border-radius:10px;padding:10px 11px}
+.rp-kpi .kl{font-size:10px;color:var(--p-mut);line-height:1.25}
+.rp-kpi .kv{font-family:var(--fd);font-size:19px;line-height:1.15;margin-top:4px;font-variant-numeric:tabular-nums}
+.rp-kpi.hi{background:#17110E;border-color:#17110E;color:#EFEAE2}
+.rp-kpi.hi .kl{color:#B9ACA4}
+.rp-kpi.hi .kv{color:#FF7A47}
+.rp-kpi.pot .kv{color:var(--p-gold)}
+.rp-bars{display:flex;flex-direction:column;gap:9px}
+.rp-bar{display:grid;grid-template-columns:120px minmax(0,1fr) 92px;gap:10px;align-items:center;font-size:11.5px}
+.rp-bar .bn{font-weight:700;line-height:1.2}
+.rp-bar .bn small{display:block;font-weight:400;color:var(--p-mut);font-size:10px}
+.rp-bar .bt2{height:14px;background:var(--p-soft);border-radius:3px;display:flex;overflow:hidden}
+.rp-bar .bt2 i{display:block;height:100%}
+.rp-bar .bv{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.rp-bar .bv small{display:block;font-weight:400;color:var(--p-mut);font-size:10px}
+.rp-legend{display:flex;gap:14px;font-size:10.5px;color:var(--p-mut);margin-top:10px}
+.rp-legend span{display:inline-flex;align-items:center;gap:6px}
+.rp-legend i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.rp-ladder{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.rp-cell{border:1px solid var(--p-line);border-radius:9px;padding:9px 9px 10px;position:relative;min-height:96px}
+.rp-cell.ok{border-color:#F5B9A3;background:#FFF5F1}
+.rp-cell .cs{display:flex;align-items:center;gap:5px;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+.rp-cell .cs i{width:7px;height:7px;border-radius:50%}
+.rp-cell .cr{font-weight:700;font-size:12px;margin-top:6px;line-height:1.2}
+.rp-cell .cp{font-size:11px;color:var(--p-mut);margin-top:3px;font-variant-numeric:tabular-nums}
+.rp-cell .ct{font-size:10px;color:var(--p-mut);margin-top:5px;line-height:1.3}
+.rp-asc{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;font-size:10.5px;color:var(--p-mut)}
+.rp-asc b{color:var(--p-ink)}
+.rp-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.rp-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+.rp-list li{display:grid;grid-template-columns:16px minmax(0,1fr);gap:8px}
+.rp-list li svg{width:14px;height:14px;margin-top:2px}
+.rp-list b{display:block;font-size:12.5px;line-height:1.3}
+.rp-list span{display:block;font-size:11.5px;color:var(--p-mut);line-height:1.45;margin-top:1px}
+.rp-pri{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;counter-reset:pr}
+.rp-pri li{counter-increment:pr;display:grid;grid-template-columns:24px minmax(0,1fr) auto;gap:10px;align-items:start;border:1px solid var(--p-line);border-radius:10px;padding:10px 12px}
+.rp-pri li::before{content:counter(pr);width:22px;height:22px;border-radius:50%;background:#FF4000;color:#fff;font-weight:700;font-size:11px;display:flex;align-items:center;justify-content:center}
+.rp-pri b{font-size:12.5px}
+.rp-pri span{display:block;font-size:11.5px;color:var(--p-mut);margin-top:2px}
+.rp-pri em{font-style:normal;font-weight:700;color:var(--p-gold);white-space:nowrap;font-variant-numeric:tabular-nums}
+.rp-plan{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.rp-col{background:var(--p-soft);border-radius:10px;padding:12px}
+.rp-col .ph{font-family:var(--fd);font-size:20px;line-height:1;color:#FF4000}
+.rp-col .pt{font-size:11px;font-weight:700;margin:4px 0 10px;line-height:1.3}
+.rp-col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.rp-col li{font-size:11.5px;line-height:1.4;padding-left:12px;position:relative}
+.rp-col li::before{content:"";position:absolute;left:0;top:6px;width:5px;height:5px;border-radius:50%;background:#FF4000}
+.rp-col li small{display:block;color:var(--p-gold);font-weight:700;font-size:10.5px}
+.rp-col li.none{color:var(--p-mut);padding-left:0}
+.rp-col li.none::before{display:none}
+.rp-text{white-space:pre-wrap;margin:0;font-size:12.5px;line-height:1.55}
+.rp-follow{display:block;margin:10px 0 0;color:#17110E;font-size:12px}
+.rp-note{margin:0 0 8px;font-size:12px;line-height:1.5}
+.rp-note b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--p-mut)}
+.rp-foot p{margin:0;font-size:10px;color:var(--p-mut);line-height:1.5;border-top:1px solid var(--p-line);padding-top:12px}
+.rp-endpad{height:24px}
+/* páginas del PDF */
+.pdf-stage{position:fixed;left:-12000px;top:0;z-index:-1}
+.pdf-page{width:794px;height:1123px;background:#fff;position:relative;overflow:hidden;display:flex;flex-direction:column}
+.pdf-page .pg-body{flex:1;overflow:hidden;padding-top:6px}
+.pdf-page .pg-run{display:flex;justify-content:space-between;padding:18px 44px 8px;font-size:9.5px;color:#6E625B;letter-spacing:.06em}
+.pdf-page .pg-run span{max-width:430px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pdf-page .pg-run b{color:#FF4000;letter-spacing:.18em;text-transform:uppercase;font-size:9px}
+.pdf-page .pg-num{padding:10px 44px 18px;display:flex;justify-content:space-between;font-size:9.5px;color:#9A8E87;border-top:1px solid #E9E1D9;margin:0 44px;padding-left:0;padding-right:0}
+.pdf-busy{position:fixed;inset:0;z-index:120;background:rgba(6,6,6,.7);display:flex;align-items:center;justify-content:center}
+.pdf-busy[hidden]{display:none}
+.pdf-busy div{background:#1E1310;border:1px solid #4a2416;border-radius:12px;padding:16px 22px;font-size:14px}
+@media (max-width:1180px){
+  .an-grid{grid-template-columns:1fr}
+  .an-side{position:static;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+  .g-four,.g-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:760px){
+  .g-hero{grid-template-columns:1fr;padding-top:28px}
+  .g-flow,.g-tools,.g-four,.g-tabs{grid-template-columns:1fr}
+  .choices,.wiz-ch{grid-template-columns:1fr}
+  .wiz-fields,.wiz-fields.profile{grid-template-columns:1fr}
+  .wq-m{padding-left:0}
+  .wq-h{grid-template-columns:auto minmax(0,1fr)}
+  .wq-h .yn{grid-column:1/-1;justify-self:start}
+  .wiz-done{grid-template-columns:1fr}
+  .wiz-dots{display:none}
+  /* la hoja en pantalla se adapta; las páginas del PDF siempre son A4 */
+  .paper .rp-blk,.paper .rp-band,.paper .rp-title{padding-left:18px;padding-right:18px}
+  .paper .rp-score{grid-template-columns:1fr}
+  .paper .rp-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .paper .rp-ladder{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .paper .rp-two,.paper .rp-plan{grid-template-columns:1fr}
+  .paper .rp-bar{grid-template-columns:84px minmax(0,1fr) 76px}
+  .paper .rp-title h2{font-size:26px}
+}
+
+/* ================= v4: calculadora, tiers, simulador, validación ================= */
+.client-card{grid-template-columns:repeat(4,minmax(0,1fr))}
+.step .lvl{font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;opacity:.85;margin-top:-2px}
+.evt .et .lv{font-family:var(--fb);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:700}
+/* validación */
+.fld .vmsg{font-size:11.5px;line-height:1.35;margin-top:1px}
+.fld .v-err{color:#FF8A80}
+.fld .v-warn{color:#F5C451}
+.fld .v-ok{color:#7FD9A8}
+.fld.f-err input{border-color:var(--no)}
+.fld.f-warn input{border-color:var(--wip)}
+.vsum{margin:10px 0 0;font-size:12.5px;color:#F5C451}
+.vsum:empty{display:none}
+/* herramientas Hotmart (diagnóstico y asistente) */
+.diag-only{display:none}
+body[data-mode="diagnose"] .diag-only{display:block}
+.hmlist{display:flex;flex-direction:column;gap:6px}
+.hmrow{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;width:100%;text-align:left;background:var(--surf2);border:1px solid var(--line);border-radius:10px;padding:8px 10px;cursor:pointer}
+.hmrow[aria-pressed="true"]{border-color:rgba(61,214,140,.45);background:rgba(61,214,140,.06)}
+.hmrow.lock{cursor:default}
+.hmrow .hi{width:26px;height:26px;border-radius:7px;background:#fff;display:flex;align-items:center;justify-content:center}
+.hmrow .hi svg{width:15px;height:15px}
+.hmrow .hn{font-size:12.5px;font-weight:700;line-height:1.2}
+.hmrow .hd{font-size:10.5px;color:var(--muted);margin-top:1px;line-height:1.3}
+.hmrow .hv{font-family:var(--fd);font-size:13px;color:var(--gold);white-space:nowrap}
+.hmrow[aria-pressed="true"] .hv{color:var(--ok);font-family:var(--fb);font-weight:700;font-size:12px}
+.guide-link{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:#FF7A47;text-decoration:none;margin-top:6px}
+.guide-link:hover{text-decoration:underline}
+.guide-link svg{width:12px;height:12px}
+.yn button[disabled]{cursor:not-allowed;opacity:.85}
+/* riel de tiers (pantalla) */
+.tr-rail{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;position:relative}
+.tr-stop{text-align:center;display:flex;flex-direction:column;align-items:center;gap:3px;opacity:.38;padding-top:20px;position:relative}
+.tr-stop img{width:46px;height:46px;object-fit:contain}
+.tr-stop b{font-size:12.5px;line-height:1.1}
+.tr-stop small{font-size:10.5px;color:var(--muted);line-height:1.2}
+.tr-stop.now,.tr-stop.pot,.tr-stop.climb{opacity:1}
+.tr-stop.climb{opacity:.7}
+.tr-pin{position:absolute;top:0;left:50%;transform:translateX(-50%);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;border-radius:999px;padding:2px 8px;white-space:nowrap}
+.tr-pin:empty{display:none}
+.tr-stop.now .tr-pin{background:var(--cr);color:#17110E}
+.tr-stop.pot .tr-pin{background:var(--o);color:#fff}
+/* simulador */
+.sim{background:var(--surf);border:1px solid var(--line);border-radius:var(--rl);padding:18px 20px;margin:0 auto 18px;max-width:794px}
+.sim[hidden]{display:none}
+.sim-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:4px}
+.sim-h h2{font-family:var(--fd);font-weight:400;font-size:22px;margin:0}
+.sim-h h2 em{font-style:normal;color:var(--o)}
+.sim-sub{margin:0 0 14px;font-size:13px;color:var(--muted)}
+.sim-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:18px}
+.sim-items{display:flex;flex-direction:column;gap:6px}
+.sim-it{display:grid;grid-template-columns:18px minmax(0,1fr) auto;gap:10px;align-items:center;width:100%;text-align:left;background:var(--surf2);border:1px solid var(--line);border-radius:10px;padding:9px 11px;cursor:pointer;font-size:13px}
+.sim-it .bx{width:18px;height:18px;border-radius:5px;border:1.5px solid #5a4a40;display:flex;align-items:center;justify-content:center}
+.sim-it .bx svg{width:12px;height:12px;display:none}
+.sim-it[aria-pressed="true"]{border-color:var(--o);background:rgba(255,64,0,.09)}
+.sim-it[aria-pressed="true"] .bx{background:var(--o);border-color:var(--o)}
+.sim-it[aria-pressed="true"] .bx svg{display:block}
+.sim-it small{display:block;color:var(--muted);font-size:11px;margin-top:1px}
+.sim-it .sv{font-family:var(--fd);color:var(--gold);white-space:nowrap}
+.sim-tools{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.sim-res{background:#0B0908;border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.sim-big .l{font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;font-weight:700}
+.sim-big .v{font-family:var(--fd);font-size:34px;line-height:1.05;color:var(--o)}
+.sim-row{display:flex;justify-content:space-between;gap:10px;font-size:13px;border-top:1px solid var(--line);padding-top:9px}
+.sim-row span{color:var(--muted)}
+.sim-row b{font-variant-numeric:tabular-nums}
+.sim-txt{margin:0;font-size:13px;line-height:1.45}
+.sim-txt b{color:var(--o);font-weight:700}
+.sim-empty{font-size:13px;color:var(--muted);margin:0}
+/* guía: execution hub */
+.g-hub{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.hcard{display:flex;flex-direction:column;gap:6px;background:var(--surf);border:1px solid var(--line);border-radius:var(--rc);padding:14px;text-decoration:none;color:var(--cr);transition:border-color .15s}
+.hcard:hover{border-color:var(--o)}
+.hcard .ht{display:flex;align-items:center;gap:10px;justify-content:space-between}
+.hcard .ht b{font-size:14px}
+.hcard .ht span{display:flex;align-items:center;gap:8px}
+.hcard .hi{width:28px;height:28px;border-radius:7px;background:#fff;display:flex;align-items:center;justify-content:center}
+.hcard .hi svg{width:15px;height:15px}
+.hcard p{margin:0;font-size:12.5px;color:var(--muted);line-height:1.45}
+.hcard .go{font-size:12px;font-weight:700;color:#FF7A47}
+.g-levels{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.g-lv{background:var(--surf);border:1px solid var(--line);border-radius:var(--rc);padding:14px}
+.g-lv b{font-family:var(--fd);font-weight:400;font-size:20px;color:var(--o);display:block}
+.g-lv span{font-size:13px;font-weight:700;display:block;margin-top:2px}
+.g-lv p{margin:6px 0 0;font-size:12.5px;color:var(--muted)}
+
+/* ---------- reporte: sobre la mesa y tiers ---------- */
+.rp a{color:#D63400;font-weight:700;text-decoration:none}
+.rp-leak{display:grid;grid-template-columns:200px minmax(0,1fr);gap:22px;align-items:start}
+.rp-lt{background:#17110E;color:#EFEAE2;border-radius:12px;padding:16px}
+.rp-lt .l{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#FF7A47;font-weight:700}
+.rp-lt .v{font-family:var(--fd);font-size:24px;line-height:1.05;margin-top:6px;color:#fff;font-variant-numeric:tabular-nums}
+.rp-lt .v small{font-size:13px;color:#B9ACA4}
+.rp-lt p{margin:8px 0 0;font-size:10.5px;color:#B9ACA4;line-height:1.4}
+.rp-lines{display:flex;flex-direction:column;gap:11px}
+.rp-ln .r{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.rp-ln .n{font-size:12px;font-weight:700;line-height:1.25}
+.rp-ln .n small{display:block;font-weight:400;color:var(--p-mut);font-size:10.5px}
+.rp-ln .v{font-family:var(--fd);font-size:15px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.rp-ln .v.ok{font-family:var(--fb);font-size:11px;font-weight:700;color:var(--p-ok)}
+.rp-ln .tag{display:inline-block;font-size:9px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:#fff;background:#FF4000;border-radius:999px;padding:2px 7px;margin-right:6px;vertical-align:middle}
+.rp-ln .b{height:7px;background:var(--p-line);border-radius:4px;margin-top:5px;overflow:hidden}
+.rp-ln .b i{display:block;height:100%;border-radius:4px;background:#FF4000}
+.rp-ln.ok .b i{background:#1C8F57}
+.rp-start{margin-top:12px;border:1px solid #F5B9A3;background:#FFF5F1;border-radius:10px;padding:10px 12px;font-size:12px;line-height:1.45}
+.rp-gen{margin:10px 0 0;font-size:11px;color:var(--p-mut);line-height:1.45}
+.rp-start .k{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#D63400;font-weight:700;display:block;margin-bottom:2px}
+.rp .tr-stop small{color:var(--p-mut)}
+.rp .tr-stop.now .tr-pin{background:#17110E;color:#fff}
+.rp .tr-stop.pot .tr-pin{background:#FF4000;color:#fff}
+.rp-tier-h{font-family:var(--fd);font-size:17px;line-height:1.25;margin:0 0 4px}
+.rp-tier-h b{color:#D63400;font-weight:400}
+.rp-tier-s{margin:0 0 14px;font-size:12px;color:var(--p-mut);line-height:1.5}
+.rp-tcards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:14px}
+.rp-tc{border:1px solid var(--p-line);border-radius:10px;padding:10px 12px}
+.rp-tc.pot{border-color:#F5B9A3;background:#FFF5F1}
+.rp-tc .l{font-size:10px;color:var(--p-mut)}
+.rp-tc .t{font-family:var(--fd);font-size:18px;line-height:1.15;margin-top:2px}
+.rp-tc .g{font-size:11px;color:var(--p-mut);font-variant-numeric:tabular-nums}
+.rp-ben{margin-top:12px}
+.rp-ben b{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--p-mut)}
+.rp-ben ul{margin:6px 0 0;padding:0;list-style:none;columns:2;column-gap:18px}
+.rp-ben li{font-size:11.5px;line-height:1.4;padding-left:12px;position:relative;margin-bottom:5px;break-inside:avoid}
+.rp-ben li::before{content:"";position:absolute;left:0;top:6px;width:5px;height:5px;border-radius:50%;background:#FF4000}
+.rp-scn{background:var(--p-soft);border-radius:12px;padding:14px}
+.rp-scn ul{margin:0 0 10px;padding:0;list-style:none;display:flex;flex-direction:column;gap:5px}
+.rp-scn li{display:flex;justify-content:space-between;gap:10px;font-size:12px}
+.rp-scn li em{font-style:normal;color:var(--p-gold);font-weight:700;white-space:nowrap}
+.rp-scn p{margin:0;font-size:12.5px;line-height:1.5}
+.rp-foot .rp-legal{margin-top:8px;border-top:0;padding-top:0;color:#4A403A}
+.rp-foot .rp-legal b{color:#17110E}
+.sim-legal{margin:14px 0 0;font-size:11px;line-height:1.45;color:var(--faint)}
+.rp-col li a{display:block;font-size:10.5px;margin-top:1px}
+@media (max-width:1180px){
+  .client-card{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .g-hub{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .g-levels{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:760px){
+  .sim-grid{grid-template-columns:1fr}
+  .g-hub,.g-levels{grid-template-columns:1fr}
+  .paper .rp-leak{grid-template-columns:1fr}
+  .paper .rp-tcards{grid-template-columns:1fr}
+  .paper .rp-ben ul{columns:1}
+  .tr-stop img{width:36px;height:36px}
+  .tr-stop small{display:none}
+}
+
+/* ---------- Responsivo ---------- */
+@media (max-width:1180px){
+  .main{grid-template-columns:1fr}
+  .side{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+  .kgrid4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .client-card{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (max-width:760px){
+  .step{min-height:0!important}
+  .hero{grid-template-columns:1fr}
+  .hero-meta{align-items:flex-start}
+  .ladder-wrap{padding-right:0}
+  .ladder{height:auto;display:flex;flex-direction:column-reverse;gap:10px}
+  .vehicle{width:100%;order:-1}
+  .step{height:auto!important;flex-direction:row;flex-wrap:wrap;text-align:left;justify-content:flex-start;border-radius:12px;padding:12px}
+  .step .tools{justify-content:flex-start;border-top:0;padding-top:4px;margin-top:4px}
+  .asc{display:none}
+  .loop{display:none}
+  .audience,.channels{margin-right:0}
+  .channels{grid-template-columns:1fr}
+  .kgrid4{grid-template-columns:1fr}
+  .client-card{grid-template-columns:1fr 1fr}
+  .sum-kpis{grid-template-columns:1fr 1fr}
+  .modes{margin-left:0}
+  .top .wrap{gap:10px}
+  .sep{display:none}
+}
+
+/* ---------- Impresión (versión web): solo la hoja del análisis ---------- */
+@media print{
+  body{background:#fff!important}
+  .top,.pres-bar,.toast,#guideView,#ecoView,.an-head,.an-side,.wiz,.pop,.modal,.drawer,.scrim{display:none!important}
+  #analysisView{display:block!important}
+  .an-grid{display:block}
+  .paper{box-shadow:none;max-width:none;border-radius:0}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body data-mode="explore">
+
+<header class="top">
+  <div class="wrap">
+    <img class="logo" src="https://assets.hotmartcomunidades.com/logos/ES_Hotmart_Logo_02_Color_Negative.svg" alt="Hotmart" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+    <span class="logo-txt">Hotmart</span>
+    <span class="sep"></span>
+    <div class="client-sel">
+      <select id="clientSel" aria-label="Cliente"></select>
+      <button class="bt sm" id="newClient" type="button">+ Nuevo cliente</button>
+    </div>
+    <nav class="modes" aria-label="Modo">
+      <button type="button" data-mode="guide" aria-pressed="false">Guía</button>
+      <button type="button" data-mode="explore" aria-pressed="false">Explorar</button>
+      <button type="button" data-mode="present" aria-pressed="false">Presentar</button>
+      <button type="button" data-mode="diagnose" aria-pressed="false">Diagnóstico</button>
+      <button type="button" data-mode="analysis" aria-pressed="false">Análisis</button>
+    </nav>
+    <div class="top-actions">
+      <button class="bt sm" type="button" data-go="wizard">Diagnóstico guiado</button>
+      <div class="menu">
+        <button class="bt ghost sm" id="menuBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Más opciones">···</button>
+        <div class="menu-list" id="menuList">
+          <button type="button" data-go="demo">Cargar cliente de ejemplo</button>
+          <button type="button" data-act="del" class="danger">Borrar este diagnóstico</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <!-- ================= GUÍA ================= -->
+  <section class="view" id="guideView" aria-label="Guía de uso">
+    <div class="g-hero">
+      <div>
+        <p class="eyb">Guía · Consultoría de Comunidades</p>
+        <h1>Cómo usar el <em>Ecosistema Digital</em></h1>
+        <p class="lead">Una herramienta para que el account y el emprendedor digital vean juntos dónde está hoy su negocio, qué le falta para crecer y qué hacer primero. La sesión termina con un análisis en PDF listo para enviar.</p>
+        <div class="g-cta">
+          <button class="bt" type="button" data-go="wizard">Empezar diagnóstico guiado</button>
+          <button class="bt ghost" type="button" data-go="demo">Ver un ejemplo completo</button>
+          <button class="bt ghost" type="button" data-go="present">Presentar el modelo</button>
+        </div>
+      </div>
+      <aside class="g-prep" aria-label="Qué pedir antes de la sesión">
+        <h3>Pídele esto antes de la sesión</h3>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#FF4000" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" data-ic="check"></svg><span>Precio y ventas por mes de cada producto (promedio de los últimos 3 meses).</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#FF4000" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" data-ic="check"></svg><span>Qué tiene configurado en el checkout: Order Bump, Upsell o DownSell, y cuántos lo toman.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#FF4000" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" data-ic="check"></svg><span>De dónde llegan sus ventas: orgánico, anuncios o afiliados, aunque sea un estimado.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#FF4000" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" data-ic="check"></svg><span>Su facturación anual en Hotmart y, si no cobra en dólares, el tipo de cambio que usa.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#FF4000" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" data-ic="check"></svg><span>Qué herramientas de Hotmart ya tiene activas y qué productos están en construcción.</span></li>
+        </ul>
+      </aside>
+    </div>
+
+    <section class="g-sec">
+      <header><h2>La idea en <em>cuatro piezas</em></h2><p>Lo que el emprendedor digital tiene que entender antes de hablar de números.</p></header>
+      <div class="g-four">
+        <div class="g-piece"><div class="gi"><svg viewBox="0 0 24 24" fill="none" stroke="#FF4000" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" data-ic="users"></svg></div><h4>La audiencia es la base</h4><p>Orgánico, anuncios y afiliados traen personas al ecosistema. Sin audiencia no hay ventas, por bueno que sea el producto.</p></div>
+        <div class="g-piece"><div class="gi"><svg viewBox="0 0 24 24" fill="none" stroke="#FF4000" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" data-ic="layers"></svg></div><h4>Una escalera de ofertas</h4><p>Low, Mid, High y Super High. Cada escalón entrega más valor y cuesta más, para que el cliente pueda seguir comprando. El evento en vivo es un adicional que empuja los escalones altos.</p></div>
+        <div class="g-piece"><div class="gi"><svg viewBox="0 0 24 24" fill="none" stroke="#FF4000" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" data-ic="cart"></svg></div><h4>Herramientas que tapan fugas</h4><p>Las de cada escalón (Order Bump, Upsell, DownSell…) y las 9 de Hotmart. Según los datos de Hotmart, Exit PopUp y Affiliate son las que más facturación recuperan.</p></div>
+        <div class="g-piece"><div class="gi"><svg viewBox="0 0 24 24" fill="none" stroke="#FF4000" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" data-ic="repeat"></svg></div><h4>Un ciclo, no una línea</h4><p>Los clientes de la cima regresan como afiliados, comunidad y testimonios, y traen nueva audiencia a la base.</p></div>
+      </div>
+    </section>
+
+    <section class="g-sec">
+      <header><h2>Los cuatro <em>niveles de precio</em></h2><p>Precios en dólares. Si el cliente cobra en otra moneda, el tipo de cambio lo ubica solo. El evento en vivo queda fuera: es un adicional y su precio depende de cada evento.</p></header>
+      <div class="g-levels">
+        <div class="g-lv"><b>Low</b><span>Menos de $100</span><p>Front-end: la puerta de entrada que convierte seguidores en clientes.</p></div>
+        <div class="g-lv"><b>Mid</b><span>$100 a $999</span><p>Oferta core: el programa principal y el volumen del negocio.</p></div>
+        <div class="g-lv"><b>High</b><span>$1,000 a $1,499</span><p>High Ticket: acompañamiento cercano, grupal o 1:1.</p></div>
+        <div class="g-lv"><b>Super High</b><span>$1,500 o más</span><p>Premium: mastermind, experiencias o servicio hecho por ti.</p></div>
+      </div>
+    </section>
+
+    <section class="g-sec">
+      <header><h2>Cómo correr la <em>consultoría</em></h2><p>Una sesión de 40 a 50 minutos. El orden importa: primero se entiende el modelo y después se miden los números.</p></header>
+      <div class="g-flow">
+        <div class="g-step"><div class="n">1</div><h4>Antes</h4><p class="when">El día anterior</p>
+          <ul>
+            <li><b>Ten los datos a la mano</b><span class="t">Antes</span><span class="d">La herramienta no guarda nada, así que el diagnóstico se arma completo durante la sesión.</span></li>
+            <li><b>Pide los datos</b><span class="t">Por mensaje</span><span class="d">Usa la lista de arriba. Con estimados basta; no tienen que ser exactos.</span></li>
+          </ul></div>
+        <div class="g-step"><div class="n">2</div><h4>Durante</h4><p class="when">En la llamada, compartiendo pantalla</p>
+          <ul>
+            <li><b>Presentar</b><span class="t">5 min</span><span class="d">Recorre el modelo paso a paso con las flechas ← →.</span></li>
+            <li><b>Diagnóstico guiado</b><span class="t">20 min</span><span class="d">Hazle las preguntas tal como aparecen. Están escritas para el cliente, sin tecnicismos.</span></li>
+            <li><b>Análisis</b><span class="t">10 min</span><span class="d">Revisen lo que queda sobre la mesa y su tier, prueben escenarios en el simulador y elijan hasta 3 prioridades.</span></li>
+          </ul></div>
+        <div class="g-step"><div class="n">3</div><h4>Después</h4><p class="when">El mismo día</p>
+          <ul>
+            <li><b>Escribe los próximos pasos</b><span class="t">5 min</span><span class="d">Qué hará el emprendedor digital, qué le entregas tú y la fecha de seguimiento.</span></li>
+            <li><b>Envía el PDF</b><span class="t">1 min</span><span class="d">Descarga el análisis y mándalo por correo o WhatsApp.</span></li>
+            <li><b>Cierra la página</b><span class="t">Listo</span><span class="d">No se guarda nada: al cerrar o recargar, el diagnóstico se borra. El PDF es el único registro.</span></li>
+          </ul></div>
+      </div>
+    </section>
+
+    <section class="g-sec">
+      <header><h2>Qué hace cada <em>pestaña</em></h2><p>Presiona una para ir directo.</p></header>
+      <div class="g-tabs">
+        <button type="button" class="g-tab" data-go="explore"><span class="tw">Para explicar</span><span class="tn">Explorar <span>→</span></span><p>El modelo completo. Presiona cualquier escalón, herramienta o canal para ver qué es y un ejemplo.</p></button>
+        <button type="button" class="g-tab" data-go="present"><span class="tw">Para abrir la sesión</span><span class="tn">Presentar <span>→</span></span><p>Cuenta la historia en 8 pasos y revela la escalera de a poco. Al final lleva al diagnóstico.</p></button>
+        <button type="button" class="g-tab" data-go="diagnose"><span class="tw">Para capturar</span><span class="tn">Diagnóstico <span>→</span></span><p>La escalera del cliente en semáforo, con sus números, brechas y el asistente guiado.</p></button>
+        <button type="button" class="g-tab" data-go="analysis"><span class="tw">Para cerrar</span><span class="tn">Análisis <span>→</span></span><p>Lo que queda sobre la mesa, el tier de Comunidades, el simulador, el plan 30/60/90 y el PDF.</p></button>
+      </div>
+    </section>
+
+    <section class="g-sec">
+      <header><h2>Las 8 herramientas en <em>palabras simples</em></h2><p>Cómo explicarlas y qué preguntar para saber si el cliente ya las usa.</p></header>
+      <div class="g-tools" id="guideTools"></div>
+    </section>
+
+    <section class="g-sec">
+      <header><h2>Guías de configuración · <em>Execution Hub</em></h2><p>Videos oficiales para activar cada herramienta de Hotmart, en orden de la facturación que recuperan. También aparecen en el análisis y en el PDF.</p></header>
+      <div class="g-hub" id="guideHub"></div>
+    </section>
+
+    <section class="g-sec">
+      <header><h2>Preguntas <em>frecuentes</em></h2></header>
+      <div class="g-faq">
+        <details><summary>¿De dónde salen los números del análisis?</summary><p>El ingreso mensual sale de lo que captura el account: precio por ventas al mes de cada producto, más lo que aportan Order Bump, Upsell y DownSell. Lo que queda sobre la mesa usa el modelo de la Calculadora de Escala de Hotmart: el peso de cada una de las 9 herramientas según la facturación que recupera, más los factores por no tener la escalera completa (Low, Mid y High o Super High) y por no tener un producto Super High Ticket. Se calcula sobre la facturación anual en USD. Smart Recovery, Club Sales y Extra Paid Module, que juntas pesan menos de 0.2%, solo se recomiendan en general y no suman cifra.</p><p><b>Descargo de responsabilidad:</b> las proyecciones presentadas son simulaciones estimadas basadas en factores de referencia del ecosistema Hotmart y no constituyen una promesa o garantía de resultados. Los valores reales dependen exclusivamente de la estrategia y ejecución de cada operación. Este texto aparece en el simulador, en el PDF y en el resumen para correo.</p></details>
+        <details><summary>¿Qué es el valor por cliente de entrada (LTV aprox.)?</summary><p>El ingreso mensual total dividido entre las ventas del producto de entrada. Indica cuánto termina dejando, en promedio, cada persona que entra por el Front-end. Si sube, el ecosistema está funcionando.</p></details>
+        <details><summary>¿Cómo se calcula el puntaje de madurez?</summary><p>Suma cuatro dimensiones: escalera (35 puntos, qué escalones existen), conversión (30: la mitad por las herramientas activas en cada escalón y la otra mitad por las 9 de Hotmart, ponderadas por su impacto), audiencia (20, cuántos canales traen ventas) y ciclo (15, recurrencia, premium, afiliados y eventos en vivo). De 0 a 34 es inicio, de 35 a 59 en construcción, de 60 a 79 en crecimiento y de 80 en adelante escalable.</p></details>
+        <details><summary>¿Cómo se define el tier de Comunidades?</summary><p>Por facturación anual en USD: Gold de $25K a $249K, Platinum de $250K a $499K y Titanium desde $500K. NOVA 30 es por invitación (Top 30 del mercado hispano). La progresión se evalúa en las puertas de entrada de enero y junio. Si no se captura la facturación anual real, se usa la proyección de la sesión.</p></details>
+        <details><summary>¿Para qué sirve el simulador?</summary><p>Para mostrarle al cliente qué pasa si activa ciertas herramientas o completa su escalera: cuánto recupera al año y a qué tier subiría. No cambia el diagnóstico. Si marcas “Incluir este escenario”, aparece en el reporte y en el PDF.</p></details>
+        <details><summary>¿Dónde se guardan los datos de mis clientes?</summary><p>En ningún lado. Todo vive en la página mientras está abierta: no se guarda en el navegador ni en un servidor. Al cerrar o recargar, el diagnóstico desaparece. Descarga el PDF antes de cerrar, porque es el único registro que queda.</p></details>
+        <details><summary>¿Puedo usarlo con un cliente que todavía no vende?</summary><p>Sí. Marca los productos como “Lo estoy construyendo” y captura el precio planeado. El análisis se enfoca en qué construir primero en lugar de en el ingreso actual.</p></details>
+      </div>
+    </section>
+  </section>
+
+  <!-- ================= ECOSISTEMA (explorar / presentar / diagnóstico) ================= -->
+  <div id="ecoView">
+  <section class="hero">
+    <div>
+      <p class="eyb">Consultoría · Comunidades Hotmart</p>
+      <h1 class="ttl">Ecosistema <em>Digital</em></h1>
+      <p class="lead" id="lead">Cómo la audiencia entra por la base, sube de valor escalón a escalón y regresa como nueva audiencia. Presiona cualquier escalón, herramienta o canal para ver el detalle.</p>
+    </div>
+    <div class="hero-meta">
+      <span class="mode-note" id="modeNote"></span>
+      <span id="saveNote"></span>
+    </div>
+  </section>
+
+  <div class="diag-tip" id="diagTip"><p><b>Recomendado:</b> captura con el diagnóstico guiado; las preguntas están escritas para el cliente. También puedes presionar cada escalón.</p><div class="g-cta" style="margin:0"><button class="bt sm" type="button" data-go="wizard">Diagnóstico guiado</button><button class="bt ghost sm" type="button" data-go="analysis">Ver análisis</button></div></div>
+
+  <div class="empty-client" id="emptyClient">
+    <p>Para diagnosticar, crea al emprendedor digital. El diagnóstico guiado te lleva paso a paso. No se guarda nada: al cerrar o recargar la página, se borra.</p>
+    <button class="bt" type="button" id="newClient2">+ Crear cliente</button>
+  </div>
+
+  <section class="client-card" id="clientCard" aria-label="Ficha del cliente">
+    <div class="fld"><label for="c_name">Emprendedor digital</label><input id="c_name" data-c="name" placeholder="Nombre o marca"></div>
+    <div class="fld"><label for="c_niche">Nicho</label><input id="c_niche" data-c="niche" placeholder="Ej. finanzas personales"></div>
+    <div class="fld"><label for="c_country">País</label><input id="c_country" data-c="country" placeholder="Ej. México"></div>
+    <div class="fld"><label for="c_cur">Moneda</label>
+      <select id="c_cur" data-c="currency">
+        <option>USD</option><option>MXN</option><option>COP</option><option>BRL</option><option>ARS</option><option>CLP</option><option>PEN</option><option>EUR</option>
+      </select></div>
+    <div class="fld"><label for="c_acc">Account</label><input id="c_acc" data-c="account" placeholder="Tu nombre"></div>
+    <div class="fld"><label for="c_date">Fecha de sesión</label><input id="c_date" type="date" data-c="date"></div>
+    <div class="fld" id="fxFld"><label for="c_fx">Tipo de cambio (por 1 USD)</label><input id="c_fx" type="number" min="0" step="0.01" inputmode="decimal" data-c="fx" placeholder="Tipo de cambio de hoy"></div>
+    <div class="fld"><label for="c_gmv">Facturación anual en USD (opcional)</label><input id="c_gmv" type="number" min="0" inputmode="numeric" data-c="gmvAnnual" placeholder="Vacío: se usa la proyección"></div>
+  </section>
+
+  <div class="main">
+    <section class="panel stage" aria-label="Escalera de valor">
+      <div class="stage-head">
+        <h2>Escalera de valor</h2>
+        <div class="legend">
+          <span class="leg-diag"><i style="background:var(--ok)"></i>Activo</span>
+          <span class="leg-diag"><i style="background:var(--wip)"></i>En construcción</span>
+          <span class="leg-diag"><i style="background:var(--no)"></i>Herramienta faltante</span>
+          <span><i style="background:var(--o)"></i>Reingreso al ecosistema</span>
+        </div>
+      </div>
+
+      <div class="ladder-wrap" id="ladderWrap">
+        <svg class="loop" id="loop" data-pres="6" aria-hidden="true"></svg>
+        <div class="ladder" id="ladder">
+          <div class="vehicle" id="vehicle" data-pres="4"></div>
+        </div>
+      </div>
+
+      <div data-pres="0">
+        <div class="audience" id="audience">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" data-ic="users"></svg>
+          <b>Audiencia</b><span>· el activo principal</span>
+        </div>
+        <div class="ch-label">Adquisición de audiencia</div>
+        <div class="channels" id="channels"></div>
+      </div>
+    </section>
+
+    <aside class="side">
+      <div class="card kpis" id="kpiCard">
+        <h3>Números del <em>cliente</em></h3>
+        <div class="kgrid" id="kpis"></div>
+        <p class="knote">Cifras mensuales estimadas con los datos capturados. “Sobre la mesa” usa el modelo de la Calculadora de Escala de Hotmart, en USD al año.</p>
+      </div>
+      <div class="card diag-only">
+        <h3>Herramientas de <em>Hotmart</em></h3>
+        <p class="gnote">Ordenadas por la facturación que recuperan. Presiona para marcar las que ya usa; las que salen de la escalera se marcan solas.</p>
+        <div class="hmlist" id="hmList"></div>
+      </div>
+      <div class="card gaps">
+        <h3>Brechas y <em>prioridades</em></h3>
+        <p class="gnote">Presiona una brecha para marcarla como prioridad (máx. 3). Aparecen en el resumen.</p>
+        <div class="glist" id="gaps"></div>
+      </div>
+      <div class="card">
+        <h3>Modelos de <em>monetización</em></h3>
+        <div class="mlist" id="models"></div>
+      </div>
+      <div class="card cycle" data-pres="6">
+        <h3>El ciclo, no la <em>escalera</em></h3>
+        <p>La adquisición llena la <b>base de audiencia</b>. Cada escalón sube el valor entregado y el ticket; el <b>evento en vivo</b> concentra a la audiencia caliente para vender los escalones altos. Y los clientes de la cima <b>regresan como afiliados, comunidad y testimonios</b> que traen nueva audiencia.</p>
+      </div>
+    </aside>
+  </div>
+
+  <section class="panel kit" data-pres="7" aria-label="Herramientas del ecosistema">
+    <div class="kit-head">
+      <h2>Herramientas del ecosistema</h2>
+      <span class="count">8 esenciales</span>
+      <p>Cada escalón activa las que le corresponden. Presiona una herramienta para ver qué es, un ejemplo y en qué escalón va.</p>
+    </div>
+    <div class="kgrid4" id="kit"></div>
+  </section>
+  </div><!-- /ecoView -->
+
+  <!-- ================= ANÁLISIS ================= -->
+  <section class="view" id="analysisView" aria-label="Análisis del cliente">
+    <div class="an-head">
+      <div>
+        <p class="eyb">Análisis automático</p>
+        <h1 id="anTitle">Análisis del <em>ecosistema</em></h1>
+      </div>
+      <span id="anBadge"></span>
+    </div>
+    <div class="an-empty" id="anEmpty" hidden>
+      <h2 id="anEmptyT">Aún no hay datos para analizar</h2>
+      <p id="anEmptyD">El análisis se arma solo con lo que captures en el diagnóstico: productos, precios, ventas y herramientas activas.</p>
+      <div class="g-cta">
+        <button class="bt" type="button" data-go="wizard">Empezar diagnóstico guiado</button>
+        <button class="bt ghost" type="button" data-go="demo">Ver un ejemplo completo</button>
+      </div>
+    </div>
+    <div class="an-grid" id="anGrid">
+      <div class="paper-wrap"><section class="sim" id="sim" aria-label="Simulador" hidden></section><article class="paper rp" id="reportPaper" aria-label="Reporte"></article></div>
+      <aside class="an-side">
+        <div class="card">
+          <h3>Exportar</h3>
+          <div class="an-actions">
+            <button class="bt" type="button" id="pdfBtn">Descargar PDF</button>
+            <button class="bt ghost" type="button" id="copySum2">Copiar resumen para correo</button>
+          </div>
+          <label class="chk" style="margin-top:12px"><input type="checkbox" id="optNotes"> Incluir notas de la sesión</label>
+          <p class="gnote" style="margin:12px 0 0">No se guarda nada. Al cerrar o recargar la página, este diagnóstico se borra: descarga el PDF antes.</p>
+        </div>
+        <div class="card">
+          <h3>Prioridades <em>acordadas</em></h3>
+          <p class="gnote">Elige hasta 3 con el cliente. Aparecen al inicio del plan.</p>
+          <div class="glist" id="aGaps"></div>
+        </div>
+        <div class="card">
+          <h3>Próximos <em>pasos</em></h3>
+          <div class="fld"><label for="a_next">Acuerdos de la sesión</label><textarea id="a_next" data-c="nextSteps" placeholder="Qué hará el emprendedor digital y qué le entregas tú"></textarea></div>
+          <div class="row2" style="margin-top:10px;align-items:end">
+            <div class="fld"><label for="a_fu">Fecha de seguimiento</label><input id="a_fu" type="date" data-c="followup"></div>
+            <div class="fld"><label for="a_time">Hora (opcional)</label><input id="a_time" type="time" data-c="followupTime"></div>
+          </div>
+          <div class="fld" style="margin-top:10px"><label for="a_mail">Correo del cliente (opcional)</label><input id="a_mail" type="email" data-c="clientEmail" placeholder="Para agregarlo como invitado"></div>
+          <a class="bt cal-btn" id="calBtn" target="_blank" rel="noopener" aria-disabled="true" tabindex="-1">Agendar en Google Calendar</a>
+          <p class="gnote" id="calNote" style="margin:8px 0 0"></p>
+        </div>
+        <div class="card">
+          <h3>¿Falta algo?</h3>
+          <div class="an-actions">
+            <button class="bt ghost" type="button" data-go="wizard">Revisar diagnóstico guiado</button>
+            <button class="bt ghost" type="button" data-go="diagnose">Editar en la escalera</button>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<!-- Asistente de diagnóstico guiado -->
+<div class="wiz" id="wiz" hidden role="dialog" aria-modal="true" aria-labelledby="wizQ">
+  <div class="wiz-top"><div class="wrap">
+    <span class="wt">Diagnóstico guiado</span>
+    <span class="wc" id="wizCount"></span>
+    <div class="wiz-prog" aria-hidden="true"><i id="wizBar"></i></div>
+    <button class="bt ghost sm" type="button" id="wizClose">Salir del asistente</button>
+  </div></div>
+  <div class="wiz-body" id="wizBody"></div>
+  <div class="wiz-foot"><div class="wrap">
+    <button class="bt ghost" type="button" id="wizPrev">← Atrás</button>
+    <div class="wiz-dots" id="wizDots"></div>
+    <button class="bt" type="button" id="wizNext">Siguiente →</button>
+  </div></div>
+</div>
+
+<div class="pdf-busy" id="pdfBusy" hidden><div>Generando PDF…</div></div>
+<div class="pdf-stage" id="pdfStage" aria-hidden="true"></div>
+
+<!-- Popover -->
+<div class="pop" id="pop" hidden role="dialog" aria-live="polite">
+  <button class="x" type="button" aria-label="Cerrar" id="popX">×</button>
+  <div class="pop-h"><span class="ps" id="popSym"></span><b id="popT"></b></div>
+  <div id="popBody"></div>
+</div>
+
+<!-- Drawer de escalón -->
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="drTitle">
+  <div class="dr-head">
+    <div><p class="eyb" id="drEyb" style="margin:0"></p><h3 id="drTitle"></h3></div>
+    <button class="bt ghost sm" type="button" id="drClose">Cerrar</button>
+  </div>
+  <div class="dr-body" id="drBody"></div>
+</aside>
+
+<!-- Canal -->
+<div class="modal" id="chanModal" role="dialog" aria-modal="true" aria-labelledby="chanTitle">
+  <div class="mbox narrow">
+    <button class="x" type="button" data-close aria-label="Cerrar">×</button>
+    <p class="eyb" style="margin:0">Canal de adquisición</p>
+    <h2 id="chanTitle"></h2>
+    <p class="muted" id="chanDesc" style="font-size:13px"></p>
+    <div class="trow on" style="margin-top:8px"><div class="trow-h"><div><div class="tn">El emprendedor digital usa este canal</div><div class="td">Desactívalo si hoy no genera audiencia</div></div>
+      <button type="button" class="tog" role="switch" id="chanTog" aria-checked="false" aria-label="Canal activo"></button></div></div>
+    <div class="fld" style="margin-top:12px"><label for="chanShare">% de las ventas que viene de este canal (opcional)</label><input id="chanShare" type="number" min="0" max="100" placeholder="Ej. 40"></div>
+    <div class="mactions"><button class="bt" type="button" data-close>Listo</button></div>
+  </div>
+</div>
+
+<!-- Eliminar -->
+<div class="modal" id="delModal" role="dialog" aria-modal="true" aria-labelledby="delTitle">
+  <div class="mbox narrow">
+    <button class="x" type="button" data-close aria-label="Cerrar">×</button>
+    <p class="eyb" style="margin:0">Borrar este diagnóstico</p>
+    <h2 id="delTitle">¿Borrar el diagnóstico de <span id="delName"></span>?</h2>
+    <p class="muted" style="font-size:13px">Se borra de la pantalla. Si todavía no descargaste el PDF, hazlo antes: no hay forma de recuperarlo.</p>
+    <div class="mactions"><button class="bt" type="button" id="delOk">Sí, borrar</button><button class="bt ghost" type="button" data-close>Cancelar</button></div>
+  </div>
+</div>
+
+<!-- Barra de presentación -->
+<div class="pres-bar" id="presBar">
+  <button class="bt ghost sm" type="button" id="pPrev" aria-label="Anterior">←</button>
+  <div class="pc">
+    <div class="pk" id="pK"></div>
+    <div class="pt" id="pT"></div>
+    <div class="pd" id="pD"></div>
+    <div class="pdots" id="pDots"></div>
+  </div>
+  <button class="bt sm" type="button" id="pNext">Siguiente →</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+'use strict';
+
+/* ================== Íconos ================== */
+const I={
+ ticket:'<path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 11v2"/><path d="M13 17v2"/>',
+ package:'<path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/>',
+ gem:'<path d="M6 3h12l4 6-10 13L2 9Z"/><path d="M11 3 8 9l4 13 4-13-3-6"/><path d="M2 9h20"/>',
+ calendar:'<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/>',
+ crown:'<path d="M5 16 3 6l5.5 4L12 4l3.5 6L21 6l-2 10z"/><path d="M5 20h14"/>',
+ users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+ sprout:'<path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/>',
+ megaphone:'<path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>',
+ infinity:'<path d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.33-6 4Z"/>',
+ rocket:'<path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>',
+ repeat:'<path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/>',
+ sparkles:'<path d="M12 3 9.9 8.8a2 2 0 0 1-1.3 1.3L3 12l5.6 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>',
+ check:'<path d="M20 6 9 17l-5-5"/>',
+ shield:'<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>',
+ magnet:'<path d="m6 15-4-4 6.75-6.77a7.79 7.79 0 0 1 11 11L13 22l-4-4 6.39-6.36a2.14 2.14 0 0 0-3-3L6 15"/><path d="m5 8 4 4"/><path d="m12 15 4 4"/>',
+ cart:'<circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>',
+ up:'<polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>',
+ zap:'<path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/>',
+ star:'<path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>',
+ down:'<polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/>',
+ ccheck:'<circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>',
+ layers:'<path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/>'
+};
+function svg(name,color,w){
+  return '<svg viewBox="0 0 24 24" fill="none" stroke="'+(color||'currentColor')+'" stroke-width="'+(w||2)+'" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(I[name]||'')+'</svg>';
+}
+document.querySelectorAll('svg[data-ic]').forEach(function(s){s.innerHTML=I[s.getAttribute('data-ic')];});
+
+/* ================== Modelo ================== */
+const TOOLS={
+ malla:{name:'Malla de seguridad',ic:'shield',color:'#334155',
+   desc:'Producto tripwire de bajo precio que paga el costo de adquirir al lead y lo mete al ecosistema.',
+   ej:'Plantilla, mini-curso o reto de $17–$37 justo después de un lead magnet.',
+   where:'Solo en el escalón de entrada (Front-end).'},
+ exit:{name:'Exit PopUp',ic:'magnet',color:'#2563EB',
+   desc:'Video, oferta o copy que aparece cuando el lead intenta salir de la página de venta y lo retiene hacia el producto principal.',
+   ej:'Video corto que responde la objeción principal, o una condición especial por tiempo limitado.',
+   where:'En todos los escalones y en el evento.'},
+ orderbump:{name:'Order Bump',ic:'cart',color:'#DB2777',metric:'rate',
+   desc:'Complemento que el comprador agrega con un clic en el checkout, antes de pagar.',
+   ej:'Agente IA, ebook, acceso a comunidad o soporte prioritario.',
+   where:'En todos los escalones y en el evento.'},
+ upsell:{name:'Upsell',ic:'up',color:'#16A34A',metric:'rate',
+   desc:'Oferta inmediatamente después de la compra (normalmente con VSL) que sube el valor por cliente.',
+   ej:'Sesión 1:1, asesoría o combo de cursos.',
+   where:'En todos los escalones y en el evento.'},
+ activacion:{name:'Activación next level',ic:'zap',color:'#0891B2',
+   desc:'Anuncio del siguiente escalón dentro del contenido del producto, justo cuando el cliente ya obtuvo un resultado.',
+   ej:'Clase bonus al final del módulo 3 que presenta la oferta core.',
+   where:'Escalones 1 a 3 y evento.'},
+ upgrade:{name:'Upgrade',ic:'star',color:'#CA8A04',
+   desc:'Contacto directo con los clientes “fieles” (70–100% de avance) con preventa del siguiente nivel.',
+   ej:'Llamada o mensaje personal con precio de preventa para el High Ticket.',
+   where:'Escalones 2 y 3.'},
+ downsell:{name:'DownSell',ic:'down',color:'#DC2626',metric:'units',
+   desc:'Alternativa más accesible cuando el cliente no compra la oferta principal o el upsell.',
+   ej:'Versión sin acompañamiento, pago en parcialidades o un módulo suelto.',
+   where:'Desde el escalón 2 y en el evento.'},
+ validacion:{name:'Validación',ic:'ccheck',color:'#9333EA',
+   desc:'Producto o llamada preparatoria que califica al cliente antes del salto a High Ticket.',
+   ej:'Sesión diagnóstica o reto pagado de 5 días.',
+   where:'En el escalón 2, como puente hacia el 3.'}
+};
+const TOOL_ORDER=['malla','exit','orderbump','upsell','activacion','upgrade','downsell','validacion'];
+
+const OFFERS=[
+ {id:'fe',n:1,role:'Front-end',level:'low',lo:0,hi:100,range:['<$100',''],ic:'ticket',sc:'#FF9166',sc2:'#F5713D',h:40,
+  tools:['malla','exit','orderbump','upsell','activacion'],
+  desc:'Producto de entrada, nivel Low (menos de $100). Convierte audiencia en clientes y, con la malla de seguridad, financia la adquisición.',
+  talk:'¿Qué es lo primero que compra alguien que te acaba de conocer?'},
+ {id:'core',n:2,role:'Oferta core',level:'mid',lo:100,hi:999,range:['$100','–$999'],ic:'package',sc:'#FF6A33',sc2:'#EC5518',h:56,
+  tools:['exit','orderbump','upsell','activacion','downsell','upgrade','validacion'],
+  desc:'El programa principal, nivel Mid ($100 a $999): la transformación completa. Es donde se construye el volumen de ingresos.',
+  talk:'¿Cuál es el resultado completo que entregas y cuántos lo compran al mes?'},
+ {id:'ht',n:3,role:'High Ticket',level:'high',lo:1000,hi:1499,range:['$1K','–$1,499'],ic:'gem',sc:'#FF4000',sc2:'#D63400',h:76,
+  tools:['exit','orderbump','upsell','activacion','downsell','upgrade'],
+  desc:'Acompañamiento cercano, grupal o 1:1, nivel High ($1,000 a $1,499). Menos clientes, mucho más valor por cliente.',
+  talk:'¿Quiénes de tus clientes core te piden más cercanía o acompañamiento?'},
+ {id:'prem',n:4,role:'Paquete premium',level:'super',lo:1500,hi:1e9,range:['$1.5K','+'],ic:'crown',sc:'#A82800',sc2:'#5A1103',h:100,premium:true,
+  tools:['exit','orderbump','upsell','downsell'],
+  desc:'Nivel Super High ($1,500 o más): experiencias, mastermind o servicio hecho por ti. La cima del ecosistema y la fuente de los mejores testimonios.',
+  talk:'¿Qué ofrecerías si el precio no fuera el límite?'}
+];
+const EVENT={id:'evt',role:'Evento en vivo',range:[],ic:'calendar',
+  tools:['exit','orderbump','upsell','activacion','downsell'],
+  desc:'Adicional a la escalera: no es un escalón, es un vehículo de venta. Concentra a la audiencia caliente y es el mejor momento para vender High Ticket y Premium.',
+  talk:'¿Haces eventos en vivo? ¿Qué vendes al final?'};
+const ALL=OFFERS.concat([EVENT]);
+const byId=function(id){return ALL.find(function(o){return o.id===id;});};
+
+const CHANNELS={
+ organico:{name:'Orgánico',ic:'sprout',d:'Contenido y SEO',desc:'Audiencia que llega sin pagar anuncios: contenido, SEO, redes y comunidad. Escala barato, pero toma tiempo construirla.'},
+ pago:{name:'Pago',ic:'megaphone',d:'Ads / tráfico',desc:'Tráfico comprado en Meta, Google o YouTube. Rápido y escalable; la malla de seguridad debe pagar el costo del lead.'},
+ afiliados:{name:'Afiliados',ic:'users',d:'Red de partners',desc:'Otros promueven tus productos a cambio de comisión. Alcance apalancado en audiencias ajenas; ideal para lanzamientos y high ticket.'}
+};
+const MODELS={
+ evergreen:{t:'Productos Evergreen',d:'Ventas automáticas todo el año',ic:'infinity'},
+ lanz:{t:'Lanzamientos',d:'Aperturas con fecha y urgencia',ic:'rocket'},
+ subs:{t:'Suscripciones',d:'Ingreso recurrente / membresía',ic:'repeat'},
+ ht:{t:'High Ticket',d:'Programas premium y 1:1',ic:'gem'},
+ eventos:{t:'Eventos',d:'En vivo, alto engagement',ic:'calendar'},
+ exp:{t:'Experiencias',d:'Presencial e inmersivo, máximo valor',ic:'sparkles'}
+};
+const STATUS={ok:{l:'Activo',c:'var(--ok)'},wip:{l:'En construcción',c:'var(--wip)'},no:{l:'No existe',c:'var(--no)'}};
+
+const SLIDES=[
+ {k:'Paso 1 · La base',t:'Todo empieza con la audiencia',d:'Orgánico, pago y afiliados llenan la base. Sin audiencia no hay ecosistema.'},
+ {k:'Escalón 1',t:'Front-end: la puerta de entrada',d:'Un producto de bajo ticket convierte seguidores en clientes y, con la malla de seguridad, paga la adquisición.'},
+ {k:'Escalón 2',t:'Oferta core: la transformación',d:'El programa principal. Aquí se construye el volumen y se prepara el salto con upgrade y validación.'},
+ {k:'Escalón 3',t:'High Ticket: más cercanía, más valor',d:'Menos clientes que pagan mucho más por acompañamiento grupal o 1:1.'},
+ {k:'Vehículo de venta',t:'Evento en vivo',d:'No es un escalón: concentra a la audiencia caliente y es el momento ideal para vender High Ticket y Premium.'},
+ {k:'Escalón 4',t:'Paquete premium: la cima',d:'Experiencias, mastermind o servicio hecho por ti. De aquí salen los mejores testimonios.'},
+ {k:'El ciclo',t:'La cima alimenta la base',d:'Los clientes de la cima regresan como afiliados, comunidad y testimonios que traen nueva audiencia.'},
+ {k:'Las herramientas',t:'8 herramientas que mueven a cada cliente hacia arriba',d:'Cada escalón activa las suyas. En el diagnóstico vemos cuáles faltan en tu ecosistema.'}
+];
+
+/* ================== Estado ================== */
+const KEY='ecosistema-digital-v2';
+let S={clients:{},current:null,assump:{bumpRate:20,bumpFactor:30,upRate:10,upFactor:150}};
+let storageOk=true;
+// No se guarda nada: todo vive en memoria mientras la página está abierta. Se limpia lo que versiones anteriores hayan guardado.
+try{localStorage.removeItem(KEY);localStorage.removeItem('ecosistema-digital-mode');}catch(e){}
+let mode='guide',slide=0,drawerFor=null,popKey=null;
+
+function uid(){return 'c'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+function blankOffer(o){
+  const t={};o.tools.forEach(function(k){t[k]={on:false,rate:'',price:'',units:''};});
+  return {status:'no',name:'',price:'',units:'',notes:'',tools:t};
+}
+function blankClient(){
+  const offers={};ALL.forEach(function(o){offers[o.id]=blankOffer(o);});
+  const ch={};Object.keys(CHANNELS).forEach(function(k){ch[k]={on:false,share:''};});
+  const md={};Object.keys(MODELS).forEach(function(k){md[k]=false;});
+  return {id:uid(),name:'',niche:'',country:'',currency:'USD',account:'',date:new Date().toISOString().slice(0,10),
+    offers:offers,channels:ch,models:md,priorities:[],notes:'',nextSteps:'',followup:'',fx:'',gmvAnnual:'',
+    hotmart:{},scenario:{tools:{},fvl:false,sht:false,include:true}};
+}
+function normalize(c){ // asegura estructura completa al importar
+  const b=blankClient();
+  c=Object.assign({},b,c);
+  ALL.forEach(function(o){
+    c.offers[o.id]=Object.assign(blankOffer(o),c.offers[o.id]||{});
+    o.tools.forEach(function(k){c.offers[o.id].tools[k]=Object.assign({on:false,rate:'',price:'',units:''},c.offers[o.id].tools[k]||{});});
+  });
+  c.channels=Object.assign(b.channels,c.channels||{});
+  c.models=Object.assign(b.models,c.models||{});
+  if(!Array.isArray(c.priorities))c.priorities=[];
+  c.hotmart=Object.assign({},c.hotmart||{});
+  c.scenario=Object.assign({tools:{},fvl:false,sht:false,include:true},c.scenario||{});c.scenario.tools=Object.assign({},c.scenario.tools||{});
+  return c;
+}
+Object.keys(S.clients).forEach(function(id){S.clients[id]=normalize(S.clients[id]);});
+function cur(){return S.current&&S.clients[S.current]?S.clients[S.current]:null;}
+let saveT=null;
+function save(){
+  clearTimeout(saveT);
+  saveT=setTimeout(function(){
+    renderSaveNote();
+  },250);
+}
+function renderSaveNote(){
+  const el=document.getElementById('saveNote');
+  if(mode!=='diagnose'||!cur()){el.textContent='';return;}
+  el.textContent='No se guarda nada: descarga el PDF antes de cerrar';
+}
+
+/* ================== Cálculos ================== */
+const num=function(v){const n=parseFloat(String(v).replace(/,/g,''));return isFinite(n)?n:0;};
+function money(v,short){
+  const c=cur(),code=(c&&c.currency)||'USD';
+  try{
+    if(short&&Math.abs(v)>=10000){const a=Math.abs(v),m=a>=1e6?[1e6,'M']:[1e3,'K'];return (v<0?'-':'')+code+' '+(a/m[0]).toLocaleString('es-MX',{maximumFractionDigits:1})+m[1];}
+    return new Intl.NumberFormat('es-MX',{style:'currency',currency:code,currencyDisplay:'code',maximumFractionDigits:0}).format(v).replace(/\u00a0/g,' ');
+  }catch(e){return code+' '+Math.round(v).toLocaleString('es-MX');}
+}
+function offerRev(id,c){
+  c=c||cur();if(!c)return {main:0,extra:0,total:0,units:0};
+  const d=c.offers[id];if(d.status==='no')return {main:0,extra:0,total:0,units:0};
+  const p=num(d.price),u=num(d.units);let extra=0;
+  Object.keys(d.tools).forEach(function(k){
+    const t=d.tools[k],def=TOOLS[k];if(!t.on)return;
+    if(def.metric==='rate')extra+=u*num(t.rate)/100*num(t.price);
+    if(def.metric==='units')extra+=num(t.units)*num(t.price);
+  });
+  return {main:p*u,extra:extra,total:p*u+extra,units:u};
+}
+/* potential: ver v4 */
+/* gapsOf: ver v4 */
+/* totals: ver v4 */
+
+/* ================== Render ================== */
+const $=function(id){return document.getElementById(id);};
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m];});}
+
+function toolBtn(o,k){
+  const t=TOOLS[k],c=cur(),d=c&&c.offers[o.id];
+  let cls='sym';
+  if(mode==='diagnose'&&d){
+    if(!d.tools[k].on){cls+=' off';if(d.status!=='no')cls+=' miss';}
+  }
+  return '<button type="button" class="'+cls+'" data-tool="'+k+'" data-offer="'+o.id+'" aria-label="'+esc(t.name)+' · '+esc(o.role)+'">'+svg(t.ic,t.color,2.2)+'</button>';
+}
+function renderLadder(){
+  const lad=$('ladder'),c=cur();
+  lad.querySelectorAll('.step,.asc').forEach(function(e){e.remove();});
+  OFFERS.forEach(function(o,i){
+    const d=c&&c.offers[o.id],st=d?d.status:'ok';
+    const b=document.createElement('div');
+    b.className='step'+(o.premium?' premium':'')+(mode==='diagnose'&&st==='no'?' st-no':'');
+    b.style.cssText='--sc:'+o.sc+';--sc2:'+o.sc2+';min-height:'+Math.round(o.h*4.3)+'px';
+    b.setAttribute('data-step',o.id);b.setAttribute('data-pres',[1,2,3,5][i]);
+    b.setAttribute('role','button');b.tabIndex=0;b.setAttribute('aria-label','Escalón '+o.n+': '+o.role);
+    let price='<div class="price">'+o.range[0]+'<small>'+o.range[1]+'</small></div>';
+    if(mode==='diagnose'&&d&&num(d.price))price='<div class="price">'+money(num(d.price),true)+'</div>';
+    b.innerHTML='<span class="stat" style="background:'+(d?STATUS[st].c:'transparent')+'" title="'+(d?STATUS[st].l:'')+'"></span>'+
+      '<div class="num">'+o.n+'</div><div class="sic">'+svg(o.ic,'#fff',1.9)+'</div>'+
+      '<div class="role">'+o.role+'</div><div class="lvl">'+LV(o.level).l+'</div>'+price+
+      '<div class="pname">'+esc(d&&d.name?d.name:(d&&num(d.units)?num(d.units)+' ventas/mes':''))+'</div>'+
+      '<div class="tools">'+o.tools.map(function(k){return toolBtn(o,k);}).join('')+'</div>';
+    lad.appendChild(b);
+  });
+  // ascenso entre escalones
+  if(mode==='diagnose'&&c){
+    const cols=lad.querySelectorAll('.step');
+    for(let i=1;i<OFFERS.length;i++){
+      const a=c.offers[OFFERS[i-1].id],b=c.offers[OFFERS[i].id];
+      if(a.status==='no'||b.status==='no'||!num(a.units)||!num(b.units))continue;
+      const pct=num(b.units)/num(a.units)*100;
+      const tag=document.createElement('span');tag.className='asc';
+      tag.textContent='↑ '+(pct<10?pct.toFixed(1):Math.round(pct))+'%';
+      tag.title='Ventas de '+OFFERS[i].role+' / ventas de '+OFFERS[i-1].role;
+      tag.style.setProperty('--h',OFFERS[i].h+'%');
+      tag.style.left=((i)*25)+'%';tag.style.bottom=(cols[i].offsetHeight+8)+'px';
+      lad.appendChild(tag);
+    }
+  }
+  // vehículo
+  const v=$('vehicle'),d=c&&c.offers.evt,st=d?d.status:'ok';
+  let pr=EVENT.range.join('');if(mode==='diagnose'&&d&&num(d.price))pr=money(num(d.price),true);
+  v.innerHTML='<div class="evt'+(mode==='diagnose'&&st==='no'?' st-no':'')+'" role="button" tabindex="0" data-step="evt" aria-label="Vehículo de venta: Evento en vivo" style="position:relative">'+
+    '<span class="stat" style="background:'+(d?STATUS[st].c:'transparent')+'"></span>'+
+    '<span class="eic">'+svg('calendar','#FF4000',1.9)+'</span>'+
+    '<div><div class="tag">Adicional · Vehículo de venta</div><div class="et">Evento en vivo <span>'+pr+'</span></div></div>'+
+    '<div class="ed">Impulsa High Ticket y Premium</div>'+
+    '<div class="tools">'+EVENT.tools.map(function(k){return toolBtn(EVENT,k);}).join('')+'</div></div>';
+  requestAnimationFrame(drawLoop);
+}
+function drawLoop(){
+  const wrap=$('ladderWrap'),svgEl=$('loop'),prem=document.querySelector('.step[data-step="prem"]'),aud=$('audience');
+  if(!prem||!aud||window.innerWidth<=760){svgEl.innerHTML='';return;}
+  const W=wrap.getBoundingClientRect(),P=prem.getBoundingClientRect(),A=aud.getBoundingClientRect();
+  const x1=P.right-W.left,y1=P.top-W.top+34,xr=W.width-14,x2=A.right-W.left+6,y2=A.top-W.top+A.height/2;
+  svgEl.setAttribute('viewBox','0 0 '+W.width+' '+(y2+30));
+  svgEl.style.height=(y2+30)+'px';svgEl.style.bottom='auto';
+  const midY=(y1+y2)/2;
+  svgEl.innerHTML='<defs><marker id="ah" markerWidth="9" markerHeight="9" refX="6" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#FF4000"/></marker></defs>'+
+    '<path d="M'+(x1+2)+','+y1+' C'+xr+','+y1+' '+xr+','+y1+' '+xr+','+(y1+30)+' L'+xr+','+(y2-24)+' C'+xr+','+y2+' '+xr+','+y2+' '+(x2+8)+','+y2+'" fill="none" stroke="#FF4000" stroke-width="2.5" stroke-linecap="round" marker-end="url(#ah)"/>'+
+    '<text x="'+(xr+12)+'" y="'+midY+'" transform="rotate(90 '+(xr+12)+' '+midY+')" text-anchor="middle" font-size="11.5" font-weight="700" fill="#FF7A47" style="font-family:var(--fb)">Reingreso · afiliados · comunidad · testimonios</text>';
+}
+function renderChannels(){
+  const c=cur();
+  $('channels').innerHTML=Object.keys(CHANNELS).map(function(k){
+    const ch=CHANNELS[k],d=c&&c.channels[k];
+    const off=mode==='diagnose'&&d&&!d.on;
+    return '<button type="button" class="chip-ch'+(off?' off':'')+'" data-chan="'+k+'">'+svg(ch.ic,'#FF4000',1.9)+
+      '<div><div class="cn">'+ch.name+'</div><div class="cd">'+(mode==='diagnose'?(d&&d.on?'Activo · presiona para editar':'Sin usar · presiona para activar'):ch.d)+'</div></div>'+
+      '<span class="share">'+(d&&d.on&&num(d.share)?num(d.share)+'%':'')+'</span></button>';
+  }).join('');
+}
+function renderModels(){
+  const c=cur();
+  $('models').innerHTML=Object.keys(MODELS).map(function(k){
+    const m=MODELS[k],on=mode==='diagnose'&&c&&c.models[k];
+    const tag=mode==='diagnose'?'button type="button" aria-pressed="'+(!!on)+'"':'div';
+    return '<'+tag+' class="mrow'+(on?' on':'')+'" data-model="'+k+'"><div class="mi">'+svg(m.ic,'#FF7A47',1.9)+'</div><div><div class="mt">'+m.t+'</div><div class="md">'+m.d+'</div></div><span class="chk">'+svg('check','#fff',3)+'</span></'+tag.split(' ')[0]+'>';
+  }).join('');
+}
+function renderKit(){
+  const c=cur();
+  $('kit').innerHTML=TOOL_ORDER.map(function(k){
+    const t=TOOLS[k];
+    let use='';
+    if(c){
+      const where=ALL.filter(function(o){return o.tools.indexOf(k)>-1&&c.offers[o.id].status!=='no';});
+      const on=where.filter(function(o){return c.offers[o.id].tools[k].on;});
+      use='<div class="use"><b>'+on.length+'/'+where.length+'</b> activa'+(where.length?' · '+where.map(function(o){return (c.offers[o.id].tools[k].on?'✓ ':'✗ ')+o.role;}).join(', '):'')+'</div>';
+    }
+    return '<button type="button" class="kit-item" data-tool="'+k+'"><span class="ks">'+svg(t.ic,t.color,2.2)+'</span><div><h4>'+t.name+'</h4><p>'+t.desc+'</p>'+use+'</div></button>';
+  }).join('');
+}
+/* renderKPIs: ver v4 */
+function renderClientBar(){
+  const sel=$('clientSel'),ids=Object.keys(S.clients);
+  sel.innerHTML='<option value="">— Sin cliente —</option>'+ids.map(function(id){const c=S.clients[id];return '<option value="'+id+'"'+(id===S.current?' selected':'')+'>'+esc(c.name||'Cliente sin nombre')+'</option>';}).join('');
+  const c=cur();
+  document.querySelectorAll('[data-c]').forEach(function(el){el.value=c?(c[el.getAttribute('data-c')]||''):'';});
+  $('clientCard').style.display=mode==='diagnose'&&c?'':'none';
+  $('fxFld').hidden=!c||(c.currency||'USD')==='USD';
+  vcheckAll($('clientCard'));
+  $('emptyClient').style.display=mode==='diagnose'&&!c?'flex':'none';
+}
+function renderMode(){
+  document.body.setAttribute('data-mode',mode);
+  document.querySelectorAll('.modes button').forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-mode')===mode);});
+  const c=cur();
+  const notes={
+    explore:'Modo <b>Explorar</b>: presiona cualquier elemento para ver su detalle.',
+    diagnose:c?'Diagnóstico de <b>'+esc(c.name||'cliente sin nombre')+'</b>: presiona un escalón para capturar sus datos.':'Modo <b>Diagnóstico</b>: crea o elige un cliente.',
+    present:'Modo <b>Presentar</b>: usa ← → o la barra inferior.',
+    guide:'',analysis:''
+  };
+  $('modeNote').innerHTML=notes[mode];
+  $('lead').textContent=mode==='diagnose'
+    ?'Marca qué productos y herramientas tiene hoy el emprendedor digital, captura sus números reales y detecta dónde está el dinero que hoy no está capturando.'
+    :'Cómo la audiencia entra por la base, sube de valor escalón a escalón y regresa como nueva audiencia. Presiona cualquier escalón, herramienta o canal para ver el detalle.';
+}
+function renderAll(){
+  $('diagTip').classList.toggle('show',!!cur());
+  if(mode==='analysis')renderAnalysis();
+  renderMode();renderClientBar();renderLadder();renderChannels();renderModels();renderKit();renderKPIs();renderSaveNote();
+  if(mode==='present')applySlide();
+}
+
+/* ================== Popover (modo explorar) ================== */
+function openPop(anchor,key,head,title,html){
+  if(popKey===key){closePop();return;}
+  closePop(true);
+  popKey=key;anchor.classList.add('on-sel');
+  $('popSym').innerHTML=head;$('popT').textContent=title;$('popBody').innerHTML=html;
+  const pop=$('pop');pop.hidden=false;
+  const r=anchor.getBoundingClientRect(),w=pop.offsetWidth,h=pop.offsetHeight;
+  let left=Math.max(12,Math.min(r.left+r.width/2-w/2,window.innerWidth-w-12));
+  let top=r.top-h-10;if(top<70)top=Math.min(r.bottom+10,window.innerHeight-h-12);
+  pop.style.left=left+'px';pop.style.top=Math.max(70,top)+'px';
+  $('popX').focus({preventScroll:true});
+  pop._anchor=anchor;
+}
+function closePop(silent){
+  const pop=$('pop');pop.hidden=true;
+  document.querySelectorAll('.on-sel').forEach(function(e){e.classList.remove('on-sel');});
+  if(!silent&&pop._anchor&&document.contains(pop._anchor))pop._anchor.focus({preventScroll:true});
+  popKey=null;pop._anchor=null;
+}
+function toolPop(el,k){
+  const t=TOOLS[k];
+  openPop(el,'t:'+k+':'+(el.getAttribute('data-offer')||'kit'),'<span>'+svg(t.ic,t.color,2.2)+'</span>',t.name,
+    '<p>'+t.desc+'</p><span class="lab">Ejemplo</span><p>'+t.ej+'</p><span class="lab">Dónde va</span><p style="margin:0">'+t.where+'</p>'+(t.loom?'<a class="guide-link" href="'+t.loom+'" target="_blank" rel="noopener">Ver guía de configuración '+svg('ext','#FF7A47',2)+'</a>':''));
+}
+function offerPop(el,id){
+  const o=byId(id);
+  openPop(el,'o:'+id,svg(o.ic,'#FF4000',1.9),o.role+(o.range.length?' · '+o.range.join(''):''),
+    '<p>'+o.desc+'</p><span class="lab">Pregunta para la sesión</span><p>'+o.talk+'</p><span class="lab">Herramientas</span><p style="margin:0">'+o.tools.map(function(k){return TOOLS[k].name;}).join(' · ')+'</p>');
+}
+
+/* ================== Drawer (modo diagnóstico) ================== */
+function openDrawer(id,focusTool){
+  const c=cur();if(!c){toast('Primero crea un cliente');return;}
+  drawerFor=id;const o=byId(id);
+  $('drEyb').textContent=o.n?'Escalón '+o.n:'Vehículo de venta';
+  $('drTitle').textContent=o.role;
+  renderDrawerBody();
+  $('drawer').classList.add('open');$('scrim').classList.add('open');$('drawer').setAttribute('aria-hidden','false');
+  setTimeout(function(){
+    const t=focusTool&&document.querySelector('#drBody .trow[data-t="'+focusTool+'"]');
+    if(t){t.scrollIntoView({block:'center'});t.querySelector('.tog').focus();}
+    else $('drClose').focus();
+  },260);
+}
+function closeDrawer(){
+  $('drawer').classList.remove('open');$('scrim').classList.remove('open');$('drawer').setAttribute('aria-hidden','true');
+  const id=drawerFor;drawerFor=null;
+  const back=id&&document.querySelector('[data-step="'+id+'"]');if(back)back.focus({preventScroll:true});
+}
+function renderDrawerBody(){
+  const c=cur(),id=drawerFor,o=byId(id),d=c.offers[id];
+  const cc=c.currency||'USD';
+  let h='<p class="muted" style="margin:0;font-size:13px">'+o.desc+'</p>'+
+    '<p style="margin:0;font-size:13px"><span class="eyb" style="margin:0 6px 0 0;font-size:10px">Pregunta</span>'+o.talk+'</p>'+
+    '<div class="sub-h">Estado</div><div class="seg" role="group" aria-label="Estado">'+
+      Object.keys(STATUS).map(function(k){return '<button type="button" data-status="'+k+'" aria-pressed="'+(d.status===k)+'"><i style="background:'+STATUS[k].c+'"></i>'+STATUS[k].l+'</button>';}).join('')+'</div>'+
+    '<div class="fld"><label for="o_name">Nombre del producto</label><input id="o_name" data-o="name" value="'+esc(d.name)+'" placeholder="Ej. Reto 7 días"></div>'+
+    '<div class="row2"><div class="fld"><label for="o_price">Precio ('+cc+')'+(o.level?' · '+LV(o.level).l:'')+'</label><input id="o_price" type="number" min="0" inputmode="decimal" data-o="price" value="'+esc(d.price)+'" placeholder="'+(o.range.length?'Rango típico: '+o.range.join(''):'Precio del evento')+'"></div>'+
+    '<div class="fld"><label for="o_units">Ventas por mes</label><input id="o_units" type="number" min="0" inputmode="numeric" data-o="units" value="'+esc(d.units)+'" placeholder="0"></div></div>'+
+    '<div class="calc" id="drCalc"></div>'+
+    '<div class="sub-h">Herramientas de conversión</div>';
+  h+=o.tools.map(function(k){
+    const t=TOOLS[k],td=d.tools[k];let m='';
+    if(t.metric==='rate')m='<div class="metrics row2"><div class="fld"><label>Tasa de toma %</label><input type="number" min="0" max="100" data-tk="'+k+'" data-tf="rate" value="'+esc(td.rate)+'" placeholder="Ej. 20"></div><div class="fld"><label>Precio ('+cc+')</label><input type="number" min="0" data-tk="'+k+'" data-tf="price" value="'+esc(td.price)+'"></div></div>';
+    if(t.metric==='units')m='<div class="metrics row2"><div class="fld"><label>Ventas por mes</label><input type="number" min="0" data-tk="'+k+'" data-tf="units" value="'+esc(td.units)+'"></div><div class="fld"><label>Precio ('+cc+')</label><input type="number" min="0" data-tk="'+k+'" data-tf="price" value="'+esc(td.price)+'"></div></div>';
+    return '<div class="trow'+(td.on?' on':'')+'" data-t="'+k+'"><div class="trow-h"><span class="ts">'+svg(t.ic,t.color,2.2)+'</span><div><div class="tn">'+t.name+'</div><div class="td">'+t.ej+'</div>'+(t.loom?'<a class="guide-link" href="'+t.loom+'" target="_blank" rel="noopener">Ver guía '+svg('ext','#FF7A47',2)+'</a>':'')+'</div>'+
+      '<button type="button" class="tog" role="switch" aria-checked="'+td.on+'" aria-label="'+esc(t.name)+' activa" data-tog="'+k+'"></button></div>'+m+'</div>';
+  }).join('');
+  h+='<div class="fld"><label for="o_notes">Notas de la sesión</label><textarea id="o_notes" data-o="notes" placeholder="Objeciones, ideas, acuerdos…">'+esc(d.notes)+'</textarea></div>';
+  $('drBody').innerHTML=h;
+  renderDrawerCalc();vcheckAll($('drBody'));
+}
+function renderDrawerCalc(){
+  if(!drawerFor)return;
+  const r=offerRev(drawerFor);const el=$('drCalc');if(!el)return;
+  const c=cur(),o=byId(drawerFor);
+  const pot=0;
+  el.innerHTML='<div>Producto<b>'+money(r.main)+'</b></div><div>Herramientas<b>'+money(r.extra)+'</b></div>'+
+    '<div class="full">Ingreso mensual de este '+(o.n?'escalón':'vehículo')+'<b>'+money(r.total)+'</b></div>'+
+    (pot?'<div class="full" style="color:var(--gold)">Potencial si activa Order Bump / Upsell: +'+money(pot)+' /mes</div>':'');
+}
+
+/* ================== Presentación ================== */
+function applySlide(){
+  slide=Math.max(0,Math.min(slide,SLIDES.length-1));
+  document.querySelectorAll('[data-pres]').forEach(function(el){
+    const k=+el.getAttribute('data-pres');
+    el.classList.toggle('lit',k<=slide);el.classList.toggle('cur',k===slide);
+  });
+  const s=SLIDES[slide];
+  $('pK').textContent=s.k;$('pT').textContent=s.t;$('pD').textContent=s.d;
+  $('pDots').innerHTML=SLIDES.map(function(_,i){return '<i class="'+(i<=slide?'on':'')+'"></i>';}).join('');
+  $('pPrev').disabled=slide===0;
+  $('pNext').textContent=slide===SLIDES.length-1?'Ir al diagnóstico →':'Siguiente →';
+  const target=document.querySelector('[data-pres="'+slide+'"]');
+  if(target)target.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+/* ================== Resumen ================== */
+
+function summaryText(){
+  const c=cur();if(!c)return '';
+  const T=totals();
+  const pri=c.priorities.map(function(k){return T.gaps.find(function(g){return g.key===k;});}).filter(Boolean);
+  const SC=scoreOf(c);
+  let s='Resumen de consultoría · Ecosistema Digital\n'+(c.name||'Cliente')+(c.date?' · '+fmtDate(c.date):'')+'\n\nMadurez del ecosistema: '+SC.total+'/100 ('+SC.stage.l+')\n\n';
+  s+='NÚMEROS\n- Ingreso mensual: '+money(T.rev)+'\n- Proyección anual: '+money(T.year)+'\n- LTV aprox. por cliente de entrada: '+(T.ltv?money(T.ltv):'—')+'\n- Sobre la mesa (modelo Calculadora de Escala): '+(T.L?usd(T.L.total)+' al año':fxShort(c).toLowerCase())+'\n'+(T.L?'- Tier de Comunidades hoy: '+(tierIdx(T.L.G)<0?'aún no califica':TIERS[tierIdx(T.L.G)].n)+'\n':'')+'\n';
+  s+='PRIORIDADES\n'+(pri.length?pri.map(function(g,i){return (i+1)+'. '+g.title+(g.pot?' (+'+usd(g.pot)+' al año)':'')+(g.link?'\n   Guía: '+g.link:'');}).join('\n'):'- Por definir')+'\n\n';
+  s+='ECOSISTEMA ACTUAL\n'+ALL.map(function(o){const d=c.offers[o.id];return '- '+o.role+': '+STATUS[d.status].l+(d.name?' · '+d.name:'')+(num(d.price)?' · '+money(num(d.price)):'')+(num(d.units)?' · '+num(d.units)+' ventas/mes':'');}).join('\n')+'\n';
+  if(c.nextSteps)s+='\nPRÓXIMOS PASOS\n'+c.nextSteps+'\n';
+  if(c.followup)s+='\nSeguimiento: '+fmtDate(c.followup)+(c.followupTime?', '+c.followupTime+' h':'')+'\n';
+  s+='\n'+LEGAL+'\n';
+  return s;
+}
+
+/* ================== Utilidades ================== */
+function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove('show');},2200);}
+function setMode(m){
+  mode=m;rememberMode();closePop(true);if(drawerFor)closeDrawer();
+  if(m==='present'){slide=0;}
+  renderAll();
+  if(m==='present')window.scrollTo({top:0,behavior:'smooth'});
+}
+function newClient(){
+  const c=blankClient();S.clients[c.id]=c;S.current=c.id;save();
+  renderAll();openWizard(0);
+}
+function openModal(id){$(id).classList.add('open');const f=$(id).querySelector('input,textarea,button');if(f)f.focus();}
+function closeModal(el){el.classList.remove('open');}
+
+/* ================== v3: lenguaje para el cliente ================== */
+I.alert='<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/>';
+const PLAIN={
+ malla:{n:'Producto que paga tus anuncios',q:'¿Vendes algo de bajo precio justo después de que alguien se registra o descarga tu regalo?'},
+ exit:{n:'Oferta para quien está por irse',q:'¿Muestras un video u oferta cuando alguien intenta salir de tu página de venta?'},
+ orderbump:{n:'Extra en el checkout',q:'¿Ofreces un complemento con un clic en el checkout, antes de pagar?'},
+ upsell:{n:'Oferta justo después de comprar',q:'¿Ofreces algo de mayor valor inmediatamente después de la compra?'},
+ activacion:{n:'Invitación al siguiente nivel',q:'¿Dentro del producto invitas a tu siguiente programa cuando el cliente ya tuvo un resultado?'},
+ upgrade:{n:'Preventa a tus mejores clientes',q:'¿Contactas a quienes terminan el curso para ofrecerles el siguiente nivel?'},
+ downsell:{n:'Alternativa más accesible',q:'¿Ofreces una opción más barata a quien no compra la oferta principal?'},
+ validacion:{n:'Paso previo al High Ticket',q:'¿Tienes una llamada o un producto que prepare al cliente antes del High Ticket?'}
+};
+const ASK={
+ fe:{q:'¿Tienes un producto de entrada de bajo precio?',h:'Nivel Low: menos de $100. Convierte seguidores en clientes: un mini curso, una plantilla, un reto.'},
+ core:{q:'¿Tienes un programa principal?',h:'Nivel Mid: de $100 a $999. Tu curso o programa completo, el que entrega la transformación.'},
+ ht:{q:'¿Ofreces acompañamiento cercano?',h:'Nivel High: de $1,000 a $1,499. Mentoría grupal o 1:1; menos clientes, más valor por cliente.'},
+ prem:{q:'¿Tienes una oferta premium?',h:'Nivel Super High: $1,500 o más. Mastermind, experiencia presencial o un servicio hecho por ti.'},
+ evt:{q:'¿Haces eventos en vivo?',h:'Es un adicional a la escalera y su precio depende de cada evento: workshops, retos o inmersiones donde presentas tus programas más altos.'}
+};
+const STAGES=[
+ {min:0,l:'Inicio',f:'en etapa de inicio',d:'Las bases del ecosistema todavía se están armando.'},
+ {min:35,l:'En construcción',f:'en construcción',d:'Hay ofertas que venden; faltan escalones y herramientas que las conecten.'},
+ {min:60,l:'En crecimiento',f:'en crecimiento',d:'La escalera funciona; el siguiente salto viene de la conversión y del ciclo.'},
+ {min:80,l:'Escalable',f:'en etapa escalable',d:'Un ecosistema completo, listo para recibir más audiencia.'}
+];
+const pct=function(x){return (x*100<10?(x*100).toFixed(1):Math.round(x*100))+'%';};
+const lowerFirst=function(s){return s.charAt(0).toLowerCase()+s.slice(1);};
+function fmtDate(iso){
+  if(!iso)return '';
+  try{return new Intl.DateTimeFormat('es-MX',{day:'numeric',month:'long',year:'numeric',timeZone:'UTC'}).format(new Date(iso+'T00:00:00Z'));}catch(e){return iso;}
+}
+
+/* ================== Puntaje de madurez ================== */
+/* scoreOf: ver v4 */
+
+/* ================== Análisis por reglas ================== */
+/* analyze: ver v4 */
+function hasData(c){return c&&ALL.some(function(o){return c.offers[o.id].status!=='no';});}
+
+/* ================== Reporte (bloques) ================== */
+const LOGO_NEG='https://assets.hotmartcomunidades.com/logos/ES_Hotmart_Logo_02_Color_Negative.svg';
+/* reportBlocks: ver v4 */
+
+/* ================== Vista Análisis ================== */
+/* gapBtn: ver v4 */
+/* renderAnalysis: ver v4 */
+let anT=null;
+function renderAnalysisSoon(){clearTimeout(anT);anT=setTimeout(function(){if(mode==='analysis')renderAnalysis();},250);}
+
+/* ================== PDF ================== */
+const LIBS={jspdf:'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js',h2c:'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js'};
+let libsP=null,DL=null,dlP=null;
+if(window.claude&&typeof window.claude.use==='function'){dlP=window.claude.use('downloads').then(function(d){DL=d;return d;},function(){return null;});}
+function loadScript(src){return new Promise(function(res,rej){const s=document.createElement('script');s.src=src;s.onload=res;s.onerror=function(){rej(new Error('No se pudo cargar '+src));};document.head.appendChild(s);});}
+function loadLibs(){
+  if(window.jspdf&&window.html2canvas)return Promise.resolve();
+  if(!libsP)libsP=Promise.all([loadScript(LIBS.jspdf),loadScript(LIBS.h2c)]).catch(function(e){libsP=null;throw e;});
+  return libsP;
+}
+function slug(s){return (s||'cliente').normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^A-Za-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,60)||'cliente';}
+// html2canvas no dibuja SVG en <img>: se convierten a PNG antes de generar el PDF.
+const svgPng={};
+function svgToPng(src){
+  if(svgPng[src])return svgPng[src];
+  svgPng[src]=new Promise(function(res){
+    const im=new Image();im.crossOrigin='anonymous';
+    im.onload=function(){try{const n=240,cv=document.createElement('canvas');cv.width=n;cv.height=n;
+      const r=Math.min(n/(im.naturalWidth||n),n/(im.naturalHeight||n)),w=(im.naturalWidth||n)*r,h=(im.naturalHeight||n)*r;
+      cv.getContext('2d').drawImage(im,(n-w)/2,(n-h)/2,w,h);res(cv.toDataURL('image/png'));}catch(e){res(src);}};
+    im.onerror=function(){res(src);};im.src=src;
+  });
+  return svgPng[src];
+}
+async function makePdf(){
+  const c=cur();if(!hasData(c))return toast('Primero captura el diagnóstico');
+  const busy=$('pdfBusy');busy.hidden=false;
+  const stage=$('pdfStage');
+  try{
+    await loadLibs();
+    if(document.fonts&&document.fonts.ready)await document.fonts.ready;
+    stage.innerHTML='';const pages=[];
+    const newPage=function(){
+      const p=document.createElement('div');p.className='pdf-page rp';
+      p.innerHTML=(pages.length?'<div class="pg-run"><b>Diagnóstico de Ecosistema Digital</b><span>'+esc(c.name||'')+'</span></div>':'')+'<div class="pg-body"'+(pages.length?'':' style="padding-top:0"')+'></div><div class="pg-num"><span>Comunidades Hotmart</span><span class="pn"></span></div>';
+      stage.appendChild(p);pages.push(p);return p.querySelector('.pg-body');
+    };
+    let body=newPage();
+    reportBlocks(c).forEach(function(html){
+      const t=document.createElement('div');t.innerHTML=html;const el=t.firstElementChild;
+      body.appendChild(el);
+      if(body.scrollHeight>body.clientHeight+1&&body.children.length>1){body.removeChild(el);body=newPage();body.appendChild(el);}
+    });
+    pages.forEach(function(p,i){p.querySelector('.pn').textContent='Página '+(i+1)+' de '+pages.length;});
+    await Promise.all(Array.prototype.map.call(stage.querySelectorAll('img'),function(im){
+      if(/\.svg($|\?)|^data:image\/svg/.test(im.getAttribute('src')||''))return svgToPng(im.getAttribute('src')).then(function(u){im.src=u;return im.decode?im.decode().catch(function(){}):null;});
+      return im.complete?null:new Promise(function(r){im.onload=im.onerror=r;});}));
+    const pdf=new window.jspdf.jsPDF({unit:'pt',format:'a4',compress:true});
+    for(let i=0;i<pages.length;i++){
+      const cv=await window.html2canvas(pages[i],{scale:2,backgroundColor:'#ffffff',useCORS:true,logging:false});
+      if(i)pdf.addPage();
+      pdf.addImage(cv.toDataURL('image/jpeg',0.92),'JPEG',0,0,595.28,841.89);
+      const pr=pages[i].getBoundingClientRect(),k=595.28/pr.width;
+      pages[i].querySelectorAll('a[href^="http"]').forEach(function(a){
+        Array.prototype.forEach.call(a.getClientRects(),function(r){pdf.link((r.left-pr.left)*k,(r.top-pr.top)*k,r.width*k,r.height*k,{url:a.href});});
+      });
+    }
+    const filename='Diagnostico-Ecosistema-'+slug(c.name)+'.pdf';
+    const blob=pdf.output('blob');
+    busy.hidden=true;
+    if(!DL&&dlP)await dlP;
+    if(DL){
+      try{await DL.save({filename:filename,data:blob});toast('PDF descargado');}
+      catch(e){const code=e&&e.code;toast(code==='declined'?'Descarga cancelada':code==='rate_limited'?'Ya hay una descarga esperando confirmación':'No se pudo descargar el PDF en esta vista');}
+    }else if(!FRAMED){pdf.save(filename);toast('PDF descargado');}
+    else toast('La descarga no está disponible en esta vista');
+  }catch(err){toast('No se pudo generar el PDF. Revisa tu conexión e inténtalo otra vez.');}
+  finally{busy.hidden=true;stage.innerHTML='';}
+}
+
+/* ================== Asistente guiado ================== */
+const WSTEPS=['perfil','fe','core','ht','prem','evt','audiencia','hotmart','fin'];
+let wStep=0;
+function openWizard(start){
+  if(!cur()){const c=blankClient();S.clients[c.id]=c;S.current=c.id;save();}
+  closePop(true);if(drawerFor)closeDrawer();
+  openWizard.back=document.activeElement;wStep=start||0;$('wiz').hidden=false;document.body.style.overflow='hidden';renderWiz();
+  setTimeout(function(){const f=$('wizBody').querySelector('input,button');if(f)f.focus({preventScroll:true});},30);
+}
+function closeWizard(go){
+  $('wiz').hidden=true;document.body.style.overflow='';
+  if(go){mode=go;rememberMode();}
+  renderAll();
+  if(go)window.scrollTo({top:0});
+  else if(openWizard.back&&document.contains(openWizard.back))openWizard.back.focus({preventScroll:true});
+}
+function wfield(attr,key,label,type,val,ph,extra){
+  return '<div class="fld"><label for="w_'+key+'">'+label+'</label><input id="w_'+key+'" '+attr+'="'+key+'" type="'+type+'"'+(type==='number'?' min="0" inputmode="decimal"':'')+' value="'+esc(val)+'" placeholder="'+esc(ph||'')+'"'+(extra||'')+'></div>';
+}
+function renderWiz(keepScroll){
+  const c=cur(),k=WSTEPS[wStep],cc=c.currency||'USD',body=$('wizBody'),st=body.scrollTop;
+  let h='<div class="wiz-in">';
+  if(k==='perfil'){
+    h+='<p class="eyb">Paso 1 · Conozcámonos</p><h2 id="wizQ">¿Con quién estamos hablando?</h2><p class="hint">Estos datos aparecen en el análisis y en el PDF. Los tiers y los rangos de precio están en dólares: si cobra en otra moneda, agrega el tipo de cambio.</p><div class="wiz-fields profile">'+
+      wfield('data-wc','name','Nombre o marca del emprendedor digital','text',c.name,'Ej. Ana Finanzas')+
+      wfield('data-wc','niche','Nicho','text',c.niche,'Ej. finanzas personales')+
+      wfield('data-wc','country','País','text',c.country,'Ej. México')+
+      '<div class="fld"><label for="w_currency">Moneda de sus precios</label><select id="w_currency" data-wc="currency">'+['USD','MXN','COP','BRL','ARS','CLP','PEN','EUR'].map(function(m){return '<option'+(m===cc?' selected':'')+'>'+m+'</option>';}).join('')+'</select></div>'+
+      wfield('data-wc','account','Account de Hotmart','text',c.account,'Tu nombre')+
+      wfield('data-wc','date','Fecha de la sesión','date',c.date,'')+
+      (cc!=='USD'?wfield('data-wc','fx','Tipo de cambio: ¿cuántos '+cc+' son 1 USD?','number',c.fx,'Tipo de cambio de hoy',' step="0.01"'):'')+
+      wfield('data-wc','gmvAnnual','Facturación anual en Hotmart (USD, opcional)','number',c.gmvAnnual,'Si la dejas vacía se usa la proyección')+'</div>';
+  }else if(ASK[k]){
+    const o=byId(k),d=c.offers[k],a=ASK[k];
+    h+='<p class="eyb">'+(o.n?'Escalón '+o.n+' de 4 · '+o.role+' · '+LV(o.level).l:'Adicional · '+o.role)+'</p><h2 id="wizQ">'+a.q+'</h2><p class="hint">'+a.h+'</p>';
+    h+='<div class="choices" role="group" aria-label="Respuesta">'+[['ok','Sí, ya lo vendo','Tiene precio y ventas'],['wip','Lo estoy construyendo','Es una idea o está en preventa'],['no','Todavía no','Lo sumamos como oportunidad']].map(function(x){
+      return '<button type="button" class="choice" data-ws="'+x[0]+'" aria-pressed="'+(d.status===x[0])+'"><b><i style="background:'+STATUS[x[0]].c+'"></i>'+x[1]+'</b><span>'+x[2]+'</span></button>';}).join('')+'</div>';
+    if(d.status!=='no'){
+      h+='<div class="wiz-fields">'+wfield('data-wo','name','Nombre del producto','text',d.name,'Ej. Reto 7 días')+
+        wfield('data-wo','price',(d.status==='wip'?'Precio planeado':'Precio')+' ('+cc+')','number',d.price,o.range.join('')||'Precio del evento')+
+        wfield('data-wo','units','Ventas por mes','number',d.units,d.status==='wip'?'Opcional':'Promedio')+'</div>';
+      h+='<p class="wiz-sub">¿Qué usas hoy para vender más con este producto?</p><p class="wiz-subd">Marca “Sí” en lo que ya funciona. Lo que quede en “No” aparece como oportunidad en el análisis.</p><div class="wq">'+
+        o.tools.map(function(t){
+          const td=d.tools[t],on=td.on,T0=TOOLS[t];let m='';
+          if(on&&T0.metric==='rate')m='<div class="wq-m">'+wfield('data-wtm',t+':rate','De cada 100 compradores, ¿cuántos lo toman? (%)','number',td.rate,'Ej. 20')+wfield('data-wtm',t+':price','Precio ('+cc+')','number',td.price,'')+'</div>';
+          if(on&&T0.metric==='units')m='<div class="wq-m">'+wfield('data-wtm',t+':units','Ventas por mes','number',td.units,'')+wfield('data-wtm',t+':price','Precio ('+cc+')','number',td.price,'')+'</div>';
+          return '<div class="wq-row'+(on?' on':'')+'"><div class="wq-h"><span class="ts">'+svg(T0.ic,T0.color,2.2)+'</span><div><div class="qq">'+PLAIN[t].q+'</div><div class="qn">'+T0.name+' · '+PLAIN[t].n+'</div>'+(T0.loom?'<a class="guide-link" href="'+T0.loom+'" target="_blank" rel="noopener">Ver guía '+svg('ext','#FF7A47',2)+'</a>':'')+'</div>'+
+            '<div class="yn" role="group" aria-label="'+esc(T0.name)+'"><button type="button" data-wt="'+t+'" data-v="1" aria-pressed="'+on+'">Sí</button><button type="button" data-wt="'+t+'" data-v="0" aria-pressed="'+(!on)+'">No</button></div></div>'+m+'</div>';
+        }).join('')+'</div>';
+    }
+  }else if(k==='audiencia'){
+    h+='<p class="eyb">Audiencia y modelo de venta</p><h2 id="wizQ">¿De dónde llegan tus clientes?</h2><p class="hint">Marca todos los canales que hoy te traen ventas. El porcentaje es opcional.</p><div class="wq" style="margin-top:20px">'+
+      Object.keys(CHANNELS).map(function(ch){
+        const d=c.channels[ch],C=CHANNELS[ch];
+        return '<div class="wq-row'+(d.on?' on':'')+'"><div class="wq-h"><span class="ts" style="background:rgba(255,64,0,.12)">'+svg(C.ic,'#FF4000',1.9)+'</span><div><div class="qq">'+C.name+'</div><div class="qn">'+C.desc+'</div></div>'+
+          '<div class="yn" role="group" aria-label="'+C.name+'"><button type="button" data-wch="'+ch+'" data-v="1" aria-pressed="'+d.on+'">Sí</button><button type="button" data-wch="'+ch+'" data-v="0" aria-pressed="'+(!d.on)+'">No</button></div></div>'+
+          (d.on?'<div class="wq-m">'+wfield('data-wchs',ch,'% de las ventas que llega por aquí','number',d.share,'Ej. 40',' max="100"')+'</div>':'')+'</div>';
+      }).join('')+'</div><p class="vsum" id="wShareSum"></p>'+
+      '<p class="wiz-sub">¿Cómo vendes hoy?</p><p class="wiz-subd">Elige todos los que apliquen.</p><div class="wiz-models">'+
+      Object.keys(MODELS).map(function(m){return '<button type="button" class="pill" data-wm="'+m+'" aria-pressed="'+!!c.models[m]+'">'+svg(MODELS[m].ic,'#FF7A47',1.9)+MODELS[m].t+'</button>';}).join('')+'</div>';
+  }else if(k==='hotmart'){
+    const L=leakOf(c);
+    h+='<p class="eyb">Herramientas de Hotmart</p><h2 id="wizQ">¿Qué herramientas de Hotmart ya usas?</h2><p class="hint">Están ordenadas por la facturación que recuperan según los datos de Hotmart. Las que ya marcaste en la escalera aparecen activas.</p><div class="wq" style="margin-top:20px">'+
+      HMT.map(function(t){
+        const der=hmDerived(c,t.key),on=hmActive(c,t.key);
+        return '<div class="wq-row'+(on?' on':'')+'"><div class="wq-h"><span class="ts">'+svg(t.ic,t.color,2.2)+'</span><div><div class="qq">'+t.q+'</div><div class="qn">'+t.name+(der.length?' · Ya activa en: '+esc(der.join(', ')):(!REL(t)?' · Recomendación general':(L?' · Recupera cerca de '+usdS(L.G*t.w*HM.max)+' al año':'')))+'</div>'+
+          '<a class="guide-link" href="'+t.loom+'" target="_blank" rel="noopener">Ver guía '+svg('ext','#FF7A47',2)+'</a></div>'+
+          '<div class="yn" role="group" aria-label="'+t.name+'"><button type="button" data-whm="'+t.key+'" data-v="1" aria-pressed="'+on+'"'+(der.length?' disabled':'')+'>Sí</button><button type="button" data-whm="'+t.key+'" data-v="0" aria-pressed="'+(!on)+'"'+(der.length?' disabled':'')+'>No</button></div></div></div>';
+      }).join('')+'</div>';
+  }else if(!hasData(c)){
+    h+='<p class="eyb">Casi listo</p><h2 id="wizQ">Todavía no hay productos que analizar</h2><p class="hint">Marcaste “Todavía no” en todos los escalones. Regresa y marca lo que '+esc(c.name||'el emprendedor digital')+' ya vende o está construyendo, aunque sea con precio planeado.</p>'+
+      '<div class="g-cta"><button class="bt" type="button" data-wd="1">Volver al Front-end</button></div>';
+  }else{
+    const sc=scoreOf(c),T=totals(c);
+    h+='<p class="eyb">Listo</p><h2 id="wizQ">El análisis de '+esc(c.name||'tu cliente')+' está listo</h2><p class="hint">Revísenlo juntos, elijan hasta 3 prioridades y descarga el PDF para enviarlo.</p>'+
+      '<div class="wiz-done"><div class="sc">'+sc.total+'<small>/100</small></div><div><b style="font-size:17px">Etapa: '+sc.stage.l+'</b><p>'+sc.stage.d+'</p><p>Ingreso mensual estimado: <b style="color:var(--cr)">'+money(T.rev)+'</b>'+(T.L&&T.L.total?' · Sobre la mesa: <b style="color:var(--gold)">'+usd(T.L.total)+' al año</b>':'')+'</p></div></div>'+
+      '<div class="g-cta"><button class="bt" type="button" data-go="analysis">Ver el análisis</button><button class="bt ghost" type="button" data-go="diagnose">Ver la escalera</button></div>';
+  }
+  body.innerHTML=h+'</div>';
+  body.scrollTop=keepScroll?st:0;
+  $('wizBar').style.width=Math.round(wStep/(WSTEPS.length-1)*100)+'%';
+  $('wizCount').textContent='Paso '+(wStep+1)+' de '+WSTEPS.length;
+  $('wizDots').innerHTML=WSTEPS.map(function(s,i){return '<button type="button" data-wd="'+i+'" class="'+(i<=wStep?'on':'')+(i===wStep?' cur':'')+'" aria-label="Ir al paso '+(i+1)+'"></button>';}).join('');
+  $('wizPrev').disabled=wStep===0;
+  $('wizNext').textContent=wStep===WSTEPS.length-1?'Ver el análisis →':'Siguiente →';
+  vcheckAll(body);shareSum();
+}
+$('wizBody').addEventListener('click',function(e){
+  const c=cur(),k=WSTEPS[wStep],b=e.target.closest('button');if(!b||!c)return;
+  if(b.hasAttribute('data-ws')){c.offers[k].status=b.getAttribute('data-ws');save();renderWiz(true);return;}
+  if(b.hasAttribute('data-wt')){c.offers[k].tools[b.getAttribute('data-wt')].on=b.getAttribute('data-v')==='1';save();renderWiz(true);return;}
+  if(b.hasAttribute('data-wch')){const d=c.channels[b.getAttribute('data-wch')];d.on=b.getAttribute('data-v')==='1';if(!d.on)d.share='';save();renderWiz(true);return;}
+  if(b.hasAttribute('data-whm')){c.hotmart[b.getAttribute('data-whm')]=b.getAttribute('data-v')==='1';save();renderWiz(true);return;}
+  if(b.hasAttribute('data-wm')){const m=b.getAttribute('data-wm');c.models[m]=!c.models[m];b.setAttribute('aria-pressed',!!c.models[m]);save();return;}
+});
+$('wizBody').addEventListener('input',function(e){
+  const c=cur(),k=WSTEPS[wStep],el=e.target;if(!c)return;
+  if(el.hasAttribute('data-wc')){c[el.getAttribute('data-wc')]=el.value;}
+  else if(el.hasAttribute('data-wo')){c.offers[k][el.getAttribute('data-wo')]=el.value;}
+  else if(el.hasAttribute('data-wtm')){const p=el.getAttribute('data-wtm').split(':');c.offers[k].tools[p[0]][p[1]]=el.value;}
+  else if(el.hasAttribute('data-wchs')){c.channels[el.getAttribute('data-wchs')].share=el.value;}
+  save();
+});
+$('wizPrev').addEventListener('click',function(){if(wStep>0){wStep--;renderWiz();}});
+$('wizNext').addEventListener('click',function(){if(wStep<WSTEPS.length-1){wStep++;renderWiz();}else closeWizard('analysis');});
+$('wizDots').addEventListener('click',function(e){const b=e.target.closest('[data-wd]');if(b){wStep=+b.getAttribute('data-wd');renderWiz();}});
+$('wizBody').addEventListener('click',function(e){const b=e.target.closest('[data-wd]');if(b){wStep=+b.getAttribute('data-wd');renderWiz();}});
+$('wizClose').addEventListener('click',function(){closeWizard();});
+
+/* ================== Cliente de ejemplo ================== */
+/* loadDemo: ver v4 */
+
+/* ================== Guía ================== */
+function renderGuide(){
+  $('guideTools').innerHTML=TOOL_ORDER.map(function(k){const t=TOOLS[k];
+    return '<div class="g-tool"><span class="ks">'+svg(t.ic,t.color,2.2)+'</span><div><h4>'+PLAIN[k].n+'<small>'+t.name+'</small></h4><p class="q">'+PLAIN[k].q+'</p><p class="e">Ejemplo: '+t.ej+'</p></div></div>';}).join('');
+}
+
+/* ================== Navegación ================== */
+const MODE_KEY='ecosistema-digital-mode';
+function rememberMode(){}
+mode='guide';
+function go(v){
+  if(v==='wizard')return openWizard(0);
+  if(v==='demo'){loadDemo();if(!$('wiz').hidden)closeWizard();return setMode('analysis');}
+  if(!$('wiz').hidden)closeWizard();
+  setMode(v);window.scrollTo({top:0});
+}
+document.addEventListener('click',function(e){const g=e.target.closest('[data-go]');if(g){e.preventDefault();go(g.getAttribute('data-go'));}});
+$('pdfBtn').addEventListener('click',makePdf);
+$('optNotes').addEventListener('change',function(){const c=cur();if(!c)return;c.pdfNotes=this.checked;save();renderAnalysis();});
+['a_next','a_fu'].forEach(function(id){$(id).addEventListener('input',renderAnalysisSoon);});
+/* ---------- Agendar seguimiento en Google Calendar (enlace prellenado, sin conectar cuentas) ---------- */
+function gcalStamp(d){return d.toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,'');}
+function calUrl(c){
+  if(!c||!c.followup)return null;
+  const name=(c.name||'cliente').replace(/^Ejemplo · /,'');
+  let dates;
+  if(c.followupTime){
+    const st=new Date(c.followup+'T'+c.followupTime+':00');if(isNaN(st))return null;
+    dates=gcalStamp(st)+'/'+gcalStamp(new Date(st.getTime()+30*60000));
+  }else{
+    const d0=new Date(c.followup+'T00:00:00Z'),d1=new Date(d0.getTime()+864e5);
+    dates=c.followup.replace(/-/g,'')+'/'+d1.toISOString().slice(0,10).replace(/-/g,'');
+  }
+  let det='Acuerdos de la sesión:\n'+(c.nextSteps||'Por definir');
+  const T=totals(c),pri=c.priorities.map(function(k){return T.gaps.find(function(g){return g.key===k;});}).filter(Boolean);
+  if(pri.length)det+='\n\nPrioridades:\n'+pri.map(function(g,i){return (i+1)+'. '+g.title;}).join('\n');
+  det+='\n\nDiagnóstico de Ecosistema Digital · Comunidades Hotmart';
+  const q=['action=TEMPLATE','text='+encodeURIComponent('Seguimiento · '+name),'dates='+dates,'details='+encodeURIComponent(det)];
+  const mail=(c.clientEmail||'').trim();
+  if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail))q.push('add='+encodeURIComponent(mail));
+  return 'https://calendar.google.com/calendar/render?'+q.join('&');
+}
+function updateCal(){
+  const c=cur(),b=$('calBtn'),n=$('calNote');if(!b)return;
+  const u=calUrl(c);
+  if(u){b.href=u;b.removeAttribute('tabindex');}else{b.removeAttribute('href');b.setAttribute('tabindex','-1');}b.setAttribute('aria-disabled',u?'false':'true');
+  const mail=c&&(c.clientEmail||'').trim();
+  n.textContent=!c||!c.followup?'Pon la fecha de seguimiento para agendar la llamada.'
+    :'Se abre Google Calendar con “Seguimiento · '+(c.name||'cliente').replace(/^Ejemplo · /,'')+'”, '+(c.followupTime?'de 30 minutos':'como evento de todo el día')+', con los acuerdos en la descripción'+(mail&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)?'. El correo no es válido, así que no se agrega como invitado':(mail?' y el cliente como invitado':''))+'. Revísalo y presiona Guardar.';
+}
+['a_next','a_fu','a_time','a_mail'].forEach(function(id){$(id).addEventListener('input',function(){setTimeout(updateCal,0);});});
+renderGuide();
+
+/* ================== v4: modelo de la Calculadora de Escala ================== */
+
+I.card='<rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/>';
+I.funnel='<path d="M3 4h18l-7 8v6l-4 2v-8z"/>';
+I.ext='<path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>';
+// Factores y pesos de la Calculadora de Escala (Hotmart). Orden = facturación atribuida.
+const HM={fvl:2.120989792,sht:1.381214111,max:0.9067737681,full:1.0002};
+const HMT=[
+ {key:'exitpopup',name:'Exit PopUp',w:.3499,ic:'magnet',color:'#2563EB',q:'¿Tu página de venta o checkout muestra una oferta cuando alguien intenta salir?',why:'Rescata a los compradores que abandonan el carrito en el último segundo.',loom:'https://www.loom.com/share/d11d19bd271547b987bf4b819e34a5f8'},
+ {key:'affiliate',name:'Affiliate',w:.3497,ic:'users',color:'#0F766E',q:'¿Tienes afiliados que venden tus productos a cambio de una comisión?',why:'Recupera demanda que no alcanzas a captar solo, a través de socios.',loom:'https://www.loom.com/share/fec7dfd98f6946ae9fa08da11cecb2fe'},
+ {key:'install',name:'Smart Installment',w:.1310,ic:'card',color:'#7C3AED',q:'¿Ofreces cuotas automáticas a quien no tiene límite suficiente en su tarjeta?',why:'Recupera ventas de quienes no tienen límite de crédito suficiente.',loom:'https://www.loom.com/share/0f19c9d5127748289f6ccc7dad15d725?sid=ad383974-0da0-4d8e-8f4d-ae0c70b6c10d'},
+ {key:'orderbump',name:'Order Bump',w:.0615,ic:'cart',color:'#DB2777',q:'¿Ofreces un complemento con un clic en el checkout?',why:'Sube el ticket de la primera compra sin tráfico extra; es la fuga más fácil de tapar.',loom:'https://www.loom.com/share/4c56abf96e2646dbbfe00fd1f54b75bd?sid=29909092-7d38-4eed-847c-9341d62bf6bc'},
+ {key:'funnel',name:'Sales Funnel',w:.0563,ic:'funnel',color:'#16A34A',q:'¿Tienes un embudo con upsell o downsell configurado después de la compra?',why:'Recupera el upsell hacia tu High Ticket que hoy se pierde después de la compra principal.',loom:'https://www.loom.com/share/2e418a3bf5c24f05aa0d6c492380e44e'},
+ {key:'bundle',name:'Bundle',w:.0504,ic:'package',color:'#CA8A04',q:'¿Vendes paquetes que combinan varios productos en una sola compra?',why:'Sube el ticket combinando ofertas complementarias en una sola compra.',loom:'https://www.loom.com/share/9dd885256a8841cb992d1a5f5eda5304'},
+ {key:'recovery',name:'Smart Recovery',w:.0007,ic:'repeat',color:'#DC2626',q:'¿Recuperas automáticamente pagos rechazados o en efectivo?',why:'Recupera pagos en efectivo y rechazados sin esfuerzo manual.',loom:'https://www.loom.com/share/dc204435f4f1459ca7b73e5ae977a2a6'},
+ {key:'club',name:'Club Sales',w:.0006,ic:'layers',color:'#0891B2',q:'¿Vendes productos exclusivos dentro de tu área de miembros?',why:'Genera ingresos de tu base de alumnos con ofertas exclusivas.',loom:'https://www.loom.com/share/b93889aa38e04c7c97403eba0451a970?sid=0c2f0f19-9c45-4c6b-a75f-465ce5e93a63'},
+ {key:'extra',name:'Extra Paid Module',w:.0001,ic:'sparkles',color:'#9333EA',q:'¿Tienes módulos extra de pago dentro de tus cursos?',why:'Aumenta el valor de cada alumno con módulos premium dentro de tus cursos.',loom:'https://www.loom.com/share/fb78f341033b4bffadcc6cae0a6a13b3'}
+];
+const HMB=function(k){return HMT.find(function(t){return t.key===k;});};
+// Relevante = pesa al menos 1% en la facturación recuperada. Las demás solo se recomiendan en general, sin cifras.
+const REL=function(t){return t.w>=.01;};
+function minorNames(c){return HMT.filter(function(t){return !REL(t)&&!hmActive(c,t.key);}).map(function(t){return t.name;});}
+function joinY(a){return a.length<2?a.join(''):a.slice(0,-1).join(', ')+' y '+a[a.length-1];}
+TOOLS.exit.loom=HMB('exitpopup').loom;TOOLS.orderbump.loom=HMB('orderbump').loom;TOOLS.upsell.loom=HMB('funnel').loom;TOOLS.downsell.loom=HMB('funnel').loom;
+const LEGAL='Las proyecciones presentadas son simulaciones estimadas basadas en factores de referencia del ecosistema Hotmart y no constituyen una promesa o garantía de resultados. Los valores reales dependen exclusivamente de la estrategia y ejecución de cada operación.';
+
+const LEVELS=[{k:'low',l:'Low',r:'menos de $100'},{k:'mid',l:'Mid',r:'$100 a $999'},{k:'high',l:'High',r:'$1,000 a $1,499'},{k:'super',l:'Super High',r:'$1,500 o más'}];
+const LV=function(k){return LEVELS.find(function(x){return x.k===k;});};
+function levelOf(u){return u<100?'low':u<1000?'mid':u<1500?'high':'super';}
+const usd=function(v){return 'USD '+Math.round(v||0).toLocaleString('en-US');};
+const usdS=function(v){v=v||0;const a=Math.abs(v);return a>=1e6?'USD '+(v/1e6).toLocaleString('en-US',{maximumFractionDigits:1})+'M':a>=1e4?'USD '+Math.round(v/1e3).toLocaleString('en-US')+'K':usd(v);};
+function fxRate(c){return (c.currency||'USD')==='USD'?1:(num(c.fx)>0?num(c.fx):0);}
+function offerLevel(c,o){const p=num(c.offers[o.id].price),r=fxRate(c);if(!(p>0))return o.level;return r?levelOf(p/r):null;}
+// El evento en vivo es adicional: no cuenta para escalera completa ni Super High Ticket.
+function ladderLevels(c){const s={};OFFERS.forEach(function(o){if(c.offers[o.id].status==='ok')s[offerLevel(c,o)]=1;});return s;}
+function hasFVL(c){const s=ladderLevels(c);return !!(s.low&&s.mid&&(s.high||s.super));}
+function hasSHT(c){return !!ladderLevels(c).super;}
+function hmDerived(c,k){
+  const on=function(t){return ALL.filter(function(o){const d=c.offers[o.id];return d.status==='ok'&&d.tools[t]&&d.tools[t].on;}).map(function(o){return o.role;});};
+  if(k==='exitpopup')return on('exit');
+  if(k==='orderbump')return on('orderbump');
+  if(k==='funnel'){const a=on('upsell').concat(on('downsell'));return a.filter(function(x,i){return a.indexOf(x)===i;});}
+  if(k==='affiliate')return c.channels.afiliados.on?['canal de afiliados']:[];
+  return [];
+}
+function hmActive(c,k){return hmDerived(c,k).length>0||!!c.hotmart[k];}
+function revYear(c){return ALL.reduce(function(s,o){return s+offerRev(o.id,c).total;},0)*12;}
+function gmvInfo(c){
+  const r=fxRate(c);if(!r)return {v:null,src:'fx'};
+  if(num(c.gmvAnnual)>0)return {v:num(c.gmvAnnual),src:'real'};
+  const v=revYear(c)/r;return v>0?{v:v,src:'proj'}:{v:null,src:'zero'};
+}
+function leakOf(c,sc){
+  const g=gmvInfo(c);if(g.v==null)return null;const G=g.v;
+  const x=sc||{tools:{},fvl:false,sht:false};
+  // Las herramientas de impacto menor (<1%) no suman cifra: solo se recomiendan en general.
+  const per=HMT.map(function(t){const act=hmActive(c,t.key);return {t:t,act:act,sim:!act&&!!(x.tools&&x.tools[t.key]),v:act||!REL(t)?0:G*t.w*HM.max};});
+  const tools=per.reduce(function(s,p){return s+(p.act||p.sim?0:p.v);},0);
+  const fvlOk=hasFVL(c),shtOk=hasSHT(c),fvlV=G*(HM.fvl-1),shtV=G*(HM.sht-1);
+  const fvl=fvlOk||x.fvl?0:fvlV,sht=shtOk||x.sht?0:shtV;
+  return {G:G,src:g.src,per:per,tools:tools,toolsFull:G*HMT.filter(REL).reduce(function(s,t){return s+t.w;},0)*HM.max,fvlOk:fvlOk,shtOk:shtOk,fvlV:fvlV,shtV:shtV,fvl:fvl,sht:sht,total:tools+fvl+sht,nOn:per.filter(function(p){return p.act;}).length};
+}
+function fxNeeded(c){return gmvInfo(c).src==='fx'?'Para calcular lo que queda sobre la mesa y el tier falta el tipo de cambio de '+esc(c.currency)+' a USD.':'Todavía no hay ventas registradas, así que no se puede estimar lo que queda sobre la mesa ni el tier. Captura las ventas por mes o la facturación anual en USD.';}
+function fxShort(c){return gmvInfo(c).src==='fx'?'Falta tipo de cambio':'Sin ventas registradas';}
+
+/* ---------- Tiers de Comunidades ---------- */
+const TIERS=[
+ {k:'gold',n:'Gold',range:'$25K – $249K',orb:'https://assets.hotmartcomunidades.com/orbs/badge-gold.svg'},
+ {k:'platinum',n:'Platinum',range:'$250K – $499K',orb:'https://assets.hotmartcomunidades.com/orbs/badge-platinum.svg'},
+ {k:'titanium',n:'Titanium',range:'$500K+',orb:'https://assets.hotmartcomunidades.com/orbs/badge-titanium.svg'},
+ {k:'nova',n:'NOVA 30',range:'Top 30 · invitación',orb:'https://assets.hotmartcomunidades.com/orbs/orb-nova-white.png',light:'https://assets.hotmartcomunidades.com/orbs/orb-nova.png'}
+];
+const BENEFITS={
+ gold:['Comunidad WhatsApp Gold','Acceso a eventos digitales','Sesiones de mentoría grupal','Retos semestrales'],
+ platinum:['Comunidad WhatsApp Platinum','Acceso a eventos digitales y presenciales','Sesiones de mentoría grupal','Visibilidad en eventos Hotmart','Manychat PRO por 3 meses','Hotmart Send y Pages gratis por 3 meses'],
+ titanium:['Comunidad WhatsApp Titanium','Acceso a eventos digitales y presenciales','Sesiones de mentoría grupal','Visibilidad en eventos Hotmart','Acceso a top masterminds del mercado','Speaker slots en eventos','Elegible para el podcast Hotmart Cast en español','Hotmart Send y Pages gratis por 3 meses','Entradas a Hotmart Sessions y Hotmart Fire']
+};
+function tierIdx(g){return g<25000?-1:g<250000?0:g<500000?1:2;}
+function tierCopy(G,total){
+  const proj=G+total,now=tierIdx(G),pot=Math.max(now,Math.min(2,tierIdx(proj)));
+  let h,s;
+  if(now===-1){h='Estás a <b>'+usd(25000-G)+'</b> de entrar a Comunidades.';
+    s='El programa arranca en Gold desde $25K de facturación anual.'+(total>0?' Recuperando lo que hoy queda sobre la mesa llegarías a '+usd(proj)+' al año'+(pot>=0?', territorio '+TIERS[pot].n:'')+'.':'');}
+  else if(pot>now){h='El dinero sobre la mesa te sube de <b>'+TIERS[now].n+'</b> a <b>'+TIERS[pot].n+'</b>.';
+    s='Hoy facturas '+usd(G)+' al año ('+TIERS[now].n+'). Recuperando '+usd(total)+' llegarías a '+usd(proj)+', territorio '+TIERS[pot].n+'.';}
+  else if(now<2){h='Estás en <b>'+TIERS[now].n+'</b>, a un paso de '+TIERS[now+1].n+'.';
+    s='Te faltan '+usd([250000,500000][now]-G)+' para '+TIERS[now+1].n+'.'+(total>0?' Tienes '+usd(total)+' sobre la mesa.':'');}
+  else{h='Ya estás en <b>Titanium</b>, la antesala de NOVA 30.';s='Recuperar lo que queda sobre la mesa te consolida en el tier más alto y te pone en el radar del Top 30.';}
+  return {now:now,pot:pot,proj:proj,h:h,s:s};
+}
+function tierRail(now,pot,onLight){
+  return '<div class="tr-rail">'+TIERS.map(function(t,i){
+    const cls=i===now?' now':(i===pot&&pot>now?' pot':(i>now&&i<pot?' climb':''));
+    const pin=i===now?'Hoy':(i===pot&&pot>now?'Potencial':'');
+    return '<div class="tr-stop'+cls+'"><span class="tr-pin">'+pin+'</span><img src="'+(onLight&&t.light?t.light:t.orb)+'" alt="" crossorigin="anonymous"><b>'+t.n+'</b><small>'+t.range+'</small></div>';
+  }).join('')+'</div>';
+}
+
+/* ================== Cálculos (reemplazan a los de v2) ================== */
+function potential(){return 0;}
+function gapsOf(c){
+  const out=[];if(!c)return out;
+  ALL.forEach(function(o){
+    const d=c.offers[o.id];
+    if(d.status==='no'){
+      if(o.id!=='evt')out.push({key:'step:'+o.id,offer:o.id,title:'Falta '+o.role,detail:'No hay producto '+LV(o.level).l+' en el escalón '+o.n+'.',pot:0,ic:o.ic,color:'#FF4000',ord:0});
+      return;
+    }
+    o.tools.forEach(function(k){
+      if(d.tools[k].on)return;
+      out.push({key:'tool:'+o.id+':'+k,offer:o.id,tool:k,title:TOOLS[k].name+' en '+o.role,detail:TOOLS[k].desc.split('.')[0]+'.',pot:0,ic:TOOLS[k].ic,color:TOOLS[k].color,ord:4,link:TOOLS[k].loom});
+    });
+  });
+  const L=leakOf(c);
+  if(!hasFVL(c))out.push({key:'fvl',title:'Completar la escalera de valor',detail:'Tener productos Low, Mid y High (o Super High) vendiendo al mismo tiempo.',pot:L?L.fvlV:0,usd:true,ic:'layers',color:'#FF4000',ord:1});
+  if(!hasSHT(c))out.push({key:'sht',title:'Lanzar un producto Super High Ticket',detail:'Un producto de $1,500 o más en la escalera.',pot:L?L.shtV:0,usd:true,ic:'crown',color:'#FF4000',ord:1});
+  HMT.forEach(function(t,i){
+    if(!REL(t)||hmActive(c,t.key))return;
+    out.push({key:'hm:'+t.key,hm:t.key,title:'Activar '+t.name+' en Hotmart',detail:t.why,pot:L?L.G*t.w*HM.max:0,usd:true,ic:t.ic,color:t.color,ord:2+i/100,link:t.loom});
+  });
+  const chOn=Object.keys(c.channels).filter(function(k){return c.channels[k].on;});
+  if(chOn.length<=1)out.push({key:'chan',title:chOn.length?'Depende de un solo canal':'Sin canales de adquisición definidos',detail:'Diversificar entre orgánico, pago y afiliados reduce el riesgo.',pot:0,ic:'megaphone',color:'#FF4000',ord:3});
+  out.sort(function(a,b){return (b.pot-a.pot)||(a.ord-b.ord);});
+  return out;
+}
+function totals(c){
+  c=c||cur();if(!c)return null;
+  let rev=0,units=0,tOn=0,tAll=0;
+  ALL.forEach(function(o){
+    const r=offerRev(o.id,c);rev+=r.total;units+=r.units;
+    if(c.offers[o.id].status!=='no'){o.tools.forEach(function(k){tAll++;if(c.offers[o.id].tools[k].on)tOn++;});}
+  });
+  const fe=num(c.offers.fe.units),L=leakOf(c);
+  return {rev:rev,year:rev*12,units:units,avg:units?rev/units:0,ltv:fe&&c.offers.fe.status!=='no'?rev/fe:0,tOn:tOn,tAll:tAll,pot:0,L:L,gaps:gapsOf(c)};
+}
+function gapPot(g){return g.pot?'<span class="gv">+'+(g.usd?usdS(g.pot)+'/año':money(g.pot,true))+'</span>':'';}
+function gapBtn(g,c){
+  const pri=c.priorities.indexOf(g.key)>-1;
+  return '<button type="button" class="gap'+(pri?' pri':'')+'" data-gap="'+esc(g.key)+'" aria-pressed="'+pri+'"><span class="gsym">'+svg(g.ic,g.color,2.2)+'</span><div><div class="gt">'+esc(g.title)+'</div><div class="gd">'+esc(g.detail)+'</div>'+(pri?'<div class="pin">Prioridad '+(c.priorities.indexOf(g.key)+1)+'</div>':'')+'</div>'+gapPot(g)+'</button>';
+}
+function renderKPIs(){
+  const T=totals();if(!T){$('kpis').innerHTML='';$('gaps').innerHTML='';$('hmList').innerHTML='';return;}
+  const c=cur(),L=T.L,tc=L?tierCopy(L.G,L.total):null;
+  $('kpis').innerHTML=
+    '<div class="kpi big"><div class="kl">Ingreso mensual estimado</div><div class="kv">'+money(T.rev)+'</div></div>'+
+    '<div class="kpi"><div class="kl">Proyección anual</div><div class="kv">'+money(T.year,true)+'</div></div>'+
+    '<div class="kpi"><div class="kl">Valor por cliente de entrada (LTV aprox.)</div><div class="kv">'+(T.ltv?money(T.ltv):'—')+'</div></div>'+
+    '<div class="kpi"><div class="kl">Tier de Comunidades hoy</div><div class="kv">'+(tc?(tc.now<0?'Aún no califica':TIERS[tc.now].n):'—')+'</div></div>'+
+    '<div class="kpi"><div class="kl">Herramientas de Hotmart</div><div class="kv">'+(L?L.nOn:HMT.filter(function(t){return hmActive(c,t.key);}).length)+' / 9</div></div>'+
+    '<div class="kpi big pot"><div class="kl">Sobre la mesa al año (USD)</div><div class="kv">'+(L?usd(L.total):'<span style="font-size:14px;color:var(--muted)">'+fxShort(c)+'</span>')+'</div></div>';
+  $('gaps').innerHTML=T.gaps.length?T.gaps.map(function(g){return gapBtn(g,c);}).join(''):'<p class="muted" style="margin:0;font-size:13px">Sin brechas detectadas. Revisa que los datos estén completos.</p>';
+  renderHm();
+}
+function renderHm(){
+  const c=cur(),el=$('hmList');if(!c){el.innerHTML='';return;}
+  const L=leakOf(c);
+  const row=function(t){
+    const der=hmDerived(c,t.key),on=hmActive(c,t.key);
+    return '<button type="button" class="hmrow'+(der.length?' lock':'')+'" data-hm="'+t.key+'" aria-pressed="'+on+'"><span class="hi">'+svg(t.ic,t.color,2.2)+'</span><span><span class="hn">'+t.name+'</span><span class="hd" style="display:block">'+(der.length?'Activa en: '+esc(der.join(', ')):esc(t.why))+'</span></span><span class="hv">'+(on?'✓ Activa':(L&&REL(t)?'+'+usdS(L.G*t.w*HM.max)+'/año':''))+'</span></button>';
+  };
+  el.innerHTML=HMT.filter(REL).map(row).join('')+'<p class="gnote" style="margin:8px 0 2px">Recomendación general, sin impacto relevante en facturación:</p>'+HMT.filter(function(t){return !REL(t);}).map(row).join('');
+}
+$('hmList').addEventListener('click',function(e){
+  const b=e.target.closest('[data-hm]'),c=cur();if(!b||!c)return;
+  const k=b.getAttribute('data-hm'),der=hmDerived(c,k);
+  if(der.length)return toast('Se marca desde la escalera: '+der.join(', '));
+  c.hotmart[k]=!c.hotmart[k];save();renderKPIs();
+});
+
+/* ================== Validación ================== */
+function vctx(el){
+  const a=function(n){return el.getAttribute(n);};
+  if(a('data-wo'))return {kind:a('data-wo'),offer:WSTEPS[wStep]};
+  if(a('data-o'))return {kind:a('data-o'),offer:drawerFor};
+  if(a('data-wtm'))return {kind:'t'+a('data-wtm').split(':')[1]};
+  if(a('data-tf'))return {kind:'t'+a('data-tf')};
+  if(a('data-wchs'))return {kind:'share'};
+  const k=a('data-wc')||a('data-c');return k?{kind:k}:null;
+}
+function vmsg(x,v,c){
+  const s=String(v==null?'':v).trim();
+  if(s===''){return x.kind==='fx'&&(c.currency||'USD')!=='USD'?{l:'warn',t:'Necesario para ubicar precios y tiers en dólares.'}:null;}
+  if(x.kind==='date'||x.kind==='followup'){return x.kind==='followup'&&c.date&&s<c.date?{l:'warn',t:'Es anterior a la fecha de la sesión.'}:null;}
+  if(['price','units','trate','tprice','tunits','share','fx','gmvAnnual'].indexOf(x.kind)<0)return null;
+  const n=num(s);
+  if(n<0)return {l:'err',t:'No puede ser negativo.'};
+  if((x.kind==='trate'||x.kind==='share')&&n>100)return {l:'err',t:'Debe estar entre 0 y 100.'};
+  if((x.kind==='units'||x.kind==='tunits')&&!Number.isInteger(n))return {l:'warn',t:'Usa un número entero de ventas.'};
+  if(x.kind==='fx'&&n===0)return {l:'err',t:'Debe ser mayor que 0.'};
+  if(x.kind==='price'&&x.offer&&n>0){
+    const o=byId(x.offer),r=fxRate(c);
+    if(!o.level)return null;
+    if(!r)return {l:'warn',t:'Agrega el tipo de cambio para ubicarlo en Low, Mid, High o Super High.'};
+    const lv=levelOf(n/r),conv=r!==1?' (~'+usd(n/r)+')':'';
+    if(lv!==o.level)return {l:'warn',t:'Con este precio'+conv+' es un producto '+LV(lv).l+'. En '+o.role+' se espera '+LV(o.level).l+': '+LV(o.level).r+'.'};
+    return {l:'ok',t:'Nivel '+LV(lv).l+conv};
+  }
+  return null;
+}
+function vcheck(el){
+  const c=cur();if(!c||!el||!el.closest)return;
+  const f=el.closest('.fld'),x=vctx(el);if(!f||!x)return;
+  const m=vmsg(x,el.value,c);
+  f.classList.toggle('f-err',!!m&&m.l==='err');f.classList.toggle('f-warn',!!m&&m.l==='warn');
+  let s=f.querySelector('.vmsg');
+  if(!m){if(s)s.remove();return;}
+  if(!s){s=document.createElement('span');f.appendChild(s);}
+  s.className='vmsg v-'+m.l;s.textContent=m.t;
+}
+function vcheckAll(root){if(root)root.querySelectorAll('.fld input').forEach(vcheck);}
+function shareSum(){
+  const c=cur(),el=$('wShareSum');if(!c||!el)return;
+  const t=Object.keys(CHANNELS).reduce(function(s,k){return s+(c.channels[k].on?num(c.channels[k].share):0);},0);
+  el.textContent=t>100?'Los porcentajes suman '+t+'%. Revisa que no pasen de 100%.':'';
+}
+document.addEventListener('input',function(e){
+  if(e.target.matches&&e.target.matches('.fld input'))vcheck(e.target);
+  if(e.target.hasAttribute&&e.target.hasAttribute('data-wchs'))shareSum();
+});
+document.addEventListener('change',function(e){
+  const k=e.target.getAttribute&&(e.target.getAttribute('data-c')||e.target.getAttribute('data-wc'));
+  if(k==='currency'){
+    const c=cur();if(!c)return;
+    if(!$('wiz').hidden&&WSTEPS[wStep]==='perfil')renderWiz(true);
+    renderClientBar();renderKPIs();if(drawerFor)vcheckAll($('drBody'));
+  }
+});
+
+/* ================== Puntaje de madurez ================== */
+function scoreOf(c){
+  const W={fe:9,core:11,ht:9,prem:6};
+  let lad=0,ladN=0;
+  Object.keys(W).forEach(function(k){const s=c.offers[k].status;lad+=s==='ok'?W[k]:s==='wip'?W[k]/2:0;if(s==='ok')ladN++;});
+  let on=0,all=0;
+  ALL.forEach(function(o){if(c.offers[o.id].status!=='no'){o.tools.forEach(function(k){all++;if(c.offers[o.id].tools[k].on)on++;});}});
+  const hw=HMT.reduce(function(s,t){return s+(hmActive(c,t.key)?t.w:0);},0)/HM.full;
+  const hn=HMT.filter(function(t){return hmActive(c,t.key);}).length;
+  const conv=(all?15*on/all:0)+15*hw;
+  const chN=Object.keys(CHANNELS).filter(function(k){return c.channels[k].on;}).length;
+  const aud=[0,8,14,20][chN];
+  const mN=Object.keys(MODELS).filter(function(k){return c.models[k];}).length;
+  const cyc=Math.min(15,Math.min(9,mN*3)+(c.channels.afiliados.on?3:0)+(c.offers.prem.status==='ok'?3:0)+(c.offers.evt.status==='ok'?2:0));
+  const total=Math.round(lad+conv+aud+cyc);
+  const stage=STAGES.filter(function(s){return total>=s.min;}).pop();
+  return {total:total,stage:stage,dims:[
+    {l:'Escalera de ofertas',v:lad,max:35,d:ladN+' de 4 escalones activos'},
+    {l:'Conversión',v:conv,max:30,d:on+' de '+all+' herramientas en la escalera · '+hn+' de 9 de Hotmart'},
+    {l:'Audiencia',v:aud,max:20,d:chN?chN+(chN===1?' canal trae ventas':' canales traen ventas'):'Sin canales definidos'},
+    {l:'Ciclo y recurrencia',v:cyc,max:15,d:'Modelos de venta, premium, afiliados y eventos'}
+  ]};
+}
+
+/* ================== Análisis por reglas ================== */
+function analyze(c){
+  const T=totals(c),sc=scoreOf(c),L=T.L;
+  const rows=ALL.map(function(o){return {o:o,d:c.offers[o.id],r:offerRev(o.id,c)};});
+  const live=rows.filter(function(x){return x.d.status!=='no';});
+  const sold=rows.filter(function(x){return x.r.total>0;});
+  const top=rows.slice().sort(function(a,b){return b.r.total-a.r.total;})[0];
+  const share=T.rev?top.r.total/T.rev:0;
+  const chOn=Object.keys(CHANNELS).filter(function(k){return c.channels[k].on;});
+  const asc=function(a,b){const x=c.offers[a],y=c.offers[b];return (x.status!=='no'&&y.status!=='no'&&num(x.units)&&num(y.units))?num(y.units)/num(x.units):null;};
+  const feCore=asc('fe','core');
+  const tc=L?tierCopy(L.G,L.total):null;
+  const good=[],warn=[];
+  const ladOk=OFFERS.filter(function(o){return c.offers[o.id].status==='ok';});
+  if(hasFVL(c))good.push({t:'Escalera de valor completa',d:'Ya vendes productos Low, Mid y High (o Super High): cada cliente tiene a dónde seguir comprando.'});
+  else if(ladOk.length>=2)good.push({t:ladOk.length+' escalones ya venden',d:ladOk.map(function(o){return o.role;}).join(', ')+': es la base para completar la escalera.'});
+  if(hasSHT(c))good.push({t:'Ya tienes un producto Super High Ticket',d:'Es la mejor fuente de casos de éxito y testimonios para el resto de la escalera.'});
+  if(feCore!==null&&feCore>=.1)good.push({t:'Buen paso de entrada a core ('+pct(feCore)+')',d:'Por cada 100 ventas del producto de entrada hay unas '+Math.round(feCore*100)+' del programa principal.'});
+  if(L&&L.nOn>=5)good.push({t:L.nOn+' de 9 herramientas de Hotmart activas',d:'Ya tapaste buena parte de las fugas por herramientas.'});
+  else if(T.tAll&&T.tOn/T.tAll>=.5)good.push({t:'Buen uso de herramientas en la escalera',d:T.tOn+' de '+T.tAll+' herramientas posibles ya están activas.'});
+  if(chOn.length>=2)good.push({t:'Audiencia por '+chOn.length+' canales',d:'Llega por '+chOn.map(function(k){return CHANNELS[k].name.toLowerCase();}).join(', ')+'; no depende de una sola fuente.'});
+  if(c.models.subs)good.push({t:'Ingreso recurrente',d:'Las suscripciones dan una base estable cada mes.'});
+  if(tc&&tc.now>=0)good.push({t:'Ya califica para Comunidades '+TIERS[tc.now].n,d:'Con '+usd(L.G)+' de facturación anual.'});
+
+  if(!live.length)warn.push({t:'Todavía no hay ofertas activas',d:'El primer paso es definir un producto de entrada y el programa principal.'});
+  if(c.offers.fe.status==='no'&&live.length)warn.push({t:'Falta una puerta de entrada',d:'Sin un producto Low, cada cliente nuevo tiene que dar un salto grande desde la primera compra.'});
+  if(c.offers.core.status==='no'&&(c.offers.ht.status!=='no'||c.offers.prem.status!=='no'))warn.push({t:'Hay un hueco en medio de la escalera',d:'Existe un escalón alto, pero no un programa principal que prepare al cliente para llegar ahí.'});
+  if(c.offers.core.status!=='no'&&c.offers.ht.status==='no')warn.push({t:'Después del programa principal no hay siguiente paso',d:'Quienes terminan la oferta core no tienen cómo seguir avanzando contigo.'});
+  if(T.rev&&share>=.7&&sold.length>=2)warn.push({t:top.o.role+' concentra el '+pct(share)+' del ingreso',d:'Si esa oferta se frena, se frena todo el negocio.'});
+  if(!chOn.length)warn.push({t:'No hay canales de audiencia definidos',d:'Sin saber de dónde llegan las ventas no se puede escalar la audiencia.'});
+  else if(chOn.length===1)warn.push({t:'Toda la audiencia llega por '+CHANNELS[chOn[0]].name.toLowerCase(),d:'Depender de un solo canal es riesgoso. Sumar un segundo canal da estabilidad.'});
+  else{const mx=chOn.slice().sort(function(a,b){return num(c.channels[b].share)-num(c.channels[a].share);})[0];
+    if(num(c.channels[mx].share)>=80)warn.push({t:num(c.channels[mx].share)+'% de las ventas llega por '+CHANNELS[mx].name.toLowerCase(),d:'Los otros canales existen, pero todavía pesan poco.'});}
+  if(feCore!==null&&feCore<.05)warn.push({t:'Pocos compradores de entrada llegan al core ('+pct(feCore)+')',d:'Revisa la invitación al siguiente nivel dentro del producto de entrada.'});
+  const wip=live.filter(function(x){return x.d.status==='wip';});
+  if(wip.length)warn.push({t:wip.map(function(x){return x.o.role;}).join(' y ')+(wip.length>1?' siguen':' sigue')+' en construcción',d:'Ponerle fecha de lanzamiento lo convierte en parte del plan.'});
+  if(!L&&gmvInfo(c).src==='fx')warn.push({t:'Falta el tipo de cambio a USD',d:'Sin él no se puede calcular lo que queda sobre la mesa ni el tier de Comunidades.'});
+
+  // Plan 30/60/90
+  const hmGaps=HMT.filter(function(t){return !hmActive(c,t.key);});
+  const d30=hmGaps.filter(function(t){return t.w>=.01;}).slice(0,2).map(function(t){return {t:'Activar '+t.name+' en Hotmart',v:L?L.G*t.w*HM.max:0,link:t.loom};});
+  const quick=T.gaps.filter(function(g){return g.tool&&c.offers[g.offer].status==='ok'&&['orderbump','upsell','exit','downsell','malla'].indexOf(g.tool)>-1;})[0];
+  if(quick)d30.push({t:'Configurar '+TOOLS[quick.tool].name+' en '+byId(quick.offer).role,s:PLAIN[quick.tool].n,link:TOOLS[quick.tool].loom});
+  const d60=wip.map(function(x){return {t:'Terminar y lanzar '+x.o.role+(x.d.name?' ('+x.d.name+')':''),s:'Ya está en construcción'};})
+    .concat(hmGaps.slice(2).filter(function(t){return t.w>=.01;}).slice(0,2).map(function(t){return {t:'Activar '+t.name+' en Hotmart',v:L?L.G*t.w*HM.max:0,link:t.loom};}))
+    .concat(T.gaps.filter(function(g){return g.tool&&c.offers[g.offer].status!=='no'&&['activacion','upgrade','validacion'].indexOf(g.tool)>-1;})
+    .map(function(g){return {t:'Sumar '+TOOLS[g.tool].name+' en '+byId(g.offer).role,s:PLAIN[g.tool].n};})).slice(0,3);
+  const d90=[];
+  if(L&&!L.fvlOk||!L&&!hasFVL(c)){const miss=OFFERS.filter(function(o){return c.offers[o.id].status==='no';})[0];
+    d90.push({t:miss?'Diseñar '+miss.role+' ('+LV(miss.level).l+')':'Completar la escalera Low, Mid y High (o Super High)',s:miss?LV(miss.level).r:'',v:L?L.fvlV:0});}
+  if(!hasSHT(c))d90.push({t:'Lanzar un producto Super High Ticket',s:'$1,500 o más',v:L?L.shtV:0});
+  if(c.offers.evt.status==='no'&&(c.offers.ht.status!=='no'||c.offers.prem.status!=='no'))d90.push({t:'Probar un evento en vivo',s:'Adicional para vender High y Super High a la audiencia caliente'});
+  if(!c.channels.pago.on&&c.offers.fe.status==='ok')d90.push({t:'Probar tráfico pago hacia el producto de entrada',s:'La malla de seguridad ayuda a pagar los anuncios'});
+
+  const pri=c.priorities.map(function(k){return T.gaps.find(function(g){return g.key===k;});}).filter(Boolean);
+  let ex='Tu ecosistema está <b>'+sc.stage.f+'</b> ('+sc.total+'/100). ';
+  if(T.rev)ex+='Hoy facturas cerca de <b>'+money(T.rev)+' al mes</b> ('+money(T.year,true)+' al año) con '+live.length+(live.length===1?' oferta activa':' ofertas activas')+'. ';
+  else ex+='Todavía no registras ventas mensuales, así que el análisis se enfoca en qué construir primero. ';
+  if(T.rev&&sold.length>=2)ex+='El '+pct(share)+' del ingreso viene de '+top.o.role+'. ';
+  if(L&&L.total>0){ex+='Según el modelo de la Calculadora de Escala, estás dejando cerca de <b>'+usd(L.total)+' al año</b> sobre la mesa';
+    ex+=tc.pot>tc.now?'; recuperarlo te llevaría de '+(tc.now<0?'no calificar':TIERS[tc.now].n)+' a <b>'+TIERS[tc.pot].n+'</b>. ':'. ';}
+  const first=pri[0]?{t:pri[0].title}:(d30[0]||d60[0]||d90[0]);
+  if(first)ex+='Primer paso recomendado: '+esc(lowerFirst(first.t))+'.';
+  return {T:T,L:L,tc:tc,sc:sc,rows:rows,live:live,good:good.slice(0,5),warn:warn.slice(0,5),plan:[d30.slice(0,3),d60,d90.slice(0,3)],pri:pri,exec:ex};
+}
+
+/* ================== Reporte (bloques) ================== */
+let C_REPORT=null;
+function leakBlock(L){
+  const lines=[
+    ['Por no diversificar tus herramientas',L.nOn+' de 9 herramientas de Hotmart activas',L.tools,L.tools<1,L.toolsFull],
+    ['Por no tener tu escalera de valor completa','Productos Low, Mid y High (o Super High) vendiendo',L.fvl,L.fvlOk,L.fvlV],
+    ['Por no tener un producto Super High Ticket','Un producto de $1,500 o más',L.sht,L.shtOk,L.shtV]];
+  const mx=Math.max(L.toolsFull,L.fvlV,L.shtV,1);
+  let big=-1,bv=0;lines.forEach(function(x,i){if(!x[3]&&x[2]>bv){bv=x[2];big=i;}});
+  const next=L.per.filter(function(p){return !p.act&&REL(p.t);})[0];
+  const minor=minorNames(C_REPORT);
+  let start='';
+  if(next)start='<div class="rp-start"><span class="k">Empieza a recuperar por aquí</span><b>'+next.t.name+'</b>: '+next.t.why+' <a href="'+next.t.loom+'" target="_blank" rel="noopener">Ver guía de configuración →</a></div>';
+  else if(!L.fvlOk||!L.shtOk)start='<div class="rp-start"><span class="k">Empieza a recuperar por aquí</span>Las herramientas de mayor impacto ya están activas. La siguiente fuga está en la escalera: '+(!L.fvlOk?'completar los niveles Low, Mid y High (o Super High).':'lanzar un producto Super High Ticket.')+'</div>';
+  return '<div class="rp-blk"><h3 class="rp-h">Lo que estás dejando sobre la mesa <small>Al año, en USD</small></h3><div class="rp-leak">'+
+    '<div class="rp-lt"><div class="l">Sobre la mesa</div><div class="v">'+usd(L.total)+'<small> /año</small></div><p>Sobre una facturación anual de '+usd(L.G)+(L.src==='real'?' (dato del emprendedor digital)':' (proyección de esta sesión)')+'.</p></div>'+
+    '<div><div class="rp-lines">'+lines.map(function(x,i){
+      const w=x[3]?100:Math.max(0,x[2]/mx*100);
+      return '<div class="rp-ln'+(x[3]?' ok':'')+'"><div class="r"><div class="n">'+(i===big?'<span class="tag">Mayor fuga</span>':'')+x[0]+'<small>'+x[1]+'</small></div><div class="v'+(x[3]?' ok':'')+'">'+(x[3]?'✓ Sin fuga':usd(x[2]))+'</div></div><div class="b"><i style="width:'+w+'%"></i></div></div>';
+    }).join('')+'</div>'+start+(minor.length?'<p class="rp-gen">Como buena práctica general, también conviene activar '+joinY(minor)+'.</p>':'')+'</div></div></div>';
+}
+function tierBlock(L,tc){
+  const show=tc.pot>tc.now?tc.pot:Math.max(tc.now,0);
+  const ben=BENEFITS[TIERS[show].k]||[];
+  return '<div class="rp-blk"><h3 class="rp-h">Tu lugar en Comunidades Hotmart <small>Por facturación anual</small></h3>'+
+    '<p class="rp-tier-h">'+tc.h+'</p><p class="rp-tier-s">'+tc.s+'</p>'+tierRail(tc.now,tc.pot,true)+
+    '<div class="rp-tcards"><div class="rp-tc"><div class="l">Hoy</div><div class="t">'+(tc.now<0?'Aún no califica':TIERS[tc.now].n)+'</div><div class="g">'+usd(L.G)+' al año</div></div>'+
+    '<div class="rp-tc pot"><div class="l">Potencial al recuperar lo que queda sobre la mesa</div><div class="t">'+(tc.pot<0?'Aún no califica':TIERS[tc.pot].n)+'</div><div class="g">'+usd(tc.proj)+' al año</div></div></div>'+
+    '<div class="rp-ben"><b>'+(tc.pot>tc.now?'Lo que desbloqueas en ':'Beneficios de ')+TIERS[show].n+'</b><ul>'+ben.map(function(b){return '<li>'+b+'</li>';}).join('')+'</ul></div></div>';
+}
+function scenarioOf(c){
+  const L=leakOf(c);if(!L)return null;
+  const x=c.scenario||{tools:{}};
+  const items=[];
+  L.per.forEach(function(p){if(!p.act&&REL(p.t)&&x.tools&&x.tools[p.t.key])items.push({t:'Activar '+p.t.name,v:p.v});});
+  if(!L.fvlOk&&x.fvl)items.push({t:'Completar la escalera Low, Mid y High (o Super High)',v:L.fvlV});
+  if(!L.shtOk&&x.sht)items.push({t:'Lanzar un producto Super High Ticket',v:L.shtV});
+  const S2=leakOf(c,x),rec=L.total-S2.total;
+  return {L:L,S2:S2,items:items,rec:rec,newG:L.G+rec,tNow:tierIdx(L.G),tNew:Math.max(tierIdx(L.G),Math.min(2,tierIdx(L.G+rec)))};
+}
+function reportBlocks(c){
+  const A=analyze(c),T=A.T,L=A.L,B=[];
+  const meta=[c.niche,c.country,fmtDate(c.date),c.account&&('Account: '+c.account)].filter(Boolean).map(esc).join(' · ');
+  B.push('<div class="rp-blk rp-cover" style="padding-left:0;padding-right:0"><div class="rp-band"><img src="'+LOGO_NEG+'" alt="Hotmart" crossorigin="anonymous"><span>Comunidades · Consultoría</span></div>'+
+    '<div class="rp-title"><p class="rp-eyb">Diagnóstico de Ecosistema Digital'+(c.demo?' · Datos de ejemplo':'')+'</p><h2>'+esc(c.name||'Emprendedor digital')+'</h2>'+(meta?'<p class="rp-meta">'+meta+'</p>':'')+'</div></div>');
+  B.push('<div class="rp-blk"><h3 class="rp-h">Resumen</h3><p class="rp-lead">'+A.exec+'</p></div>');
+  C_REPORT=c;
+  if(L){B.push(leakBlock(L));B.push(tierBlock(L,A.tc));}
+  else B.push('<div class="rp-blk"><h3 class="rp-h">Lo que estás dejando sobre la mesa</h3><p class="rp-text" style="color:#6E625B">'+fxNeeded(c)+'</p></div>');
+  const SC=scenarioOf(c);
+  if(SC&&c.scenario&&c.scenario.include&&SC.items.length)B.push('<div class="rp-blk"><h3 class="rp-h">Escenario: ¿qué pasa si…? <small>Simulado en la sesión</small></h3><div class="rp-scn"><ul>'+
+    SC.items.map(function(x){return '<li><span>'+esc(x.t)+'</span><em>+'+usd(x.v)+'/año</em></li>';}).join('')+'</ul><p>Recuperarías cerca de <b>'+usd(SC.rec)+' al año</b> y tu facturación pasaría de '+usd(SC.L.G)+' a <b>'+usd(SC.newG)+'</b>'+
+    (SC.tNew>SC.tNow?', lo que te llevaría de '+(SC.tNow<0?'no calificar':TIERS[SC.tNow].n)+' a <b>'+TIERS[SC.tNew].n+'</b>.':'.')+'</p></div></div>');
+  B.push('<div class="rp-blk"><h3 class="rp-h">Madurez del ecosistema <small>Puntaje de 0 a 100</small></h3><div class="rp-score">'+
+    '<div class="rp-dial"><div class="v">'+A.sc.total+'<small>/100</small></div><span class="st">'+A.sc.stage.l+'</span><p>'+A.sc.stage.d+'</p></div>'+
+    '<div class="rp-dims">'+A.sc.dims.map(function(d){return '<div class="rp-dim"><div class="l">'+d.l+'<span>'+Math.round(d.v)+' / '+d.max+'</span></div><div class="b"><i style="width:'+Math.round(d.v/d.max*100)+'%"></i></div><div class="d">'+d.d+'</div></div>';}).join('')+'</div></div></div>');
+  B.push('<div class="rp-blk"><h3 class="rp-h">Números del mes <small>Estimados con los datos de la sesión</small></h3><div class="rp-kpis">'+
+    '<div class="rp-kpi hi"><div class="kl">Ingreso mensual</div><div class="kv">'+money(T.rev)+'</div></div>'+
+    '<div class="rp-kpi"><div class="kl">Proyección anual</div><div class="kv">'+money(T.year,true)+'</div></div>'+
+    '<div class="rp-kpi"><div class="kl">Valor por cliente de entrada</div><div class="kv">'+(T.ltv?money(T.ltv):'—')+'</div></div>'+
+    '<div class="rp-kpi pot"><div class="kl">Herramientas de Hotmart</div><div class="kv">'+HMT.filter(function(t){return hmActive(c,t.key);}).length+' / 9</div></div></div></div>');
+  const sold=A.rows.filter(function(x){return x.r.total>0;}).sort(function(a,b){return b.r.total-a.r.total;});
+  const mx=sold.length?sold[0].r.total:1;
+  B.push('<div class="rp-blk"><h3 class="rp-h">Ingreso mensual por oferta</h3>'+(sold.length?'<div class="rp-bars">'+sold.map(function(x){
+    return '<div class="rp-bar"><div class="bn">'+x.o.role+(x.d.name?'<small>'+esc(x.d.name)+'</small>':'')+'</div><div class="bt2"><i style="width:'+(x.r.main/mx*100)+'%;background:#FF4000"></i><i style="width:'+(x.r.extra/mx*100)+'%;background:#E6B450"></i></div><div class="bv">'+money(x.r.total)+'<small>'+pct(T.rev?x.r.total/T.rev:0)+' del total</small></div></div>';
+  }).join('')+'</div><div class="rp-legend"><span><i style="background:#FF4000"></i>Producto</span><span><i style="background:#E6B450"></i>Order Bump, Upsell y DownSell</span></div>':'<p class="rp-text" style="color:#6E625B">Todavía no hay ventas registradas.</p>')+'</div>');
+  const ascs=[['fe','core','Entrada → Core'],['core','ht','Core → High Ticket'],['ht','prem','High Ticket → Premium']].map(function(p){
+    const x=c.offers[p[0]],y=c.offers[p[1]];if(x.status==='no'||y.status==='no'||!num(x.units)||!num(y.units))return '';
+    return '<span>'+p[2]+': <b>'+pct(num(y.units)/num(x.units))+'</b></span>';}).filter(Boolean);
+  B.push('<div class="rp-blk"><h3 class="rp-h">La escalera hoy</h3><div class="rp-ladder">'+ALL.map(function(o){
+    const d=c.offers[o.id],st=d.status,on=o.tools.filter(function(k){return d.tools[k].on;}).length;
+    const col={ok:'#1C8F57',wip:'#B87F00',no:'#CF3A32'}[st];
+    const lvl=o.level?LV(offerLevel(c,o)||o.level).l:'Adicional';
+    return '<div class="rp-cell'+(st==='ok'?' ok':'')+'"><div class="cs" style="color:'+col+'"><i style="background:'+col+'"></i>'+STATUS[st].l+'</div><div class="cr">'+o.role+'</div>'+
+      '<div class="cp">'+[lvl,num(d.price)?money(num(d.price)):o.range.join(''),num(d.units)?num(d.units)+'/mes':''].filter(Boolean).join(' · ')+'</div>'+
+      (st!=='no'?'<div class="ct">'+on+' de '+o.tools.length+' herramientas</div>':'')+'</div>';
+  }).join('')+'</div>'+(ascs.length?'<div class="rp-asc">Ventas del escalón siguiente vs. el anterior: '+ascs.join(' · ')+'</div>':'')+'</div>');
+  const li=function(arr,ic,col,empty){return arr.length?'<ul class="rp-list">'+arr.map(function(x){return '<li>'+svg(ic,col,2.2)+'<div><b>'+esc(x.t)+'</b><span>'+esc(x.d)+'</span></div></li>';}).join('')+'</ul>':'<p class="rp-text" style="color:#6E625B">'+empty+'</p>';};
+  B.push('<div class="rp-blk"><div class="rp-two"><div><h3 class="rp-h">Lo que ya funciona</h3>'+li(A.good,'ccheck','#1C8F57','Completa el diagnóstico para ver fortalezas.')+'</div>'+
+    '<div><h3 class="rp-h">Puntos de atención</h3>'+li(A.warn,'alert','#CF3A32','Sin alertas importantes.')+'</div></div></div>');
+  if(A.pri.length)B.push('<div class="rp-blk"><h3 class="rp-h">Prioridades acordadas</h3><ol class="rp-pri">'+A.pri.map(function(g){
+    return '<li><div><b>'+esc(g.title)+'</b><span>'+esc(g.detail)+(g.link?' <a href="'+g.link+'" target="_blank" rel="noopener">Ver guía →</a>':'')+'</span></div><em>'+(g.pot?'+'+(g.usd?usd(g.pot)+'/año':money(g.pot)+'/mes'):'')+'</em></li>';}).join('')+'</ol></div>');
+  const PH=[['30 días','Tapar las fugas más rápidas'],['60 días','Conectar los escalones'],['90 días','Construir el siguiente nivel']];
+  B.push('<div class="rp-blk"><h3 class="rp-h">Plan de acción</h3><div class="rp-plan">'+A.plan.map(function(items,i){
+    return '<div class="rp-col"><div class="ph">'+PH[i][0]+'</div><div class="pt">'+PH[i][1]+'</div><ul>'+(items.length?items.map(function(x){
+      return '<li>'+esc(x.t)+(x.v?'<small>+'+usd(x.v)+'/año estimado</small>':(x.s?'<small style="color:#6E625B;font-weight:400">'+esc(x.s)+'</small>':''))+(x.link?'<a href="'+x.link+'" target="_blank" rel="noopener">Ver guía →</a>':'')+'</li>';}).join(''):'<li class="none">Sin pendientes en esta etapa.</li>')+'</ul></div>';
+  }).join('')+'</div></div>');
+  if(c.nextSteps||c.followup){
+    const lines=(c.nextSteps||'').split('\n'),chunks=[];for(let i=0;i<lines.length;i+=12)chunks.push(lines.slice(i,i+12).join('\n'));
+    if(!chunks.length)chunks.push('');
+    const fu=c.followup?'<p class="rp-follow"><span style="font-weight:700">Seguimiento:</span> '+esc(fmtDate(c.followup))+(c.followupTime?', '+esc(c.followupTime)+' h':'')+'</p>':'';
+    chunks.forEach(function(t,i){B.push('<div class="rp-blk">'+(i===0?'<h3 class="rp-h">Próximos pasos</h3>':'')+(t?'<p class="rp-text">'+esc(t)+'</p>':'')+(i===chunks.length-1?fu:'')+'</div>');});
+  }
+  const notes=ALL.filter(function(o){return c.offers[o.id].notes;});
+  if(c.pdfNotes!==false&&notes.length)notes.forEach(function(o,i){B.push('<div class="rp-blk">'+(i===0?'<h3 class="rp-h">Notas de la sesión</h3>':'')+'<p class="rp-note"><b>'+o.role+'</b>'+esc(c.offers[o.id].notes)+'</p></div>');});
+  B.push('<div class="rp-blk rp-foot"><p>Cifras mensuales estimadas con datos proporcionados por el emprendedor digital'+(c.currency?', en '+esc(c.currency):'')+(fxRate(c)&&c.currency!=='USD'?', con un tipo de cambio de '+esc(c.fx)+' '+esc(c.currency)+' por USD':'')+'. Lo que queda sobre la mesa y el tier usan el modelo de la Calculadora de Escala de Hotmart, en USD al año.</p><p class="rp-legal"><b>Descargo de responsabilidad.</b> '+LEGAL+'</p></div>');
+  return B;
+}
+
+/* ================== Simulador ================== */
+function renderSim(){
+  const c=cur(),el=$('sim');
+  if(!hasData(c)){el.hidden=true;return;}
+  el.hidden=false;
+  const head='<div class="sim-h"><h2>Simulador: <em>¿qué pasa si…?</em></h2></div><p class="sim-sub">Marca lo que el emprendedor digital podría activar y mira cuánto recupera y a qué tier sube. No cambia su diagnóstico.</p>';
+  const SC=scenarioOf(c);
+  if(!SC){el.innerHTML=head+'<p class="sim-empty">'+fxNeeded(c)+'</p><div class="sim-tools"><button class="bt sm" type="button" data-go="wizard">Completar en el diagnóstico guiado</button></div>';return;}
+  const L=SC.L,x=c.scenario;
+  const its=[];
+  L.per.forEach(function(p){if(!p.act&&REL(p.t))its.push({k:'tool:'+p.t.key,on:!!x.tools[p.t.key],t:'Activar '+p.t.name,s:p.t.why,v:p.v});});
+  if(!L.fvlOk)its.push({k:'fvl',on:!!x.fvl,t:'Completar la escalera de valor',s:'Productos Low, Mid y High (o Super High) vendiendo',v:L.fvlV});
+  if(!L.shtOk)its.push({k:'sht',on:!!x.sht,t:'Lanzar un producto Super High Ticket',s:'$1,500 o más',v:L.shtV});
+  its.sort(function(a,b){return b.v-a.v;});
+  const ck=svg('check','#fff',3);
+  const left=its.length?'<div class="sim-items">'+its.map(function(i){return '<button type="button" class="sim-it" data-sim="'+i.k+'" aria-pressed="'+i.on+'"><span class="bx">'+ck+'</span><span>'+i.t+'<small>'+esc(i.s)+'</small></span><span class="sv">+'+usdS(i.v)+'</span></button>';}).join('')+'</div>'+
+    '<div class="sim-tools"><button class="bt ghost sm" type="button" data-sim-all>Marcar todo</button><button class="bt ghost sm" type="button" data-sim-clear>Limpiar</button></div>'
+    :'<p class="sim-empty">Ya están activas las herramientas de mayor impacto y la escalera está completa: no hay nada relevante que simular.</p>';
+  const tNow=SC.tNow,tNew=SC.tNew;
+  const txt=SC.items.length?(tNew>tNow?'Con este escenario pasaría de <b>'+(tNow<0?'no calificar':TIERS[tNow].n)+'</b> a <b>'+TIERS[tNew].n+'</b>.':(tNow<0?'Todavía no alcanzaría Gold ($25K al año).':'Se mantiene en '+TIERS[tNow].n+'.')):'Marca una o varias opciones para ver el resultado.';
+  const right='<div class="sim-res"><div class="sim-big"><div class="l">Recupera al año</div><div class="v">+'+usd(SC.rec)+'</div></div>'+
+    '<div class="sim-row"><span>Facturación anual</span><b>'+usd(L.G)+' → '+usd(SC.newG)+'</b></div>'+
+    '<div class="sim-row"><span>Queda sobre la mesa</span><b>'+usd(SC.S2.total)+'</b></div>'+
+    tierRail(tNow,tNew)+'<p class="sim-txt">'+txt+'</p>'+
+    '<label class="chk"><input type="checkbox" id="simInc"'+(x.include?' checked':'')+'> Incluir este escenario en el reporte y el PDF</label></div>';
+  el.innerHTML=head+'<div class="sim-grid"><div>'+left+'</div>'+right+'</div><p class="sim-legal">'+LEGAL+'</p>';
+}
+$('sim').addEventListener('click',function(e){
+  const c=cur();if(!c)return;const x=c.scenario;
+  const b=e.target.closest('[data-sim],[data-sim-all],[data-sim-clear]');if(!b)return;
+  if(b.hasAttribute('data-sim')){const k=b.getAttribute('data-sim');
+    if(k.indexOf('tool:')===0){const t=k.slice(5);x.tools[t]=!x.tools[t];}else x[k]=!x[k];}
+  if(b.hasAttribute('data-sim-all')){const L=leakOf(c);L.per.forEach(function(p){if(!p.act&&REL(p.t))x.tools[p.t.key]=true;});x.fvl=!L.fvlOk;x.sht=!L.shtOk;}
+  if(b.hasAttribute('data-sim-clear')){x.tools={};x.fvl=false;x.sht=false;}
+  save();renderSim();renderAnalysisSoon();
+});
+$('sim').addEventListener('change',function(e){if(e.target.id==='simInc'){const c=cur();c.scenario.include=e.target.checked;save();renderAnalysis();}});
+
+/* ================== Vista Análisis ================== */
+function renderAnalysis(){
+  const c=cur(),ok=hasData(c);
+  $('anEmpty').hidden=ok;$('anGrid').hidden=!ok;
+  $('anBadge').innerHTML=c&&c.demo?'<span class="ex-badge">Cliente de ejemplo</span>':'';
+  $('anTitle').innerHTML=c&&c.name?'Análisis de <em>'+esc(c.name.replace(/^Ejemplo · /,''))+'</em>':'Análisis del <em>ecosistema</em>';
+  if(!ok){$('anEmptyT').textContent=c?'Falta capturar el ecosistema de '+(c.name||'este cliente'):'Aún no hay un cliente seleccionado';$('sim').hidden=true;return;}
+  renderSim();
+  $('reportPaper').innerHTML=reportBlocks(c).join('')+'<div class="rp-endpad"></div>';
+  const g=gapsOf(c);
+  $('aGaps').innerHTML=g.length?g.map(function(x){return gapBtn(x,c);}).join(''):'<p class="muted" style="margin:0;font-size:13px">Sin brechas detectadas.</p>';
+  $('optNotes').checked=c.pdfNotes!==false;
+  updateCal();
+}
+
+/* ================== Cliente de ejemplo (v4) ================== */
+function loadDemo(){
+  if(S.clients.demo&&S.clients.demo.demoV===4){S.current='demo';save();return;}
+  const c=blankClient();c.id='demo';c.demo=true;c.demoV=4;
+  Object.assign(c,{name:'Ejemplo · Academia Finanzas Claras',niche:'Finanzas personales',country:'México',currency:'USD',account:'Account de ejemplo'});
+  const set=function(id,st,name,price,units,tools,notes){const d=c.offers[id];d.status=st;d.name=name;d.price=String(price);d.units=String(units);d.notes=notes||'';
+    Object.keys(tools||{}).forEach(function(k){Object.assign(d.tools[k],{on:true},tools[k]);});};
+  set('fe','ok','Reto 5 días: ordena tu dinero',27,250,{malla:{},exit:{},orderbump:{rate:'24',price:'9'}});
+  set('core','ok','Programa Finanzas Claras',397,15,{exit:{},upsell:{rate:'9',price:'600'},downsell:{units:'4',price:'197'}},'Varios alumnos piden más acompañamiento: buen terreno para la mentoría grupal.');
+  set('ht','wip','Mentoría grupal trimestral',1200,0,{});
+  set('evt','ok','Workshop: tu primer portafolio',147,10,{});
+  c.channels.organico={on:true,share:'55'};c.channels.pago={on:true,share:'45'};
+  c.models.evergreen=true;c.models.eventos=true;
+  c.hotmart.install=true;
+  c.scenario={tools:{affiliate:true,bundle:true},fvl:false,sht:false,include:true};
+  c.nextSteps='Activar Affiliate y abrir el programa de afiliados este mes.\nDefinir la fecha de preventa de la mentoría grupal.';
+  const f=new Date();f.setDate(f.getDate()+14);c.followup=f.toISOString().slice(0,10);
+  S.clients.demo=normalize(c);S.current='demo';save();
+}
+
+/* ================== Guía: niveles y Execution Hub ================== */
+function renderGuideHub(){
+  $('guideHub').innerHTML=HMT.map(function(t,i){
+    return '<a class="hcard" href="'+t.loom+'" target="_blank" rel="noopener"><span class="ht"><span><span class="hi">'+svg(t.ic,t.color,2.2)+'</span><b>'+t.name+'</b></span><span class="go">Ver guía →</span></span><p>'+t.why+'</p></a>';
+  }).join('');
+}
+renderGuideHub();
+window.addEventListener('beforeunload',function(e){if(Object.keys(S.clients).some(function(k){return !S.clients[k].demo&&hasData(S.clients[k]);})){e.preventDefault();e.returnValue='';}});
+
+/* ================== Eventos ================== */
+document.querySelectorAll('.modes button').forEach(function(b){b.addEventListener('click',function(){setMode(b.getAttribute('data-mode'));});});
+$('newClient').addEventListener('click',newClient);
+$('newClient2').addEventListener('click',newClient);
+$('clientSel').addEventListener('change',function(e){S.current=e.target.value||null;save();renderAll();});
+
+document.querySelectorAll('[data-c]').forEach(function(el){
+  el.addEventListener('input',function(){
+    const c=cur();if(!c)return;c[el.getAttribute('data-c')]=el.value;save();
+    if(el.getAttribute('data-c')==='name'){const o=$('clientSel').querySelector('option[value="'+c.id+'"]');if(o)o.textContent=el.value||'Cliente sin nombre';renderMode();}
+    if(['currency','fx','gmvAnnual'].indexOf(el.getAttribute('data-c'))>-1){renderLadder();renderKPIs();}
+  });
+});
+
+// clics en el lienzo
+document.addEventListener('click',function(e){
+  const sym=e.target.closest('.sym[data-tool]');
+  const step=e.target.closest('[data-step]');
+  const chan=e.target.closest('[data-chan]');
+  const kit=e.target.closest('.kit-item[data-tool]');
+  const model=e.target.closest('.mrow[data-model]');
+  const gap=e.target.closest('[data-gap]');
+  if(e.target.closest('#pop'))return;
+
+  if(mode==='present'){
+    if(sym)return toolPop(sym,sym.getAttribute('data-tool'));
+    if(step)return offerPop(step,step.getAttribute('data-step'));
+    if(kit)return toolPop(kit,kit.getAttribute('data-tool'));
+    if(chan){const k=chan.getAttribute('data-chan'),ch=CHANNELS[k];return openPop(chan,'c:'+k,svg(ch.ic,'#FF4000',1.9),ch.name,'<p style="margin:0">'+ch.desc+'</p>');}
+    if(!e.target.closest('.pres-bar'))closePop(true);
+    return;
+  }
+  if(mode==='explore'){
+    if(sym)return toolPop(sym,sym.getAttribute('data-tool'));
+    if(step)return offerPop(step,step.getAttribute('data-step'));
+    if(kit)return toolPop(kit,kit.getAttribute('data-tool'));
+    if(chan){const k=chan.getAttribute('data-chan'),ch=CHANNELS[k];return openPop(chan,'c:'+k,svg(ch.ic,'#FF4000',1.9),ch.name,'<p style="margin:0">'+ch.desc+'</p>');}
+    if(!$('pop').hidden)closePop(true);
+    return;
+  }
+  // diagnóstico
+  if(!cur()){if(sym||step||chan||model)toast('Primero crea un cliente');return;}
+  if(sym)return openDrawer(sym.getAttribute('data-offer'),sym.getAttribute('data-tool'));
+  if(step)return openDrawer(step.getAttribute('data-step'));
+  if(kit)return toolPop(kit,kit.getAttribute('data-tool'));
+  if(chan)return openChan(chan.getAttribute('data-chan'));
+  if(model){const c=cur(),k=model.getAttribute('data-model');c.models[k]=!c.models[k];save();renderModels();return;}
+  if(gap){
+    const c=cur(),k=gap.getAttribute('data-gap'),i=c.priorities.indexOf(k);
+    if(i>-1)c.priorities.splice(i,1);
+    else{if(c.priorities.length>=3){toast('Máximo 3 prioridades: quita una primero');return;}c.priorities.push(k);}
+    save();renderKPIs();if(mode==='analysis')renderAnalysis();return;
+  }
+  if(!$('pop').hidden&&!e.target.closest('.pop'))closePop(true);
+});
+// teclado en escalones (role=button)
+document.addEventListener('keydown',function(e){
+  if((e.key==='Enter'||e.key===' ')&&e.target.matches('[data-step][role="button"]')){e.preventDefault();e.target.click();}
+});
+$('popX').addEventListener('click',function(){closePop();});
+
+// drawer
+$('drClose').addEventListener('click',closeDrawer);
+$('scrim').addEventListener('click',closeDrawer);
+$('drBody').addEventListener('click',function(e){
+  const c=cur(),d=c.offers[drawerFor];
+  const sb=e.target.closest('[data-status]');
+  if(sb){d.status=sb.getAttribute('data-status');save();
+    $('drBody').querySelectorAll('[data-status]').forEach(function(b){b.setAttribute('aria-pressed',b===sb);});
+    renderLadder();renderKPIs();renderKit();renderDrawerCalc();return;}
+  const tg=e.target.closest('[data-tog]');
+  if(tg){const k=tg.getAttribute('data-tog');d.tools[k].on=!d.tools[k].on;
+    if(d.tools[k].on&&d.status==='no'){d.status='wip';$('drBody').querySelectorAll('[data-status]').forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-status')==='wip');});}
+    tg.setAttribute('aria-checked',d.tools[k].on);tg.closest('.trow').classList.toggle('on',d.tools[k].on);
+    save();renderLadder();renderKPIs();renderKit();renderDrawerCalc();}
+});
+$('drBody').addEventListener('input',function(e){
+  const c=cur(),d=c.offers[drawerFor],el=e.target;
+  if(el.hasAttribute('data-o')){d[el.getAttribute('data-o')]=el.value;
+    if((el.getAttribute('data-o')==='price'||el.getAttribute('data-o')==='units')&&el.value&&d.status==='no'){d.status='ok';$('drBody').querySelectorAll('[data-status]').forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-status')==='ok');});}
+  }
+  if(el.hasAttribute('data-tk'))d.tools[el.getAttribute('data-tk')][el.getAttribute('data-tf')]=el.value;
+  save();renderDrawerCalc();renderKPIs();renderKit();
+  clearTimeout(renderLadder._t);renderLadder._t=setTimeout(renderLadder,300);
+});
+
+// menú
+$('menuBtn').addEventListener('click',function(e){e.stopPropagation();const l=$('menuList'),o=!l.classList.contains('open');l.classList.toggle('open',o);this.setAttribute('aria-expanded',o);});
+document.addEventListener('click',function(e){if(!e.target.closest('.menu')){$('menuList').classList.remove('open');$('menuBtn').setAttribute('aria-expanded','false');}});
+$('menuList').addEventListener('click',function(e){
+  const a=e.target.closest('[data-act]');if(!a)return;const act=a.getAttribute('data-act');
+  $('menuList').classList.remove('open');
+  if(act==='del'){const c=cur();if(!c)return toast('No hay cliente seleccionado');$('delName').textContent=c.name||'este cliente';openModal('delModal');}
+});
+const FRAMED=(function(){try{return window.self!==window.top;}catch(e){return true;}})();
+
+
+
+// modales
+document.querySelectorAll('.modal').forEach(function(m){
+  m.addEventListener('click',function(e){if(e.target===m||e.target.closest('[data-close]'))closeModal(m);});
+});
+$('copySum2').addEventListener('click',function(){
+  const t=summaryText();if(!t)return toast('No hay cliente seleccionado');
+  const done=function(){toast('Resumen copiado');};
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(done,function(){fallbackCopy(t);done();});
+  else{fallbackCopy(t);done();}
+});
+function fallbackCopy(t){const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');}catch(e){}a.remove();}
+
+// canal
+let chanFor=null;
+function openChan(k){
+  const d=cur().channels[k];chanFor=k;
+  $('chanTitle').textContent=CHANNELS[k].name;$('chanDesc').textContent=CHANNELS[k].desc;
+  $('chanTog').setAttribute('aria-checked',!!d.on);$('chanShare').value=d.share||'';$('chanShare').disabled=!d.on;
+  openModal('chanModal');
+}
+$('chanTog').addEventListener('click',function(){const d=cur().channels[chanFor];d.on=!d.on;if(!d.on)d.share='';this.setAttribute('aria-checked',d.on);$('chanShare').disabled=!d.on;$('chanShare').value=d.share||'';save();renderChannels();renderKPIs();});
+$('chanShare').addEventListener('input',function(){const d=cur().channels[chanFor];d.share=this.value;if(this.value)d.on=true;save();renderChannels();});
+$('delOk').addEventListener('click',function(){const c=cur();if(c){delete S.clients[c.id];S.current=Object.keys(S.clients)[0]||null;save();renderAll();toast('Diagnóstico borrado');}closeModal($('delModal'));});
+
+// presentación
+$('pPrev').addEventListener('click',function(){slide--;closePop(true);applySlide();});
+$('pNext').addEventListener('click',function(){if(slide>=SLIDES.length-1){setMode('diagnose');return;}slide++;closePop(true);applySlide();});
+
+// teclado global
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'&&!$('wiz').hidden){closeWizard();return;}
+  if(e.key==='Escape'){
+    if(!$('pop').hidden){closePop();return;}
+    const m=document.querySelector('.modal.open');if(m){closeModal(m);return;}
+    if(drawerFor){closeDrawer();return;}
+    if($('menuList').classList.contains('open')){$('menuList').classList.remove('open');return;}
+  }
+  if(mode==='present'&&!e.target.matches('input,textarea,select')){
+    if(e.key==='ArrowRight'||e.key==='PageDown'){e.preventDefault();$('pNext').click();}
+    if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();if(slide>0)$('pPrev').click();}
+  }
+});
+let rT;window.addEventListener('resize',function(){clearTimeout(rT);rT=setTimeout(function(){drawLoop();if(!$('pop').hidden)closePop(true);},120);});
+window.addEventListener('scroll',function(){if(!$('pop').hidden&&mode!=='present')closePop(true);},{passive:true});
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(drawLoop);
+
+renderAll();
+})();
+</script>
+</body>
+</html>
